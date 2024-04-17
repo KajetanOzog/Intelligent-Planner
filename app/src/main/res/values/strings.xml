@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Intelligent Planner</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="user_name">Michael</string>
+    <string name="greeting_text">Good morning, %s!</string>
+    <string name="temperature">26°C</string>
+    <string name="habits">Habits</string>
+</resources>
