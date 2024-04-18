@@ -20,13 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.res.dimensionResource
 import com.example.io_project.R
 
+
 @Composable
 fun BottomBar(modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary)
             .padding(dimensionResource(id = R.dimen.padding_medium))
     ) {
         Icon(

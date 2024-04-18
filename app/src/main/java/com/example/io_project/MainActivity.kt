@@ -16,11 +16,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             IO_ProjectTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    HomeScreen()
+                    IO_ProjectApp()
                 }
             }
         }
@@ -33,6 +32,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     IO_ProjectTheme {
-        HomeScreen()
+        IO_ProjectApp()
     }
 }
