@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.io_project.ui.screens.ui.calendarscreen.CalendarScreen
 import com.example.io_project.ui.screens.ui.homescreen.HomeScreen
+import com.example.io_project.ui.screens.ui.profilescreen.ProfileScreen
 
 @Composable
 fun IO_ProjectApp() {
@@ -20,6 +21,9 @@ fun IO_ProjectApp() {
         }
         composable("calendar_screen") {
             CalendarScreen(navigateTo = { navController.navigate(it) })
+        }
+        composable("profile_screen") {
+            ProfileScreen(navigateTo = { navController.navigate(it) })
         }
 
     }

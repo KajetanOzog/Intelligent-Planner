@@ -6,10 +6,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.io_project.ui.components.BottomBar
+import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.TopBar
+import com.example.io_project.R
 
 @Composable
 fun CalendarScreen(
@@ -25,13 +28,18 @@ fun CalendarScreen(
             )
         },
         bottomBar = {
-            BottomBar()
+            BottomBar(
+                navigateTo = navigateTo,
+                currentScreenName = "calendar_screen"
+            )
         }
     ) { paddingValues ->
         Column(
-            modifier = modifier.padding(paddingValues)
+            modifier = modifier
+                .padding(paddingValues)
+                .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
-            Text(text = "calendar")
+            CalendarTile()
         }
     }
 }

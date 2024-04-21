@@ -7,27 +7,24 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.example.io_project.R
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.GreetingTile
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
-import com.example.io_project.R
-import com.example.io_project.Screen
-import com.example.io_project.ui.screens.ui.calendarscreen.CalendarScreen
 import com.example.io_project.ui.theme.IO_ProjectTheme
 
 @Composable
@@ -36,6 +33,7 @@ fun HomeScreen(
     navigateTo: (route: String) -> Unit
 ) {
     Scaffold(
+
         topBar = {
             TopBar(
                 text = stringResource(id = R.string.app_name),
@@ -43,18 +41,34 @@ fun HomeScreen(
                 canNavigateBack = false
             )
         },
+
         bottomBar = {
-            BottomBar()
+            BottomBar(
+                navigateTo = navigateTo,
+                currentScreenName = "home_screen"
+            )
         },
+
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                text = { /*TODO*/ },
-                icon = { /*TODO*/ },
+                text = {
+                       Text(
+                           text = "Add",
+                           style = MaterialTheme.typography.labelSmall
+                       )
+                       },
+                icon = {
+                       Icon(
+                           Icons.Rounded.Add,
+                           contentDescription = null
+                       )
+                       },
                 onClick = { /*TODO*/ })
         },
         modifier = modifier
             .fillMaxSize()
     ) { innerPadding ->
+
         Column(
             modifier = modifier
                 .padding(innerPadding)
@@ -72,24 +86,28 @@ fun HomeScreen(
             Column() {
                 Row() {
                     SmallTile(
-                        modifier
+                        text = "Nawyki",
+                        modifier = modifier
                             .padding(end = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
                     )
                     SmallTile(
-                        modifier
+                        text = "Statystyki",
+                        modifier = modifier
                             .padding(start = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
                     )
                 }
                 Row() {
                     SmallTile(
-                        modifier
+                        text = "Zaproszenia/Grupy",
+                        modifier = modifier
                             .padding(end = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
                     )
                     SmallTile(
-                        modifier
+                        text = "",
+                        modifier = modifier
                             .padding(start = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
                     )

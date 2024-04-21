@@ -1,6 +1,7 @@
 package com.example.io_project.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.DateRange
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Icon
@@ -22,32 +25,61 @@ import com.example.io_project.R
 
 
 @Composable
-fun BottomBar(modifier: Modifier = Modifier) {
+fun BottomBar(
+    modifier: Modifier = Modifier,
+    currentScreenName: String,
+    navigateTo: (route: String) -> Unit
+    ) {
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.padding_medium))
     ) {
-        Icon(
-            Icons.Rounded.DateRange,
-            contentDescription = null
+
+
+        NavigationButton(
+            navigateTo = navigateTo,
+            targetScreenName = "home_screen",
+            isCurrent = (currentScreenName == "home_screen"),
+            icon = Icons.Rounded.Home
         )
-        Icon(
-            Icons.Rounded.Build,
-            contentDescription = null
+
+        NavigationButton(
+            navigateTo = navigateTo,
+            targetScreenName = "calendar_screen",
+            isCurrent = (currentScreenName == "calendar_screen"),
+            icon = Icons.Rounded.DateRange
         )
-        Icon(
-            Icons.Rounded.AccountCircle,
-            contentDescription = null
+
+        NavigationButton(
+            navigateTo = navigateTo,
+            targetScreenName = "profile_screen",
+            isCurrent = (currentScreenName == "profile_screen"),
+            icon = Icons.Rounded.Person
         )
-        Icon(
-            Icons.Rounded.Share,
-            contentDescription = null
-        )
-        Icon(
-            Icons.Rounded.Settings,
-            contentDescription = null
-        )
+
+
+//        Icon(
+//            Icons.Rounded.Home,
+//            contentDescription = null,
+//            modifier = modifier.clickable {
+//                navigateTo("home_screen")
+//            }
+//        )
+//        Icon(
+//            Icons.Rounded.DateRange,
+//            contentDescription = null,
+//            modifier = modifier.clickable {
+//                navigateTo("calendar_screen")
+//            }
+//        )
+//        Icon(
+//            Icons.Rounded.AccountCircle,
+//            contentDescription = null,
+//            modifier = modifier.clickable {
+//                navigateTo("profile_screen")
+//            }
+//        )
     }
 }
