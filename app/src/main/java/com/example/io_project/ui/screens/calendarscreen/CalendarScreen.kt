@@ -1,4 +1,4 @@
-package com.example.io_project.ui.screens.ui.calendarscreen
+package com.example.io_project.ui.screens.calendarscreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

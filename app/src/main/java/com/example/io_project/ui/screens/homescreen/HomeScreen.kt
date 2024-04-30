@@ -1,4 +1,4 @@
-package com.example.io_project.ui.screens.ui.homescreen
+package com.example.io_project.ui.screens.homescreen
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
