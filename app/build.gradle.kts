@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -9,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.io_project"
+//        applicationId = "com.example.io_project"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -69,11 +71,18 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(platform(libs.firebase.bom))
+    implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics")
-    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
-    implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:21.1.0")
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation(libs.coil.compose)
+    implementation ("com.google.dagger:hilt-android:2.46.1")
+    kapt ("com.google.dagger:hilt-compiler:2.46.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }

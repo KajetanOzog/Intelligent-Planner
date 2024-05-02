@@ -1,5 +1,10 @@
 [versions]
 agp = "8.3.1"
+coilCompose = "2.2.2"
+firebaseBom = "32.8.1"
+hiltAndroid = "2.44"
+hiltAndroidVersion = "2.51.1"
+hiltNavigationFragment = "1.2.0"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -11,10 +16,22 @@ composeBom = "2023.08.00"
 navigationCompose = "2.7.7"
 material3Android = "1.2.1"
 lifecycleRuntimeCompose = "2.7.0"
+googleServices = "4.4.1"
+firebaseAuth = "22.3.1"
+playServicesAuth = "21.1.0"
+firebaseAnalytics = "21.6.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationFragment" }
+androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+hilt-android-v2511 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroidVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -31,6 +48,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
