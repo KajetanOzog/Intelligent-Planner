@@ -2,10 +2,8 @@ package com.example.io_project.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -18,20 +16,22 @@ import androidx.compose.ui.unit.dp
 import com.example.io_project.R
 
 @Composable
-fun CalendarTile(modifier: Modifier = Modifier) {
-    Column(
+fun FriendButton(
+    navigateTo: (String) -> Unit,
+    friendID: Int = 0,
+    modifier: Modifier = Modifier
+) {
+    Row(
         modifier = modifier
+            .padding(bottom = dimensionResource(id = R.dimen.padding_small))
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.outlineVariant)
-            .padding(dimensionResource(id = R.dimen.padding_medium))
+            .padding(dimensionResource(id = R.dimen.padding_small))
     ) {
-        // TO-DO:
-        // 1) Widok kalendarza
-        // 2) Z gory dwa przyciski na lewo i prawo do zmiany dnia
         Text(
-            text = "Kalendarz",
-            style = MaterialTheme.typography.labelLarge
+            text = "Znajomy #${friendID}",
+            style = MaterialTheme.typography.labelSmall
         )
     }
 }

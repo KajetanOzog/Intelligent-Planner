@@ -32,7 +32,7 @@ import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.signinscreen.GoogleAuthUiClient
 import com.example.io_project.ui.screens.signinscreen.SignInScreen
 import com.example.io_project.ui.screens.signinscreen.SignInViewModel
-import com.example.io_project.ui.theme.IO_ProjectTheme
+import com.example.compose.IO_ProjectTheme
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient

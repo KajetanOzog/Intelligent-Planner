@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.profilescreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -30,13 +31,15 @@ import com.example.io_project.ui.components.TopBar
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.SignOut
 import com.example.io_project.ui.components.RevokeAccess
-import com.example.io_project.ui.theme.IO_ProjectTheme
+import com.example.compose.IO_ProjectTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import com.example.io_project.Constants.ARCHIVE_SCREEN
 import com.example.io_project.Constants.REVOKE_ACCESS_MESSAGE
 import com.example.io_project.Constants.SIGN_OUT
+import com.example.io_project.Constants.STATS_SCREEN
 import kotlinx.coroutines.launch
 
 @Composable
@@ -105,6 +108,37 @@ fun ProfileScreen(
                     }
                 }
             }
+
+            Row() {
+                SmallTile(
+                    text = "Archiwum",
+                    modifier = modifier
+                        .padding(end = dimensionResource(id = R.dimen.padding_small))
+                        .weight(1f)
+                        .clickable { navigateTo(ARCHIVE_SCREEN) }
+                )
+                SmallTile(
+                    text = "Statystyki",
+                    modifier = modifier
+                        .padding(start = dimensionResource(id = R.dimen.padding_small))
+                        .weight(1f)
+                        .clickable { navigateTo(STATS_SCREEN) }
+                )
+            }
+            Row() {
+                SmallTile(
+                    text = "Eksport danych",
+                    modifier = modifier
+                        .padding(end = dimensionResource(id = R.dimen.padding_small))
+                        .weight(1f)
+                )
+                SmallTile(
+                    text = "Import danych",
+                    modifier = modifier
+                        .padding(start = dimensionResource(id = R.dimen.padding_small))
+                        .weight(1f)
+                )
+            }
         }
 
     }
@@ -138,6 +172,7 @@ fun ProfileScreen(
         }
     )
 }
+
 @Preview(showBackground = true)
 @Composable
 fun ProfPreview() {
@@ -145,39 +180,4 @@ fun ProfPreview() {
 
     }
 }
-//        Row() {
-//            SmallTile(
-//                modifier
-//                    .padding(end = dimensionResource(id = R.dimen.padding_small))
-//                    .weight(1f)
-//            )
-//            SmallTile(
-//                modifier
-//                    .padding(start = dimensionResource(id = R.dimen.padding_small))
-//                    .weight(1f)
-//            )
-//        }
-//        Row() {
-//            SmallTile(
-//                modifier
-//                    .padding(end = dimensionResource(id = R.dimen.padding_small))
-//                    .weight(1f)
-//            )
-//            SmallTile(
-//                modifier
-//                    .padding(start = dimensionResource(id = R.dimen.padding_small))
-//                    .weight(1f)
-//            )
-//        }
-//        Row() {
-//            SmallTile(
-//                modifier
-//                    .padding(end = dimensionResource(id = R.dimen.padding_small))
-//                    .weight(1f)
-//            )
-//            SmallTile(
-//                modifier
-//                    .padding(start = dimensionResource(id = R.dimen.padding_small))
-//                    .weight(1f)
-//            )
-//        }
+

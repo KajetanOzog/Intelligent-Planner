@@ -8,5 +8,11 @@ sealed class Screen(val route: String) {
     object ProfileScreen: Screen("profile_screen")
     object SignInScreen: Screen("sign_in_screen")
     object AuthScreen: Screen("auth_screen")
+    object ArchiveScreen: Screen("archive_screen")
+    object GroupScreen: Screen("group_screen")
+    object LongTermScreen: Screen("long_term_screen")
+    object SocialScreen: Screen("social_screen")
+    object StatsScreen: Screen("stats_screen")
+    object TasksScreen: Screen("tasks_screen")
 
 }

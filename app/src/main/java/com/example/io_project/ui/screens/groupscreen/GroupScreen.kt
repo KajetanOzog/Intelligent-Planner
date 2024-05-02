@@ -1,11 +1,9 @@
-package com.example.io_project.ui.screens.calendarscreen
+package com.example.io_project.ui.screens.groupscreen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,29 +18,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.compose.IO_ProjectTheme
-import com.example.io_project.Constants.LONG_TERM_SCREEN
-import com.example.io_project.Constants.TASKS_SCREEN
-import com.example.io_project.ui.components.BottomBar
-import com.example.io_project.ui.components.CalendarTile
-import com.example.io_project.ui.components.TopBar
 import com.example.io_project.R
 import com.example.io_project.ui.components.AddButton
+import com.example.io_project.ui.components.BottomBar
+import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.SmallTile
-import com.example.io_project.ui.screens.homescreen.HomeScreen
+import com.example.io_project.ui.components.TopBar
 
 @Composable
-fun CalendarScreen(
+fun GroupScreen(
     modifier: Modifier = Modifier,
-    navigateTo: (route: String) -> Unit
+    groupID: Int = 0,
+    navigateTo: (String) -> Unit
 ) {
     Scaffold(
+        // TO-DO:
+        // 1) Nawigacja do ekranu spolecznosci a nie do homescreen
         topBar = {
             TopBar(
-                text = "Calendar",
+                text = "Grupa #1",
                 navigateTo = navigateTo,
                 canNavigateBack = true
             )
@@ -50,7 +45,7 @@ fun CalendarScreen(
         bottomBar = {
             BottomBar(
                 navigateTo = navigateTo,
-                currentScreenName = "calendar_screen"
+                currentScreenName = "long_term_screen"
             )
         },
         floatingActionButton = {
@@ -89,29 +84,26 @@ fun CalendarScreen(
             )
             Row() {
                 SmallTile(
-                    text = "Nawyki",
+                    text = "Członkowie",
                     modifier = modifier
                         .padding(end = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)
-                        .clickable { navigateTo(TASKS_SCREEN) }
                 )
                 SmallTile(
-                    text = "Cele długotermi...",
+                    text = "Zarządzaj grupą",
                     modifier = modifier
                         .padding(start = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)
-                        .clickable { navigateTo(LONG_TERM_SCREEN) }
                 )
             }
         }
-
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun GroupScreenPreview() {
     IO_ProjectTheme {
-        CalendarScreen(navigateTo = {})
+        GroupScreen(navigateTo = {})
     }
 }

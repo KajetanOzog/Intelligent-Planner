@@ -14,7 +14,7 @@ val Rubik = FontFamily(
 )
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val AppTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.Normal,

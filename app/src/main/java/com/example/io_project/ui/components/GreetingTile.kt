@@ -1,16 +1,31 @@
 package com.example.io_project.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.io_project.R
@@ -25,6 +40,10 @@ fun GreetingTile(modifier: Modifier = Modifier) {
             .background(MaterialTheme.colorScheme.outlineVariant)
             .padding(dimensionResource(id = R.dimen.padding_medium))
     ) {
+
+        // TO-DO:
+        // 1) Dodac nazwe uzytkownika z profilu (jesli sie da to tylko imie)
+        // 2) Dodac inne przywitanie w zaleznosci od godziny
         Text(
             text = stringResource(
                 id = R.string.greeting_text,
@@ -32,9 +51,48 @@ fun GreetingTile(modifier: Modifier = Modifier) {
             ),
             style = MaterialTheme.typography.displayLarge,
         )
+
+        // TO-DO:
+        // 1) Sciaganie biezacej daty
         Text(
-            text = stringResource(id = R.string.temperature),
-            style = MaterialTheme.typography.labelLarge
+            text = "27 maj 2024",
+            style = MaterialTheme.typography.labelSmall
         )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom,
+            modifier = modifier.fillMaxWidth()
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // TO-DO:
+                // 1) Aktualna pogoda sciagnieta z lokalizacji uzytkownika
+                // 2) Jesli sie da to odpowiednia ikonka do pogody
+                Image(
+                    painter = painterResource(
+                        id = R.drawable.partly_cloudy_dark_color_96dp
+                    ),
+                    contentDescription = "Ikona pogody",
+                    modifier = modifier.size(64.dp)
+                )
+                Spacer(modifier = modifier.width(16.dp))
+                Text(
+                    text = stringResource(id = R.string.temperature),
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+
+            Icon(
+                Icons.Rounded.KeyboardArrowDown,
+                contentDescription = "Rozwin podsumowanie dnia",
+                modifier = modifier.clickable {
+                    /*TO-DO: wyswietlanie podsumowania*/
+                }
+            )
+        }
+
+        // Tutaj Composable tworzace podsumowanie lub odwolanie to funkcji z osobnego pliku
+
     }
 }

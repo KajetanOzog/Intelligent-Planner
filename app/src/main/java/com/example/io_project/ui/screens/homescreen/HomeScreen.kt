@@ -4,6 +4,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
@@ -19,13 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.compose.IO_ProjectTheme
+import com.example.io_project.Constants
+import com.example.io_project.Constants.CALENDAR_SCREEN
+import com.example.io_project.Constants.LONG_TERM_SCREEN
+import com.example.io_project.Constants.SOCIAL_SCREEN
+import com.example.io_project.Constants.TASKS_SCREEN
 import com.example.io_project.R
+import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.GreetingTile
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
-import com.example.io_project.ui.theme.IO_ProjectTheme
 
 @Composable
 fun HomeScreen(
@@ -50,20 +57,7 @@ fun HomeScreen(
         },
 
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = {
-                       Text(
-                           text = "Add",
-                           style = MaterialTheme.typography.labelSmall
-                       )
-                       },
-                icon = {
-                       Icon(
-                           Icons.Rounded.Add,
-                           contentDescription = null
-                       )
-                       },
-                onClick = { /*TODO*/ })
+            AddButton()
         },
         modifier = modifier
             .fillMaxSize()
@@ -80,7 +74,9 @@ fun HomeScreen(
 
             CalendarTile(
                 modifier = modifier
-                    .clickable(onClick = { navigateTo("calendar_screen") })
+                    .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
+                    .clickable(onClick = { navigateTo(CALENDAR_SCREEN) })
+                    .aspectRatio(1.2f)
             )
 
             Column() {
@@ -90,38 +86,22 @@ fun HomeScreen(
                         modifier = modifier
                             .padding(end = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
+                            .clickable { navigateTo(TASKS_SCREEN) }
                     )
                     SmallTile(
-                        text = "Statystyki",
+                        text = "Społeczność",
                         modifier = modifier
                             .padding(start = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
+                            .clickable { navigateTo(SOCIAL_SCREEN) }
                     )
                 }
                 Row() {
                     SmallTile(
-                        text = "Zaproszenia/Grupy",
+                        text = "Cele długoterminowe",
                         modifier = modifier
-                            .padding(end = dimensionResource(id = R.dimen.padding_small))
                             .weight(1f)
-                    )
-                    SmallTile(
-                        text = "",
-                        modifier = modifier
-                            .padding(start = dimensionResource(id = R.dimen.padding_small))
-                            .weight(1f)
-                    )
-                }
-                Row() {
-                    SmallTile(
-                        modifier
-                            .padding(end = dimensionResource(id = R.dimen.padding_small))
-                            .weight(1f)
-                    )
-                    SmallTile(
-                        modifier
-                            .padding(start = dimensionResource(id = R.dimen.padding_small))
-                            .weight(1f)
+                            .clickable { navigateTo(LONG_TERM_SCREEN) }
                     )
                 }
             }
@@ -134,6 +114,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     IO_ProjectTheme {
-//        HomeScreen()
+        HomeScreen(navigateTo = {})
     }
 }

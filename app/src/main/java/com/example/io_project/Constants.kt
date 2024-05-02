@@ -23,9 +23,18 @@ object Constants {
     const val REVOKE_ACCESS = "Revoke Access"
 
     //Screens
-    const val AUTH_SCREEN = "Authentication"
-    const val PROFILE_SCREEN = "Profile"
-
+    const val AUTH_SCREEN = "auth_screen"
+    const val PROFILE_SCREEN = "profile_screen"
+    const val LONG_TERM_SCREEN = "long_term_screen"
+    const val TASKS_SCREEN = "tasks_screen"
+    const val SOCIAL_SCREEN = "social_screen"
+    const val GROUP_SCREEN = "group_screen"
+    const val HOME_SCREEN = "home_screen"
+    const val CALENDAR_SCREEN = "calendar_screen"
+    const val ARCHIVE_SCREEN = "archive_screen"
+    const val STATS_SCREEN = "stats_screen"
+    const val SIGN_IN_SCREEN = "sign_in_screen"
+    // TO-DO: Pozamieniac stringi w kodzie no consty
     //Messages
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."
 }
