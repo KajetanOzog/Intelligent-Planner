@@ -2,39 +2,54 @@ import com.example.io_project.dataclasses.Event
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.DayOfWeek
 
+suspend fun addEventToFirestore(userID: String, event: Event, isRegular: Boolean) {
+    val firestore = FirebaseFirestore.getInstance()
+    val userDocumentRef = firestore.collection("users").document(userID)
 
-fun addEventToFirestore(userId: String, event: Event, eventType: String, dayOfWeek: String? = null) {
-    val auth = FirebaseAuth.getInstance()
-    val currentUser = auth.currentUser
+    val eventData = hashMapOf<String, Any>(
+        "name" to event.name,
+        "category" to event.category,
+        "color" to event.color,
+        "place" to event.place,
+        "time" to event.time,
+        "endDate" to event.endDate,
+        "weekly" to event.weekly,
+        "reminder" to event.reminder,
+        "alarm" to event.alarm,
+        "reminderTime" to event.reminderTime,
+        "visible" to event.visible,
+        "description" to event.description
+    )
 
-    if (currentUser != null && currentUser.uid == userId) {
-        val db = FirebaseFirestore.getInstance()
-        val eventsCollection = db.collection("users").document(userId)
-
-        if (eventType == "regular" && dayOfWeek != null) {
-            val dayEventsDoc = eventsCollection.collection("regular").document(dayOfWeek)
-
-            dayEventsDoc.update("events", FieldValue.arrayUnion(event))
-                .addOnSuccessListener {
-                    println("Regular event added successfully")
-                }
-                .addOnFailureListener { e ->
-                    println("Error adding regular event: $e")
-                }
-        } else if (eventType == "nonregular") {
-            eventsCollection.collection("nonregular").document("data")
-                .update(event.name, FieldValue.arrayUnion(event))
-                .addOnSuccessListener {
-                    println("Non-regular event added successfully")
-                }
-                .addOnFailureListener { e ->
-                    println("Error adding non-regular event: $e")
-                }
-        } else {
-            println("Invalid event type or day of week")
-        }
+    if (isRegular) {
+        val dayOfWeek = getDayOfWeek(event.date)
+        val regularEventsRef = userDocumentRef.collection("regular")
+        val dayEventsRef = regularEventsRef.document(dayOfWeek)
+        dayEventsRef.update("events", FieldValue.arrayUnion(eventData))
     } else {
-        println("Wrong user ID")
+        val nonRegularEventsRef = userDocumentRef.collection("nonregular")
+        val dateEventsRef = nonRegularEventsRef.document(event.date)
+        dateEventsRef.update("events", FieldValue.arrayUnion(eventData))
+    }
+}
+
+
+fun getDayOfWeek(date: String): String {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") // Adjust the date format according to your string
+    val localDate = LocalDate.parse(date, formatter)
+    val dayOfWeek = localDate.dayOfWeek
+    return when (dayOfWeek) {
+        DayOfWeek.MONDAY -> "monday"
+        DayOfWeek.TUESDAY -> "tuesday"
+        DayOfWeek.WEDNESDAY -> "wednesday"
+        DayOfWeek.THURSDAY -> "thursday"
+        DayOfWeek.FRIDAY -> "friday"
+        DayOfWeek.SATURDAY -> "saturday"
+        DayOfWeek.SUNDAY -> "sunday"
     }
 }

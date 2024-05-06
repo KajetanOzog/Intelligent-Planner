@@ -4,25 +4,17 @@ import com.example.io_project.dataclasses.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 
-fun addTask(userId: String, task: Task) {
-    val auth = FirebaseAuth.getInstance()
-    val currentUser = auth.currentUser
+suspend fun addTaskToFirestore(userID: String, task: Task) {
+    val firestore = FirebaseFirestore.getInstance()
+    val userDocumentRef = firestore.collection("users").document(userID)
 
-    if (currentUser != null && currentUser.uid == userId)
-    {
-        val db = FirebaseFirestore.getInstance()
-        val userTasksCollection = db.collection("users").document(userId).collection("tasks")
+    val taskData = hashMapOf<String, Any>(
+        "name" to task.name,
+        "completed" to task.completed,
+        "daysCount" to task.daysCount,
+        "daysCounter" to task.daysCounter,
+        "maxStreak" to task.maxStreak
+    )
 
-        userTasksCollection.add(task)
-            .addOnSuccessListener { documentReference ->
-                println("Task added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                println("Error adding task: $e")
-            }
-    }
-    else
-    {
-        println("Wrong user ID")
-    }
+    userDocumentRef.collection("tasks").add(taskData)
 }

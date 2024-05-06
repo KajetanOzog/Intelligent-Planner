@@ -5,24 +5,21 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
-fun addGoalToFirestore(userId: String, goal: Goal, status: String) {
-    val auth = FirebaseAuth.getInstance()
-    val currentUser = auth.currentUser
+suspend fun addGoalToFirestore(userID: String, goal: Goal, isCompleted: Boolean) {
+    val firestore = FirebaseFirestore.getInstance()
+    val userDocumentRef = firestore.collection("users").document(userID)
 
-    if (currentUser != null && currentUser.uid == userId) {
-        val db = FirebaseFirestore.getInstance()
-        val goalsCollection = db.collection("users").document(userId).collection("goals")
-
-        goalsCollection.document(status).update("goals", FieldValue.arrayUnion(goal))
-            .addOnSuccessListener {
-                println("Goal added successfully")
-            }
-            .addOnFailureListener { e ->
-                println("Error adding goal: $e")
-            }
+    val goalData = hashMapOf<String, Any>(
+        "name" to goal.name,
+        "deadline" to goal.deadline,
+        "done" to goal.done
+    )
+    val goalsRef = if (isCompleted) {
+        userDocumentRef.collection("goals").document("completed")
     }
     else
     {
-        println("Wrong user ID")
+        userDocumentRef.collection("goals").document("unfinished")
     }
+    goalsRef.update("goals", FieldValue.arrayUnion(goalData))
 }
