@@ -6,14 +6,28 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.compose.IO_ProjectTheme
 import com.example.io_project.ui.components.AuthContent
 import com.example.io_project.ui.components.AuthTopBar
 import com.example.io_project.ui.components.OneTapSignIn
 import com.example.io_project.ui.components.SignInWithGoogle
+import com.example.io_project.ui.navigation.Screen
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider.getCredential
+
+
+
+@Composable
+fun AuthScreen() {
+    val viewModel: AuthViewModel = hiltViewModel()
+    AuthScreen(
+        viewModel,
+        {}
+    )
+}
 
 @Composable
 fun AuthScreen(
@@ -65,4 +79,12 @@ fun AuthScreen(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun AuthScreenPreview() {
+    IO_ProjectTheme {
+        AuthScreen()
+    }
 }

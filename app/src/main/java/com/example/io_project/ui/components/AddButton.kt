@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun AddButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateTo: (String) -> Unit
 ) {
     ExtendedFloatingActionButton(
     text = {

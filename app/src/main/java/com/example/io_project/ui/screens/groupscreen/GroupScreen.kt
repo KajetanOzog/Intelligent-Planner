@@ -49,7 +49,7 @@ fun GroupScreen(
             )
         },
         floatingActionButton = {
-            AddButton()
+            AddButton(navigateTo = navigateTo)
         }
     ) { paddingValues ->
         Column(

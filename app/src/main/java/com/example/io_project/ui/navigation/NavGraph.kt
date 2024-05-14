@@ -8,7 +8,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import com.example.compose.IO_ProjectTheme
+import com.example.intelligentplanner.dialog.AddEventDialog
 import com.example.io_project.ui.screens.archivescreen.ArchiveScreen
 import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.authscreen.AuthScreen
@@ -17,6 +19,7 @@ import com.example.io_project.ui.screens.groupscreen.GroupScreen
 import com.example.io_project.ui.screens.homescreen.HomeScreen
 import com.example.io_project.ui.screens.longtermscreen.LongTermScreen
 import com.example.io_project.ui.screens.socialscreen.SocialScreen
+import com.example.io_project.ui.screens.splashscreeen.SplashScreen
 import com.example.io_project.ui.screens.statsscreen.StatsScreen
 import com.example.io_project.ui.screens.taskscreen.TasksScreen
 
@@ -27,11 +30,11 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.AuthScreen.route,
+        startDestination = Screen.SplashScreen.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        // TO-DO:
+        // TODO:
         // 1) Zrobic nawigacje do pozostalych ekranow
         // 2) Ustawic HomeScreen na startowy gdy uzytkownik jest juz zalogowany
         //    (to moze wymagac trzymania stanu zalogowania w viewmodelu DO SPRAWDZENIA)
@@ -44,33 +47,34 @@ fun NavGraph(
             CalendarScreen(navigateTo = { navController.navigate(it) })
         }
         composable(route = Screen.ArchiveScreen.route) {
-            ArchiveScreen(navigateTo = { navController.navigate(it)})
+            ArchiveScreen(navigateTo = { navController.navigate(it) })
         }
         composable(route = Screen.LongTermScreen.route) {
-            LongTermScreen(navigateTo = { navController.navigate(it)})
+            LongTermScreen(navigateTo = { navController.navigate(it) })
         }
         composable(route = Screen.GroupScreen.route) {
-            GroupScreen(navigateTo = { navController.navigate(it)})
+            GroupScreen(navigateTo = { navController.navigate(it) })
         }
         composable(route = Screen.TasksScreen.route) {
-            TasksScreen(navigateTo = { navController.navigate(it)})
+            TasksScreen(navigateTo = { navController.navigate(it) })
         }
         composable(route = Screen.SocialScreen.route) {
-            SocialScreen(navigateTo = { navController.navigate(it)})
+            SocialScreen(navigateTo = { navController.navigate(it) })
         }
         composable(route = Screen.StatsScreen.route) {
-            StatsScreen(navigateTo = { navController.navigate(it)})
+            StatsScreen(navigateTo = { navController.navigate(it) })
         }
-        composable(
-            route = Screen.AuthScreen.route
-        ) {
+        composable(route = Screen.SplashScreen.route) {
+            SplashScreen(navigateTo = { navController.navigate(it) })
+        }
+        composable(route = Screen.AuthScreen.route) {
             AuthScreen(navigateTo = { navController.navigate(it) })
         }
-        composable(
-            route = Screen.ProfileScreen.route
-        ) {
-            ProfileScreen(navigateTo = { navController.navigate(it) }
-            )
+        composable(route = Screen.ProfileScreen.route) {
+            ProfileScreen(navigateTo = { navController.navigate(it) })
+        }
+        dialog(route = Screen.AddEventDialog.route) {
+            AddEventDialog(navigateBack = { navController.popBackStack() })
         }
     }
 }

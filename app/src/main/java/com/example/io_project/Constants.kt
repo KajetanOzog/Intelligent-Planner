@@ -35,6 +35,10 @@ object Constants {
     const val STATS_SCREEN = "stats_screen"
     const val SIGN_IN_SCREEN = "sign_in_screen"
     // TO-DO: Pozamieniac stringi w kodzie no consty
+
+    //Values
+    const val SPLASH_DELAY: Long = 500
+
     //Messages
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."
 }

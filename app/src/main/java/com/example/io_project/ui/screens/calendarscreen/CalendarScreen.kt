@@ -54,7 +54,7 @@ fun CalendarScreen(
             )
         },
         floatingActionButton = {
-            AddButton()
+            AddButton(navigateTo = navigateTo)
         }
     ) { paddingValues ->
         Column(

@@ -57,7 +57,7 @@ fun HomeScreen(
         },
 
         floatingActionButton = {
-            AddButton()
+            AddButton(navigateTo = navigateTo)
         },
         modifier = modifier
             .fillMaxSize()

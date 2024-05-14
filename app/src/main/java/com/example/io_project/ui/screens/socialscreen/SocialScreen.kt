@@ -59,7 +59,7 @@ fun SocialScreen(
             )
         },
         floatingActionButton = {
-            AddButton()
+            AddButton(navigateTo = navigateTo)
         }
     ) { paddingValues ->
         Column(
