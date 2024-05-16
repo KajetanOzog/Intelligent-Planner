@@ -1,17 +1,19 @@
 package com.example.io_project.ui.components
 
+import android.app.TimePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerLayoutType
+import androidx.compose.material3.TimePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,26 +23,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerCustom(
+fun TimePickerCustom(
     modifier: Modifier = Modifier,
     label: String
 ) {
-    val datePickerState: DatePickerState = rememberDatePickerState()
+    val timePickerState: TimePickerState = rememberTimePickerState()
     val calendar: Calendar = Calendar.getInstance()
     var dialogVisible: Boolean by remember { mutableStateOf(false) }
-    val dateState = datePickerState.selectedDateMillis?.let {
-        formatDate(it)
-    } ?: ""
-    var selectedDate by remember {
-        mutableStateOf(formatDate(calendar.timeInMillis))
+    val formatter = remember {
+        SimpleDateFormat("hh:mm", Locale.getDefault())
     }
+    val cal = Calendar.getInstance()
+    var selectedTime by remember {
+        mutableStateOf(formatter.format(cal.time))
+    }
+
     OutlinedTextField(
-        value = selectedDate,
+        value = selectedTime,
         onValueChange = {},
         enabled = false,
         colors = TextFieldDefaults.colors(
@@ -55,6 +61,11 @@ fun DatePickerCustom(
     )
 
     if (dialogVisible) {
+        /*
+            TODO: Zamiana DatePickerDialog z customowym dialogiem (Google jest na tyle miłe, że
+             dodali go do dokumentacji, ale do samego Material3 już zapomnieli), bo na ten moment
+             glitchuje sie okienko dialogu.
+         */
         DatePickerDialog(
             onDismissRequest = {
                 dialogVisible = false
@@ -62,7 +73,10 @@ fun DatePickerCustom(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        selectedDate = dateState
+                        cal.set(Calendar.HOUR_OF_DAY, timePickerState.hour)
+                        cal.set(Calendar.MINUTE, timePickerState.minute)
+                        cal.isLenient = false
+                        selectedTime = formatter.format(cal.time)
                         dialogVisible = false
                     }
                 ) {
@@ -79,12 +93,13 @@ fun DatePickerCustom(
                 }
             }
         ) {
-            DatePicker(state = datePickerState)
+            TimePicker(
+                state = timePickerState,
+                layoutType = TimePickerLayoutType.Vertical
+            )
         }
+
+
     }
-}
 
-fun formatDate(millis: Long): String {
-    return SimpleDateFormat("EEE, MMM d yyyy", Locale.ENGLISH).format(millis)
 }
-

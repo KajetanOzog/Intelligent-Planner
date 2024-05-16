@@ -4,13 +4,11 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
-import com.example.compose.IO_ProjectTheme
-import com.example.intelligentplanner.dialog.AddEventDialog
+import com.example.io_project.ui.screens.dialogs.AddEventDialog
 import com.example.io_project.ui.screens.archivescreen.ArchiveScreen
 import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.authscreen.AuthScreen

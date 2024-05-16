@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.io_project.Constants.ADD_EVENT_DIALOG
 
 @Composable
 fun AddButton(
@@ -28,5 +29,6 @@ fun AddButton(
         )
     },
         containerColor = MaterialTheme.colorScheme.primary,
-    onClick = { /*TODO*/ })
+        onClick = { navigateTo(ADD_EVENT_DIALOG)}
+    )
 }

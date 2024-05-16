@@ -1,4 +1,4 @@
-package com.example.intelligentplanner.dialog
+package com.example.io_project.ui.screens.dialogs
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -13,27 +13,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.ui.components.CheckboxRow
 import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.OutlinedTextFieldCustom
-import java.util.Date
-
-
+import com.example.io_project.ui.components.TimePickerCustom
 
 
 @Composable
@@ -66,17 +62,18 @@ fun AddEventDialog(
                 .padding(8.dp)
                 .fillMaxWidth()
                 .verticalScroll(ScrollState(0))
-                .background(MaterialTheme.colorScheme.onPrimaryContainer)
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.White)
                 .padding(16.dp)
         ) {
 
             Text(
                 text = "Dodaj wydarzenie",
-                style = MaterialTheme.typography.headlineMedium,
-                color = colorResource(id = R.color.white)
+                style = MaterialTheme.typography.headlineSmall
             )
 
-            Spacer(modifier = modifier.padding(8.dp))
+            Spacer(modifier = modifier.padding(4.dp))
+            // Pomysl: przekazac tym funkcjom onChange do updateowania zmiennych stanu?
             OutlinedTextFieldCustom(label = "Nazwa")
 
             DropDownPicker(argList = categories, label = "Kategoria")
@@ -86,10 +83,12 @@ fun AddEventDialog(
             OutlinedTextFieldCustom(label = "Lokalizacja")
 
             Row() {
-                DatePickerCustom(label = "Data",modifier = modifier.weight(1f))
+                DatePickerCustom(label = "Data",modifier = modifier.weight(2f))
                 Spacer(modifier = modifier.width(8.dp))
-                /*TODO TimePickerCustom*/DatePickerCustom(label = "Godzina",modifier = modifier.weight(1f))
+                /*TODO TimePickerCustom*/TimePickerCustom(label = "Godzina",modifier = modifier.weight(1f))
             }
+
+            DatePickerCustom(label = "Data zakończenia")
 
             CheckboxRow(label = "Tygodniowe")
             CheckboxRow(label = "Przypomnij")
@@ -109,13 +108,21 @@ fun AddEventDialog(
                     onClick = {},
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Dodaj")
+                    Text(
+                        text = "Dodaj",
+                        style = MaterialTheme.typography.labelSmall
+                    )
                 }
                 Button(
-                    onClick = {},
+                    onClick = {
+                              navigateBack()
+                    },
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Anuluj")
+                    Text(
+                        text = "Anuluj",
+                        style = MaterialTheme.typography.labelSmall
+                    )
                 }
             }
         }
@@ -128,5 +135,7 @@ fun AddEventDialog(
 @Preview(showBackground = true)
 @Composable
 fun AddEventDialogPreview() {
-    AddEventDialog( navigateBack = {})
+    IO_ProjectTheme {
+        AddEventDialog( navigateBack = {})
+    }
 }
