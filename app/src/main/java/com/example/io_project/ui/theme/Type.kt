@@ -27,8 +27,8 @@ val AppTypography = Typography(
     ),
     labelLarge = TextStyle(
         fontFamily = Rubik,
-        fontWeight = FontWeight.Bold,
-        fontSize = 32.sp
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = Rubik,
