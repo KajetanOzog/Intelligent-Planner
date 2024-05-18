@@ -95,19 +95,16 @@ fun WeatherWidget(modifier: Modifier = Modifier)
     var wc by remember { mutableStateOf(WeatherData.code) }
     val activity = LocalContext.current as Activity
 
-    LaunchedEffect(AskingForPermissions.started)
-    {
-        while(!AskingForPermissions.finished || !WeatherData.acquired && checkLocationPermission(activity))
-        {
-            delay(500)
-        }
-        temp = WeatherData.temperature
-        wc = WeatherData.code
-    }
     if(!AskingForPermissions.started){
         LaunchedEffect(Unit)
         {
             Permissions(activity)
+            while(!AskingForPermissions.finished || !WeatherData.acquired && checkLocationPermission(activity))
+            {
+                delay(500)
+            }
+            temp = WeatherData.temperature
+            wc = WeatherData.code
         }
     }
 

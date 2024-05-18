@@ -40,7 +40,8 @@ class MainActivity : ComponentActivity(),
                     NavGraph(
                         navController = navController
                     )
-                    checkAuthState()
+                    //checkAuthState()
+                    navController.navigate("home_screen")
                 }
             }
         }

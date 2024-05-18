@@ -40,7 +40,6 @@ fun HomeScreen(
     navigateTo: (route: String) -> Unit
 ) {
     Scaffold(
-
         topBar = {
             TopBar(
                 text = stringResource(id = R.string.app_name),
