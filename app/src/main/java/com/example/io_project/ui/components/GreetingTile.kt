@@ -1,5 +1,6 @@
 package com.example.io_project.ui.components
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,17 +19,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.io_project.R
+import kotlinx.coroutines.delay
 
 @Composable
 fun GreetingTile(modifier: Modifier = Modifier) {
@@ -66,21 +71,7 @@ fun GreetingTile(modifier: Modifier = Modifier) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // TO-DO:
-                // 1) Aktualna pogoda sciagnieta z lokalizacji uzytkownika
-                // 2) Jesli sie da to odpowiednia ikonka do pogody
-                Image(
-                    painter = painterResource(
-                        id = R.drawable.partly_cloudy_dark_color_96dp
-                    ),
-                    contentDescription = "Ikona pogody",
-                    modifier = modifier.size(64.dp)
-                )
-                Spacer(modifier = modifier.width(16.dp))
-                Text(
-                    text = stringResource(id = R.string.temperature),
-                    style = MaterialTheme.typography.labelLarge
-                )
+                WeatherWidget(modifier)
             }
 
             Icon(
@@ -94,5 +85,46 @@ fun GreetingTile(modifier: Modifier = Modifier) {
 
         // Tutaj Composable tworzace podsumowanie lub odwolanie to funkcji z osobnego pliku
 
+    }
+}
+
+@Composable
+fun WeatherWidget(modifier: Modifier = Modifier)
+{
+    var temp by remember { mutableStateOf(WeatherData.temperature) }
+    var wc by remember { mutableStateOf(WeatherData.code) }
+    val activity = LocalContext.current as Activity
+
+    LaunchedEffect(AskingForPermissions.started)
+    {
+        while(!AskingForPermissions.finished || !WeatherData.acquired && checkLocationPermission(activity))
+        {
+            delay(500)
+        }
+        temp = WeatherData.temperature
+        wc = WeatherData.code
+    }
+    if(!AskingForPermissions.started){
+        LaunchedEffect(Unit)
+        {
+            Permissions(activity)
+        }
+    }
+
+    wc?.let {
+        Image(
+            painter = painterResource(
+                id = getIcon(it)
+            ),
+            contentDescription = "Ikona pogody",
+            modifier = modifier.size(64.dp)
+        )
+    }
+    temp?.let {
+        Spacer(modifier = modifier.width(16.dp))
+        Text(
+            text = "$it°C",
+            style = MaterialTheme.typography.labelLarge
+        )
     }
 }

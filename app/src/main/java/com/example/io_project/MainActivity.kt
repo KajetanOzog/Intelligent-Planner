@@ -10,15 +10,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.components.getCurrentLocation
 import com.example.io_project.ui.navigation.NavGraph
 import com.example.io_project.ui.screens.authscreen.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(),
+    ActivityCompat.OnRequestPermissionsResultCallback
+{
 
     private lateinit var navController: NavHostController
     private val viewModel by viewModels<AuthViewModel>()
@@ -36,11 +40,20 @@ class MainActivity : ComponentActivity() {
                     NavGraph(
                         navController = navController
                     )
-                    checkAuthState()
-
+                    //checkAuthState()
+                    navController.navigate("home_screen")
                 }
             }
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        getCurrentLocation(this)
     }
 
     private fun checkAuthState() {
