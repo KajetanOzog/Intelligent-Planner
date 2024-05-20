@@ -40,7 +40,7 @@ suspend fun addEventToFirestore(userID: String, event: Event, isRegular: Boolean
 
 
 fun getDayOfWeek(date: String): String {
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") // Adjust the date format according to your string
+    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     val localDate = LocalDate.parse(date, formatter)
     val dayOfWeek = localDate.dayOfWeek
     return when (dayOfWeek) {
