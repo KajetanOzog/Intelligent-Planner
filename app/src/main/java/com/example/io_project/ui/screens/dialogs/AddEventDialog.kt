@@ -1,5 +1,7 @@
 package com.example.io_project.ui.screens.dialogs
 
+import addEventToFirestore
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +17,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +28,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.ui.components.CheckboxRow
@@ -30,26 +36,21 @@ import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.OutlinedTextFieldCustom
 import com.example.io_project.ui.components.TimePickerCustom
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun AddEventDialog(
     modifier: Modifier = Modifier,
+    addEventViewModel: AddEventViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {
-//    var eventName: String by remember { mutableStateOf("") }
-//    var eventCategory: String by remember { mutableStateOf("") }
-//    var eventColor: String by remember { mutableStateOf("") }
-//    var eventDate: String by remember { mutableStateOf("") }
-//    var eventPlace: String by remember { mutableStateOf("") }
-//    var eventTime: String by remember { mutableStateOf("") }
-//    var eventEndDate: String by remember { mutableStateOf("") }
-//    var weeklyEvent: Boolean by remember { mutableStateOf(false) }
-//    var alarmAboutEvent: Boolean by remember { mutableStateOf(false) }
-//    var remindAboutEvent: Boolean by remember { mutableStateOf(false) }
-//    var visibleEvent: Boolean by remember { mutableStateOf(false) }
-//    var eventDescription: String by remember { mutableStateOf("") }
+    val addEventState by addEventViewModel.eventState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
     val categories = listOf("Szkola", "Praca", "Aktywnosc fizyczna", "Znajomi", "Inne")
+
     Dialog(
         onDismissRequest = {
             navigateBack()
@@ -73,29 +74,70 @@ fun AddEventDialog(
             )
 
             Spacer(modifier = modifier.padding(4.dp))
-            // Pomysl: przekazac tym funkcjom onChange do updateowania zmiennych stanu?
-            OutlinedTextFieldCustom(label = "Nazwa")
 
-            DropDownPicker(argList = categories, label = "Kategoria")
 
-            DropDownPicker(argList = categories, label = "Kolor")
+            OutlinedTextFieldCustom(
+                onValueChange = addEventViewModel._changeName,
+                label = "Nazwa"
+            )
 
-            OutlinedTextFieldCustom(label = "Lokalizacja")
+            DropDownPicker(
+                onValueChange = addEventViewModel._changeCategory,
+                argList = categories,
+                label = "Kategoria"
+            )
+
+            DropDownPicker(
+                onValueChange = addEventViewModel._changeColor,
+                argList = categories,
+                label = "Kolor"
+            )
+
+            OutlinedTextFieldCustom(
+                onValueChange = addEventViewModel._changePlace,
+                label = "Lokalizacja"
+            )
 
             Row() {
-                DatePickerCustom(label = "Data",modifier = modifier.weight(2f))
+                DatePickerCustom(
+                    onValueChange = addEventViewModel._changeDate,
+                    label = "Data",
+                    modifier = modifier.weight(2f)
+                )
                 Spacer(modifier = modifier.width(8.dp))
-                /*TODO TimePickerCustom*/TimePickerCustom(label = "Godzina",modifier = modifier.weight(1f))
+                TimePickerCustom(
+                    onValueChange = addEventViewModel._changeTime,
+                    label = "Godzina",
+                    modifier = modifier.weight(1f)
+                )
             }
 
-            DatePickerCustom(label = "Data zakończenia")
+            DatePickerCustom(
+                onValueChange = addEventViewModel._changeEndDate,
+                label = "Data zakończenia"
+            )
 
-            CheckboxRow(label = "Tygodniowe")
-            CheckboxRow(label = "Przypomnij")
-            CheckboxRow(label = "Alarm")
-            CheckboxRow(label = "Widoczne dla znajomych")
+            CheckboxRow(
+                onValueChange = addEventViewModel._changeWeekly,
+                label = "Tygodniowe"
+            )
+            CheckboxRow(
+                onValueChange = addEventViewModel._changeReminder,
+                label = "Przypomnij"
+            )
+            CheckboxRow(
+                onValueChange = addEventViewModel._changeAlarm,
+                label = "Alarm"
+            )
+            CheckboxRow(
+                onValueChange = addEventViewModel._changeVisible,
+                label = "Widoczne dla znajomych"
+            )
 
-            OutlinedTextFieldCustom(label = "Opis")
+            OutlinedTextFieldCustom(
+                onValueChange = addEventViewModel._changeDescription,
+                label = "Opis"
+            )
 
             Spacer(modifier = modifier.padding(8.dp))
 
@@ -105,7 +147,14 @@ fun AddEventDialog(
                     .fillMaxWidth()
             ) {
                 Button(
-                    onClick = {},
+                    onClick = {
+                        coroutineScope.launch{
+                            addEventViewModel.addEvent()
+                            Log.d("EVENT: ", addEventViewModel._eventState.toString())
+                            navigateBack()
+                        }
+
+                    },
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
@@ -115,7 +164,7 @@ fun AddEventDialog(
                 }
                 Button(
                     onClick = {
-                              navigateBack()
+                        navigateBack()
                     },
                     shape = RoundedCornerShape(8.dp)
                 ) {
@@ -130,12 +179,10 @@ fun AddEventDialog(
 }
 
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun AddEventDialogPreview() {
     IO_ProjectTheme {
-        AddEventDialog( navigateBack = {})
+        AddEventDialog(navigateBack = {})
     }
 }

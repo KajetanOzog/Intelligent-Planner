@@ -35,7 +35,7 @@ object Constants {
     const val ARCHIVE_SCREEN = "archive_screen"
     const val STATS_SCREEN = "stats_screen"
     const val SIGN_IN_SCREEN = "sign_in_screen"
-    // TO-DO: Pozamieniac stringi w kodzie no consty
+    // TODO: Pozamieniac stringi w kodzie na consty
 
     //Values
     const val SPLASH_DELAY: Long = 500

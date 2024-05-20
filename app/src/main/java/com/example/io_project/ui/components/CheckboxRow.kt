@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun CheckboxRow(
     modifier: Modifier = Modifier,
+    onValueChange: (Boolean) -> Unit,
     label: String
 ) {
     var checked: Boolean by remember { mutableStateOf(false) }
@@ -32,6 +33,7 @@ fun CheckboxRow(
         Checkbox(
             checked = checked,
             onCheckedChange = {
+                onValueChange(it)
                 checked = !checked
             }
         )

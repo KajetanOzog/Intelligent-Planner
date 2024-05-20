@@ -28,6 +28,7 @@ import java.util.Locale
 @Composable
 fun DatePickerCustom(
     modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
     label: String
 ) {
     val datePickerState: DatePickerState = rememberDatePickerState()
@@ -37,7 +38,7 @@ fun DatePickerCustom(
         formatDate(it)
     } ?: ""
     var selectedDate by remember {
-        mutableStateOf(formatDate(calendar.timeInMillis))
+        mutableStateOf("")
     }
     OutlinedTextField(
         value = selectedDate,
@@ -63,6 +64,7 @@ fun DatePickerCustom(
                 TextButton(
                     onClick = {
                         selectedDate = dateState
+                        onValueChange(dateState)
                         dialogVisible = false
                     }
                 ) {

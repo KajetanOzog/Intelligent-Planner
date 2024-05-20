@@ -23,11 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
+import java.io.StringBufferInputStream
 
 
 @Composable
 fun DropDownPicker(
     modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
     argList: List<String>,
     label: String,
 ) {
@@ -40,7 +42,10 @@ fun DropDownPicker(
     OutlinedTextField(
         value = selectedValue,
         label = { Text(text = label) },
-        onValueChange = { selectedValue = it },
+        onValueChange = {
+            selectedValue = it
+            onValueChange(it)
+        },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
@@ -63,7 +68,7 @@ fun DropDownPicker(
         expanded = expanded,
         onDismissRequest = { expanded = false },
         modifier = Modifier
-            .width(with(LocalDensity.current){textFieldSize.width.toDp()})
+            .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
     ) {
         argList.forEach { itemName ->
             DropdownMenuItem(

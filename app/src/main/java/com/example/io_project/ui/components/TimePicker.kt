@@ -32,17 +32,17 @@ import java.util.Locale
 @Composable
 fun TimePickerCustom(
     modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
     label: String
 ) {
     val timePickerState: TimePickerState = rememberTimePickerState()
-    val calendar: Calendar = Calendar.getInstance()
     var dialogVisible: Boolean by remember { mutableStateOf(false) }
     val formatter = remember {
         SimpleDateFormat("hh:mm", Locale.getDefault())
     }
     val cal = Calendar.getInstance()
     var selectedTime by remember {
-        mutableStateOf(formatter.format(cal.time))
+        mutableStateOf("")
     }
 
     OutlinedTextField(
@@ -77,6 +77,7 @@ fun TimePickerCustom(
                         cal.set(Calendar.MINUTE, timePickerState.minute)
                         cal.isLenient = false
                         selectedTime = formatter.format(cal.time)
+                        onValueChange(selectedTime)
                         dialogVisible = false
                     }
                 ) {
