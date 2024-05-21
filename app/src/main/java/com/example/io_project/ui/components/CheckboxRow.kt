@@ -1,5 +1,6 @@
 package com.example.io_project.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,14 +29,16 @@ fun CheckboxRow(
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                checked = !checked
+                onValueChange(checked)
+            }
     ) {
         Checkbox(
             checked = checked,
-            onCheckedChange = {
-                onValueChange(it)
-                checked = !checked
-            }
+            onCheckedChange = null
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(

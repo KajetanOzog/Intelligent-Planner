@@ -27,7 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import com.example.io_project.Constants.ADD_EVENT_DIALOG
+import com.example.io_project.Constants.ADD_ACTIVITY_DIALOG
 import com.example.io_project.R
 
 @Composable
@@ -45,7 +45,7 @@ fun AddButton(
                 name = "New Activity",
                 icon = Icons.Rounded.Create,
                 onClick = navigateTo,
-                dialogDestination = ADD_EVENT_DIALOG
+                dialogDestination = ADD_ACTIVITY_DIALOG
             )
             AddButtonExtendable(
                 name = "Assistant",

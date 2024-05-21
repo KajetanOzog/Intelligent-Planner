@@ -7,7 +7,6 @@ import com.example.io_project.dataclasses.Event
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,8 +19,6 @@ class AddEventViewModel @Inject constructor(
 ) : ViewModel() {
     val eventState = MutableStateFlow(Event())
     val _eventState: StateFlow<Event> = eventState.asStateFlow()
-
-    val _changeName: (String) -> Unit = { it -> changeName(it) }
 
     fun getEvent(): Event {
         return eventState.value
@@ -36,9 +33,11 @@ class AddEventViewModel @Inject constructor(
                     isRegular = true
                 )
             }
+
         }
     }
 
+    val _changeName: (String) -> Unit = { it -> changeName(it) }
     fun changeName(newName: String) {
         eventState.update { currentState -> currentState.copy(name = newName) }
     }
@@ -104,17 +103,3 @@ class AddEventViewModel @Inject constructor(
     }
 
 }
-
-
-//"name" to event.name,
-//"category" to event.category,
-//"color" to event.color,
-//"place" to event.place,
-//"time" to event.time,
-//"endDate" to event.endDate,
-//"weekly" to event.weekly,
-//"reminder" to event.reminder,
-//"alarm" to event.alarm,
-//"reminderTime" to event.reminderTime,
-//"visible" to event.visible,
-//"description" to event.description

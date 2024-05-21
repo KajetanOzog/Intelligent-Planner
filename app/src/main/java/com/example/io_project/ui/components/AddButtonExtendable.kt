@@ -35,8 +35,8 @@ fun AddButtonExtendable(
             .shadow(dimensionResource(id = R.dimen.padding_button))
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.padding_small)))
             .background(Color.White)
-            .padding(dimensionResource(id = R.dimen.padding_small))
             .clickable { onClick(dialogDestination) }
+            .padding(dimensionResource(id = R.dimen.padding_small))
     ) {
         Icon(icon, contentDescription = "null")
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))

@@ -1,6 +1,7 @@
 package com.example.io_project.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -8,9 +9,11 @@ import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,9 +26,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
+import org.w3c.dom.Text
 import java.io.StringBufferInputStream
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropDownPicker(
     modifier: Modifier = Modifier,
@@ -39,45 +44,53 @@ fun DropDownPicker(
     val expansionIcon =
         if (expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown
 
-    OutlinedTextField(
-        value = selectedValue,
-        label = { Text(text = label) },
-        onValueChange = {
-            selectedValue = it
-            onValueChange(it)
-        },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
-        ),
-        enabled = false,
-        trailingIcon = {
-            Icon(
-                expansionIcon,
-                contentDescription = null,
-                modifier = Modifier.clickable { expanded = !expanded }
-            )
-        },
-        modifier = Modifier
-            .onGloballyPositioned { coordinates ->
-                textFieldSize = coordinates.size.toSize()
-            }
-    )
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = { expanded = false },
-        modifier = Modifier
-            .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-    ) {
-        argList.forEach { itemName ->
-            DropdownMenuItem(
-                text = { Text(text = itemName) },
-                onClick = {
-                    selectedValue = itemName
-                    expanded = false
+    Box {
+        OutlinedTextField(
+            value = selectedValue,
+            label = { Text(text = label) },
+            onValueChange = {
+                selectedValue = it
+                onValueChange(it)
+            },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                disabledContainerColor = Color.White,
+                disabledTextColor = Color.DarkGray,
+                disabledLabelColor = Color.DarkGray,
+                disabledPlaceholderColor = Color.DarkGray,
+                disabledIndicatorColor = Color.DarkGray,
+                disabledTrailingIconColor = Color.DarkGray
+            ),
+            enabled = false,
+            trailingIcon = {
+                Icon(
+                    expansionIcon,
+                    contentDescription = null
+                )
+            },
+            modifier = Modifier
+                .clickable { expanded = !expanded }
+                .onGloballyPositioned { coordinates ->
+                    textFieldSize = coordinates.size.toSize()
                 }
             )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
+        ) {
+            argList.forEach { itemName ->
+                DropdownMenuItem(
+                    text = { Text(text = itemName) },
+                    onClick = {
+                        selectedValue = itemName
+                        onValueChange(itemName)
+                        expanded = false
+                    }
+                )
+            }
         }
     }
 

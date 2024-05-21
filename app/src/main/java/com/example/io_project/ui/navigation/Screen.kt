@@ -14,6 +14,6 @@ sealed class Screen(val route: String) {
     object SplashScreen: Screen("splash_screen")
     object StatsScreen: Screen("stats_screen")
     object TasksScreen: Screen("tasks_screen")
-    object AddEventDialog: Screen("add_event_dialog")
+    object AddActivityDialog: Screen("add_activity_dialog")
 
 }
