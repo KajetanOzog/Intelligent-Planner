@@ -2,6 +2,7 @@ package com.example.io_project.ui.screens.dialogs
 
 import addEventToFirestore
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.io_project.dataclasses.Event
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -26,13 +27,15 @@ class AddEventViewModel @Inject constructor(
         return eventState.value
     }
 
-    suspend fun addEvent() {
-        Firebase.auth.currentUser?.let {
-            addEventToFirestore(
-                userID = it.uid,
-                event = getEvent(),
-                isRegular = false
-            )
+    fun addEvent() {
+        viewModelScope.launch {
+            Firebase.auth.currentUser?.let {
+                addEventToFirestore(
+                    userID = it.uid,
+                    event = getEvent(),
+                    isRegular = false
+                )
+            }
         }
     }
 
