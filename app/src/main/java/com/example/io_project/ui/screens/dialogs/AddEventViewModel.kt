@@ -33,7 +33,7 @@ class AddEventViewModel @Inject constructor(
                 addEventToFirestore(
                     userID = it.uid,
                     event = getEvent(),
-                    isRegular = false
+                    isRegular = true
                 )
             }
         }
