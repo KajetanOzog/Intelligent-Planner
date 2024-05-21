@@ -34,7 +34,7 @@ suspend fun addEventToFirestore(userID: String, event: Event, isRegular: Boolean
             dayEventsRef.update("events", FieldValue.arrayUnion(eventData)).await()
         } else {
             val nonRegularEventsRef = userDocumentRef.collection("nonregular")
-            val dateEventsRef = nonRegularEventsRef.document(event.date)
+            val dateEventsRef = nonRegularEventsRef.document("data")
             dateEventsRef.update("events", FieldValue.arrayUnion(eventData)).await()
         }
     } catch (e: Exception) {

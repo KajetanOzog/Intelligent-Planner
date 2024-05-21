@@ -34,7 +34,7 @@ fun BottomBar(
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier
             .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.padding_medium))
+            .padding(dimensionResource(id = R.dimen.padding_small))
     ) {
 
 
@@ -42,6 +42,7 @@ fun BottomBar(
             navigateTo = navigateTo,
             targetScreenName = "home_screen",
             isCurrent = (currentScreenName == "home_screen"),
+            label = "Home",
             icon = Icons.Rounded.Home
         )
 
@@ -49,6 +50,7 @@ fun BottomBar(
             navigateTo = navigateTo,
             targetScreenName = "calendar_screen",
             isCurrent = (currentScreenName == "calendar_screen"),
+            label = "Calendar",
             icon = Icons.Rounded.DateRange
         )
 
@@ -56,6 +58,7 @@ fun BottomBar(
             navigateTo = navigateTo,
             targetScreenName = "profile_screen",
             isCurrent = (currentScreenName == "profile_screen"),
+            label = "Profile",
             icon = Icons.Rounded.Person
         )
 

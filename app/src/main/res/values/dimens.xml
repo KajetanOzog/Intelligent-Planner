@@ -4,4 +4,5 @@
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_outer">16dp</dimen>
     <dimen name="padding_inner">4dp</dimen>
+    <dimen name="padding_button">4dp</dimen>
 </resources>
