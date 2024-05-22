@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Named
@@ -95,6 +96,14 @@ class AuthRepositoryImpl @Inject constructor(
                 "groups" to listOf<String>()
             )
             db.collection(USERS).document(user.uid).set(emptyUserData).await()
+
+            val userEmail = user.email ?: throw Exception("User email is null")
+            val userDocument = mapOf(
+                 userEmail to user.uid
+            )
+
+            db.collection("metadata").document("user_email")
+                .set(userDocument, SetOptions.merge()).await()
         } catch (e: Exception) {
            Failure(e)
         }
