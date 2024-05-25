@@ -19,15 +19,12 @@ suspend fun addFriends(userId: String, email: String) {
     if (document.exists())
     {
         val secondUserId = document.getString(email)
-        if (secondUserId != null) {
+        if (secondUserId != null)
+        {
             val userRef = firestore.collection("users").document(userId)
             val secondUserRef = firestore.collection("users").document(secondUserId)
-
-            firestore.runBatch { batch ->
-                batch.update(userRef, "friends", FieldValue.arrayUnion(secondUserId))
-                batch.update(secondUserRef, "friends", FieldValue.arrayUnion(userId))
-            }.await()
-
+            userRef.update("friends", FieldValue.arrayUnion(secondUserId))
+            secondUserRef.update("friends", FieldValue.arrayUnion(userId))
             println("Users added to each other's friends list successfully.")
         } else {
             println("No user found with the provided email.")
