@@ -83,14 +83,14 @@ fun AddActivityDialog(
                 )
                 DialogPicker(
                     label = "Zadanie",
-                    isCurrent = (currentDialog == "Goal"),
-                    onClick = { currentDialog = "Goal" },
+                    isCurrent = (currentDialog == "Task"),
+                    onClick = { currentDialog = "Task" },
                     modifier = modifier.weight(1f)
                 )
                 DialogPicker(
                     label = "Cel długo...",
-                    isCurrent = (currentDialog == "Task"),
-                    onClick = { currentDialog = "Task" },
+                    isCurrent = (currentDialog == "Goal"),
+                    onClick = { currentDialog = "Goal" },
                     modifier = modifier.weight(1f)
                 )
             }

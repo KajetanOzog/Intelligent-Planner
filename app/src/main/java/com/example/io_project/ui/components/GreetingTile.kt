@@ -34,9 +34,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.io_project.R
 import kotlinx.coroutines.delay
+import java.util.Calendar
 
 @Composable
 fun GreetingTile(modifier: Modifier = Modifier) {
+
+    val calendar: Calendar = Calendar.getInstance()
+    val currentDate by remember {
+        mutableStateOf(formatDate(calendar.timeInMillis))
+    }
+
     Column(
         modifier = modifier
             .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
@@ -57,10 +64,8 @@ fun GreetingTile(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.displayLarge,
         )
 
-        // TO-DO:
-        // 1) Sciaganie biezacej daty
         Text(
-            text = "27 maj 2024",
+            text = currentDate,
             style = MaterialTheme.typography.labelSmall
         )
         Row(
