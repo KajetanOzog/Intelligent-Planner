@@ -21,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
-    private val viewModel by viewModels<AuthViewModel>()
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,18 +35,11 @@ class MainActivity : ComponentActivity() {
                     NavGraph(
                         navController = navController
                     )
-                    checkAuthState()
-
                 }
             }
         }
     }
 
-    private fun checkAuthState() {
-        if (viewModel.isUserAuthenticated) {
-            navController.navigate("auth_screen")
-        }
-    }
 }
 
 

@@ -40,4 +40,5 @@ class AddTaskViewModel @Inject constructor(
     fun changeName(newName: String) {
         taskState.update { currentState -> currentState.copy(name = newName) }
     }
+
 }

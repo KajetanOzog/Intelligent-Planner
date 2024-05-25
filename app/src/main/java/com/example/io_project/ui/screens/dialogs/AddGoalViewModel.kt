@@ -40,4 +40,9 @@ class AddGoalViewModel @Inject constructor(
     fun changeName(newName: String) {
         goalState.update { currentState -> currentState.copy(name = newName) }
     }
+
+    val _changeDeadline: (String) -> Unit = { it -> changeDeadline(it) }
+    fun changeDeadline(newDeadline: String) {
+        goalState.update { currentState -> currentState.copy(deadline = newDeadline) }
+    }
 }

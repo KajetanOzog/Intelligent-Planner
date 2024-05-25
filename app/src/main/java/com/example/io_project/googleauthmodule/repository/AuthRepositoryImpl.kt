@@ -105,7 +105,7 @@ class AuthRepositoryImpl @Inject constructor(
             db.collection("metadata").document("user_email")
                 .set(userDocument, SetOptions.merge()).await()
         } catch (e: Exception) {
-           Failure(e)
+            Failure(e)
         }
     }
 }

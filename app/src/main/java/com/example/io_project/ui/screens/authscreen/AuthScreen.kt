@@ -24,9 +24,8 @@ import com.google.firebase.auth.GoogleAuthProvider.getCredential
 fun AuthScreen() {
     val viewModel: AuthViewModel = hiltViewModel()
     AuthScreen(
-        viewModel,
-        {}
-    )
+        viewModel
+    ) {}
 }
 
 @Composable
