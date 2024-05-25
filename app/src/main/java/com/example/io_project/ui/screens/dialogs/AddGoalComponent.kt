@@ -2,6 +2,7 @@ package com.example.io_project.ui.screens.dialogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.OutlinedTextFieldCustom
 
 @Composable
@@ -12,6 +13,10 @@ fun AddGoalComponent(
         OutlinedTextFieldCustom(
             onValueChange = addGoalViewModel._changeName,
             label = "Nazwa"
+        )
+        DatePickerCustom(
+            onValueChange = addGoalViewModel._changeDeadline,
+            label = "Data zakończenia"
         )
     }
 }

@@ -96,7 +96,7 @@ class AuthRepositoryImpl @Inject constructor(
             )
             db.collection(USERS).document(user.uid).set(emptyUserData).await()
         } catch (e: Exception) {
-           Failure(e)
+            Failure(e)
         }
     }
 }
