@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.goalsscreen
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
@@ -61,6 +62,7 @@ fun GoalsScreen(
                 mutableStateOf(goalsViewModel.goals.isEmpty())
             }
 
+            Log.d("GoalsScreen", "Pobrane cele ${goalsViewModel.goals}")
             if (noGoals) {
                 NoGoalsText()
             } else {
@@ -102,7 +104,7 @@ fun GoalsColumn(
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun GoalsScreenPreview() {
     IO_ProjectTheme {
         GoalsScreen(navigateTo = {})
     }

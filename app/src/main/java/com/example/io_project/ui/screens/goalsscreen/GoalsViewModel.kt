@@ -18,7 +18,7 @@ class GoalsViewModel @Inject constructor(
 ) : ViewModel() {
     var goals: List<Goal> = emptyList()
     init {
-        getGoalsList2()
+        getGoalsList()
         Log.d("GoalsScreensFetch", "${goals.size}")
     }
 

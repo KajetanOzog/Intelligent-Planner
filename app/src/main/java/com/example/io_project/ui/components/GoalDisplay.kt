@@ -2,6 +2,8 @@ package com.example.io_project.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +41,6 @@ fun GoalDisplay() {
 }
 
 
-
 @Composable
 fun GoalDisplay(
     goal: Goal
@@ -53,9 +57,23 @@ fun GoalDisplay(
             .padding(dimensionResource(id = R.dimen.padding_small))
             .fillMaxWidth()
     ) {
-        Text(
-            text = goal.name
-        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = goal.name
+            )
+            if (markedDone) {
+                Icon(
+                    Icons.Rounded.Clear,
+                    contentDescription = "Delete goal from display",
+                    modifier = Modifier.clickable {
+                        /* TODO: Przenoszenie celu do completed i usuwanie go z widoku */
+                    }
+                )
+            }
+        }
         Text(
             text = "Data zakończenia: ${goal.deadline}"
         )
@@ -71,7 +89,7 @@ fun GoalDisplay(
                 checked = markedDone,
                 onCheckedChange = null
             )
-            Spacer( modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
             Text(text = "Wykonano")
         }
     }
@@ -81,7 +99,7 @@ fun GoalDisplay(
 fun markDone(goal: Goal) {
 }
 
-@Preview (showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun GoalDisplayPreview() {
     IO_ProjectTheme {
