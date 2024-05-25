@@ -8,7 +8,7 @@ suspend fun fetchUncompletedGoals(userID: String): List<Goal>? {
 
     try {
         if (documentSnapshot != null && documentSnapshot.exists()) {
-            val uncompletedGoalsData = documentSnapshot.get("goals.uncompleted")
+            val uncompletedGoalsData = documentSnapshot.get("goals.unfinished")
             if (uncompletedGoalsData is List<*>)
             {
                 @Suppress("UNCHECKED_CAST")
