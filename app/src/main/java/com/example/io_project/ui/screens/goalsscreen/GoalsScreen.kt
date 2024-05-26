@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +37,6 @@ fun GoalsScreen(
     modifier: Modifier = Modifier
 ) {
     val goalsViewModel: GoalsViewModel = hiltViewModel()
-
     Scaffold(
         topBar = {
             TopBar(
@@ -58,12 +58,7 @@ fun GoalsScreen(
                 .verticalScroll(ScrollState(0))
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
-            val noGoals: Boolean by remember {
-                mutableStateOf(goalsViewModel.goals.isEmpty())
-            }
-
-            Log.d("GoalsScreen", "Pobrane cele ${goalsViewModel.goals}")
-            if (noGoals) {
+            if (goalsViewModel.size == 0) {
                 NoGoalsText()
             } else {
                 GoalsColumn(goals = goalsViewModel.goals)

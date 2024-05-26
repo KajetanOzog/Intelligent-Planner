@@ -64,7 +64,6 @@ fun TasksScreen(
                 mutableStateOf(tasksViewModel.tasks.isEmpty())
             }
 
-            Log.d("TasksScreen", "Pobrane taski: ${tasksViewModel.tasks}")
             if (noTasks) {
                 NoTasksText()
             } else {
