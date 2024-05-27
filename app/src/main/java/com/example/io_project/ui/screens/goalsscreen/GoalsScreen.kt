@@ -55,7 +55,6 @@ fun GoalsScreen(
         Column(
             modifier = modifier
                 .padding(paddingValues)
-                .verticalScroll(ScrollState(0))
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
             if (goalsViewModel.size == 0) {

@@ -57,7 +57,6 @@ fun TasksScreen(
         Column(
             modifier = modifier
                 .padding(paddingValues)
-                .verticalScroll(ScrollState(0))
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
             val noTasks: Boolean by remember {
