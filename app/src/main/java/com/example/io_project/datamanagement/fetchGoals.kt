@@ -36,9 +36,11 @@ suspend fun fetchUncompletedGoals(userID: String): List<Goal>? {
                     }
                 }
                 @Suppress("UNCHECKED_CAST")
-                return returnList
+                return uncompletedGoalsData as List<Goal>
             }
-        } else {
+        }
+        else
+        {
             println("Dokument użytkownika nie istnieje lub nie został pobrany")
         }
     } catch (e: Exception) {
