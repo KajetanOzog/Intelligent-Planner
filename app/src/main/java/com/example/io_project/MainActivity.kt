@@ -14,13 +14,14 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.IO_ProjectTheme
-import com.example.io_project.ui.components.getCurrentLocation
+import com.example.io_project.datamanagement.getCurrentLocation
 import com.example.io_project.ui.navigation.NavGraph
 import com.example.io_project.ui.screens.authscreen.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity(),
+class MainActivity :
+    ComponentActivity(),
     ActivityCompat.OnRequestPermissionsResultCallback
 {
 
@@ -45,6 +46,12 @@ class MainActivity : ComponentActivity(),
         }
     }
 
+    private fun checkAuthState() {
+        if (viewModel.isUserAuthenticated) {
+            navController.navigate("auth_screen")
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -53,7 +60,6 @@ class MainActivity : ComponentActivity(),
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         getCurrentLocation(this)
     }
-
 }
 
 
