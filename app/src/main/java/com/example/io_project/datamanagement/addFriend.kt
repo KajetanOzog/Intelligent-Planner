@@ -18,7 +18,7 @@ suspend fun addFriends(userId: String, email: String) {
 
     if (document.exists())
     {
-        val secondUserId = document.getString(email)
+        val secondUserId = document.getString("$email.uid")
         if (secondUserId != null)
         {
             val userRef = firestore.collection("users").document(userId)

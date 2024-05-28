@@ -97,10 +97,18 @@ class AuthRepositoryImpl @Inject constructor(
             )
             db.collection(USERS).document(user.uid).set(emptyUserData).await()
 
+
             val userEmail = user.email ?: throw Exception("User email is null")
+            val userId = user.uid ?: throw Exception("User ID is null")
+            val userName = user.displayName ?: throw Exception("User name is null")
+
             val userDocument = mapOf(
-                 userEmail to user.uid
+                userEmail to mapOf(
+                    "uid" to userId,
+                    "userName" to userName
+                )
             )
+
 
             db.collection("metadata").document("user_email")
                 .set(userDocument, SetOptions.merge()).await()
