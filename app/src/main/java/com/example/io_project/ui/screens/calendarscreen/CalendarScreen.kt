@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.IO_ProjectTheme
-import com.example.io_project.Constants.LONG_TERM_SCREEN
+import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.TASKS_SCREEN
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.CalendarTile
@@ -36,7 +36,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 fun getCurrentDate(currentDate: LocalDate): String{
-    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+    val formatter = DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
     return currentDate.format(formatter)
 }
 
@@ -113,7 +113,7 @@ fun CalendarScreen(
                     modifier = modifier
                         .padding(start = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)
-                        .clickable { navigateTo(LONG_TERM_SCREEN) }
+                        .clickable { navigateTo(GOALS_SCREEN) }
                 )
             }
         }

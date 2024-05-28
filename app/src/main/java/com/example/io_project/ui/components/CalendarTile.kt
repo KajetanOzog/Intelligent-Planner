@@ -1,5 +1,7 @@
 package com.example.io_project.ui.components
 
+import android.util.Log
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +48,7 @@ fun CalendarTile(date: String? = getCurrentDate(LocalDate.now()), modifier: Modi
                 .padding(start = 16.dp, top = 5.dp, bottom = 15.dp)
         )
 
-        var list: List<Event>? = null
+        var list: List<Event> = emptyList()
 
         if (date != null) {
             LaunchedEffect(Unit){
@@ -53,18 +56,25 @@ fun CalendarTile(date: String? = getCurrentDate(LocalDate.now()), modifier: Modi
                     list = fetchEvents(
                         userID = it.uid,
                         targetDate = date
-                    )
+                    ) ?: emptyList()
                 }
             }
         }
+        Log.d("CalendarTile","Fetched Events: ${list}")
 
-        var i = 0
-        while ((i < 3) && (i < (list?.size ?: 3))) {
-            if (date != null) {
-                EventDisplay(list?.get(i)?.date ?: "data", list?.get(i)?.name ?: "nazwa")
-            }
-            i++
+        for(event in list) {
+            Log.d("CalendarTile","Fetched Events: ${event}")
+            EventDisplay(date = event.name, eventName = event.name)
         }
+
+
+//        var i = 0
+//        while ((i < 3) && (i < (list?.size ?: 3))) {
+//            if (date != null) {
+//                EventDisplay(list?.get(i)?.date ?: "", list?.get(i)?.name ?: "")
+//            }
+//            i++
+//        }
 
     }
 }

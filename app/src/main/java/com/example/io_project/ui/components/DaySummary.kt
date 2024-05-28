@@ -1,5 +1,6 @@
 package com.example.io_project.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,6 +42,7 @@ fun DaySummary(modifier: Modifier = Modifier)
             val formatter = DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.ENGLISH)
             val date = LocalDate.now().format(formatter)
             GreetingData.events = fetchEvents(userID, date)?.toMutableList()
+            Log.d("DaySummary", "Fetched Events: ${GreetingData.events}")
             for (i in 1..10)
             {
                 if(GreetingData.events != null) break
