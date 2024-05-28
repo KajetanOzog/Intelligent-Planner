@@ -36,7 +36,7 @@ suspend fun fetchUncompletedGoals(userID: String): List<Goal>? {
                     }
                 }
                 @Suppress("UNCHECKED_CAST")
-                return uncompletedGoalsData as List<Goal>
+                return returnList
             }
         }
         else
