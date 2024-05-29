@@ -1,9 +1,8 @@
 package com.example.io_project.datamanagement
-
+import com.example.io_project.datamanagement.getDayOfWeek
 import android.util.Log
 import com.example.io_project.dataclasses.Event
 import com.google.firebase.firestore.DocumentSnapshot
-import getDayOfWeek
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -93,13 +92,4 @@ private fun getNonRegularDataForDate(
     }
 
     return null
-}
-
-fun getDayOfWeek(dateString: String): String {
-    val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
-    val date = dateFormat.parse(dateString)
-    val calendar = Calendar.getInstance()
-    calendar.time = date
-    val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)
-    return dayOfWeek.toLowerCase()
 }
