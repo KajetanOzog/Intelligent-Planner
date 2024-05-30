@@ -52,7 +52,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Locale
-import kotlin.random.Random
 
 @Composable
 fun StatsScreen(
