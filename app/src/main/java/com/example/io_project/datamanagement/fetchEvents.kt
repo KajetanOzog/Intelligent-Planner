@@ -57,6 +57,61 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
     return null
 }
 
+suspend fun fetchAllEvents(userID: String): List<Event>? {
+    val documentSnapshot = getUserDocument(userID)
+    val returnList = ArrayList<Event>()
+    try {
+
+        if (documentSnapshot != null && documentSnapshot.exists()) {
+
+            val daysOfWeek =  arrayOf("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+            for(i in 0..6)
+            {
+                val regularData = documentSnapshot
+                    .get("regular.${daysOfWeek[i]}") as List<Map<String, Event>>
+                Log.d("FetchEvents","Fetched events list: ${regularData}")
+
+                val allEvents = mutableListOf<Event>()
+
+                if (regularData is List<*>) {
+                    @Suppress("UNCHECKED_CAST")
+                    for (event in regularData) {
+                        returnList.add(mapToEvent(event))
+                    }
+                    Log.d("FetchEvents","ConvertedEvents: ${regularData}")
+
+//                allEvents.addAll(regularDataForDayOfWeek as List<Event>)
+                }
+            }
+
+//
+//            val nonRegularData = documentSnapshot.get("nonregular") //as List<Map<String, Event>>
+//            Log.d("FetchEvents(NonReg)","ConvertedEvents: ${nonRegularData}")
+//            //nonRegularData.filter { event -> event["date"].toString() == targetDate }
+//            //Log.d("FetchEvents(NonReg)","ConvertedEvents: ${nonRegularData}")
+
+
+            val nonRegularData = getNonRegularData(documentSnapshot)
+            if (nonRegularData != null) {
+                for (event in nonRegularData) {
+                    returnList.add(mapToEvent(event))
+                }
+//                allEvents.addAll(nonRegularDataForDate)
+            }
+
+            return returnList
+        } else {
+            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+        }
+    } catch (e: Exception) {
+        println("Błąd podczas pobierania danych dla danego dnia: ${e.message}")
+        e.printStackTrace()
+    }
+
+    return null
+}
+
+
 private fun mapToEvent(event: Map<String, Event>): Event {
     return Event(
         name = event["name"].toString(),
@@ -75,8 +130,6 @@ private fun mapToEvent(event: Map<String, Event>): Event {
     )
 }
 
-
-
 private fun getNonRegularDataForDate(
     documentSnapshot: DocumentSnapshot,
     targetDate: String
@@ -89,6 +142,19 @@ private fun getNonRegularDataForDate(
         val filteredNonRegularData =
             nonRegularData.filter { it["date"].toString() == targetDate }
         return filteredNonRegularData
+    }
+
+    return null
+}
+
+private fun getNonRegularData(documentSnapshot: DocumentSnapshot): List<Map<String, Event>>?
+{
+    val nonRegularData = documentSnapshot.get("nonregular.data") as List<Map<String, Event>>
+    Log.d("FetchEvents(NonReg)","ConvertedEvents: ${nonRegularData}")
+
+    if (nonRegularData is List<*>) {
+        @Suppress("UNCHECKED_CAST")
+        return nonRegularData
     }
 
     return null

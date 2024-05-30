@@ -92,7 +92,7 @@ fun Greeting()
     // TO-DO:
     // 1) Dodac nazwe uzytkownika z profilu (jesli sie da to tylko imie)
     Text(
-        text = "${GreetingData.greetingText}, Michał",
+        text = "${GreetingData.greetingText}!",
         style = MaterialTheme.typography.displayLarge,
     )
 }

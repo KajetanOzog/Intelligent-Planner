@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.example.io_project.datamanagement.getCurrentLocation
 
 private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
 
