@@ -9,6 +9,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +27,7 @@ class SocialViewModel @Inject constructor(
     }
 
     fun getGroupsList() {
-        viewModelScope.launch {
+         runBlocking {
             Firebase.auth.currentUser?.let {
                 groups = fetchGroups(it.uid) ?: emptyList()
                 groupCount = groups.size
@@ -35,7 +36,7 @@ class SocialViewModel @Inject constructor(
     }
 
     fun getFriendsList() {
-        viewModelScope.launch {
+        runBlocking {
             Firebase.auth.currentUser?.let {
 
             }

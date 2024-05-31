@@ -27,7 +27,7 @@ class GoalsViewModel @Inject constructor(
 
 
     fun getGoalsList(){
-        viewModelScope.launch {
+        runBlocking{
             Firebase.auth.currentUser?.let {
                 goals = fetchUncompletedGoals(it.uid) ?: emptyList()
                 size = goals.size
