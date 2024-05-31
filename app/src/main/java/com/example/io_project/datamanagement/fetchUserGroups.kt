@@ -14,6 +14,9 @@ suspend fun fetchGroups(userID: String): List<Group>? {
             Log.d("FetchUserGroups", "GroupIDs: $groupIDs")
             for (groupID in groupIDs) {
                 val groupDocument = getGroupDocument(groupID)
+                if (groupDocument != null) {
+                    Log.d("FetchUserGroup", "$groupDocument, ${groupDocument.exists()}")
+                }
                 if (groupDocument != null && groupDocument.exists()) {
                     val groupData = groupDocument.data as Map<String, Any>
                     Log.d("FetchUserGroups", "GroupData: $groupData")

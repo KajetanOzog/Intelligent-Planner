@@ -24,10 +24,10 @@ class AddGroupViewModel @Inject constructor(
     fun addNewGroup() {
         viewModelScope.launch {
             Firebase.auth.currentUser?.let {
-                val userId = it.uid
-                groupState.update { currentState -> currentState.copy(ownerID = userId) }
-                groupState.update { currentState -> currentState.copy(groupMembers = listOf(userId)) }
-                addGroup(getGroup())
+                val userID = it.uid
+                groupState.update { currentState -> currentState.copy(ownerID = userID) }
+                groupState.update { currentState -> currentState.copy(groupMembers = listOf(userID)) }
+                addGroup(getGroup(), userID)
             }
         }
     }
