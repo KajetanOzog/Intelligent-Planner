@@ -1,4 +1,4 @@
-package com.example.io_project.ui.screens.dialogs
+package com.example.io_project.ui.dialogs
 
 import addEventToFirestore
 import androidx.lifecycle.ViewModel
@@ -18,7 +18,6 @@ import javax.inject.Inject
 class AddEventViewModel @Inject constructor(
 ) : ViewModel() {
     val eventState = MutableStateFlow(Event())
-    val _eventState: StateFlow<Event> = eventState.asStateFlow()
 
     fun getEvent(): Event {
         return eventState.value

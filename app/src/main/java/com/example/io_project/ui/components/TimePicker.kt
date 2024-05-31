@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,10 +36,11 @@ fun TimePickerCustom(
     onValueChange: (String) -> Unit,
     label: String
 ) {
-    val timePickerState: TimePickerState = rememberTimePickerState()
+    val timePickerState: TimePickerState = rememberTimePickerState(is24Hour = true)
+
     var dialogVisible: Boolean by remember { mutableStateOf(false) }
     val formatter = remember {
-        SimpleDateFormat("hh:mm", Locale.getDefault())
+        SimpleDateFormat("HH:mm", Locale.getDefault())
     }
     val cal = Calendar.getInstance()
     var selectedTime by remember {
@@ -50,9 +52,11 @@ fun TimePickerCustom(
         onValueChange = {},
         enabled = false,
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
+            disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer
         ),
         label = { Text(text = label) },
         modifier = modifier.clickable {

@@ -1,13 +1,11 @@
-package com.example.io_project
+package com.example.io_project.notifications
 
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
-class IOProjectApp: Application() {
+class AlarmApp: Application() {
     override fun onCreate() {
         super.onCreate()
         val channelId = "event_notifications"

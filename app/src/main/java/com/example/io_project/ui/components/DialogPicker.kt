@@ -26,7 +26,7 @@ fun DialogPicker(
     isCurrent: Boolean,
     onClick: () -> Unit
 ) {
-    val color: Color = if (isCurrent) MaterialTheme.colorScheme.outlineVariant else Color.White
+    val color: Color = if (isCurrent) MaterialTheme.colorScheme.outlineVariant else MaterialTheme.colorScheme.onPrimary
 
     Text(
         text = label,

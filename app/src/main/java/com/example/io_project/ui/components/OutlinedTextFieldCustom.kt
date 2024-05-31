@@ -36,9 +36,18 @@ fun OutlinedTextFieldCustom(
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
+            focusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            focusedIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            unfocusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            unfocusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
         label = {
             Text(

@@ -37,6 +37,7 @@ fun GoalsScreen(
     modifier: Modifier = Modifier
 ) {
     val goalsViewModel: GoalsViewModel = hiltViewModel()
+
     Scaffold(
         topBar = {
             TopBar(

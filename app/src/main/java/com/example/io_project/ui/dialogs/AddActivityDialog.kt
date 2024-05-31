@@ -1,5 +1,6 @@
-package com.example.io_project.ui.screens.dialogs
+package com.example.io_project.ui.dialogs
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,8 +33,15 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
+import com.example.io_project.dataclasses.Alarm
+import com.example.io_project.notifications.AlarmScheduler
+import com.example.io_project.notifications.AlarmSchedulerImpl
 import com.example.io_project.ui.components.DialogPicker
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 
 @Composable
@@ -44,6 +53,8 @@ fun AddActivityDialog(
     val addEventViewModel: AddEventViewModel = hiltViewModel()
     val addTaskViewModel: AddTaskViewModel = hiltViewModel()
     val addGoalViewModel: AddGoalViewModel = hiltViewModel()
+    val context: Context = LocalContext.current
+    val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(context)
 
     Dialog(
         onDismissRequest = {
@@ -57,7 +68,7 @@ fun AddActivityDialog(
                 .padding(8.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.onPrimary)
                 .padding(16.dp)
         ) {
             var currentDialog: String by remember { mutableStateOf("Event") }
@@ -117,6 +128,27 @@ fun AddActivityDialog(
                             when(currentDialog) {
                                 "Event" -> {
                                     addEventViewModel.addEvent()
+                                    if (addEventViewModel.eventState.value.reminder) {
+                                        val alarm = Alarm(
+                                            message = addEventViewModel.eventState.value.name,
+                                            time = LocalDateTime.of(
+                                                LocalDate.parse(
+                                                    addEventViewModel.eventState.value.date,
+                                                    DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
+                                                ),
+                                                LocalTime.parse(addEventViewModel.eventState.value.reminderTime)
+                                            ),
+                                            sound = addEventViewModel.eventState.value.alarm
+                                        )
+                                        if (addEventViewModel.eventState.value.weekly) {
+                                            alarmScheduler.scheduleWeekly(alarm)
+                                            Log.d("AddActDia", "Scheduling weekly event")
+                                        }
+                                        else {
+                                            alarmScheduler.scheduleSingle(alarm)
+                                            Log.d("AddActDia", "Scheduling single event")
+                                        }
+                                    }
                                     Log.d("EVENT", "New Event was added")
                                 }
                                 "Goal" -> {

@@ -11,6 +11,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -53,14 +54,11 @@ fun DropDownPicker(
                 onValueChange(it)
             },
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                disabledContainerColor = Color.White,
-                disabledTextColor = Color.DarkGray,
-                disabledLabelColor = Color.DarkGray,
-                disabledPlaceholderColor = Color.DarkGray,
-                disabledIndicatorColor = Color.DarkGray,
-                disabledTrailingIconColor = Color.DarkGray
+                disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             enabled = false,
             trailingIcon = {

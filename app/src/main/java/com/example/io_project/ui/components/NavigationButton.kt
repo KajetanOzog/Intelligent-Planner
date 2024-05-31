@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,13 +40,14 @@ fun NavigationButton(
     val buttonColor = if (isCurrent) MaterialTheme.colorScheme.outlineVariant
     else MaterialTheme.colorScheme.background
 
-    val buttonModifier: Modifier = if (isCurrent) modifier
-    else modifier.clickable {
+    val buttonModifier: Modifier = if (isCurrent) Modifier
+    else Modifier.clickable {
         navigateTo(targetScreenName)
     }
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             modifier = buttonModifier
@@ -53,12 +55,12 @@ fun NavigationButton(
                 .background(buttonColor)
                 .padding(horizontal = 2.dp, vertical = 1.dp)
         ) {
-            Spacer(modifier = modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Icon(
                 icon,
                 contentDescription = null
             )
-            Spacer(modifier = modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(8.dp))
         }
         Text(
             text = label,

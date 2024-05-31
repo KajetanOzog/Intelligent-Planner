@@ -1,4 +1,4 @@
-package com.example.io_project.ui.screens.dialogs
+package com.example.io_project.ui.dialogs
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ import com.example.io_project.ui.components.TimePickerCustom
 fun AddEventComponent(
     addEventViewModel: AddEventViewModel = hiltViewModel()
 ) {
-    val categories = listOf("Szkola", "Praca", "Aktywnosc fizyczna", "Znajomi", "Inne")
+    val categories = listOf("Szkoła", "Praca", "Aktywność fizyczna", "Znajomi", "Inne")
     val colors = listOf("Czerwony", "Niebieski", "Zielony")
 
     Column(

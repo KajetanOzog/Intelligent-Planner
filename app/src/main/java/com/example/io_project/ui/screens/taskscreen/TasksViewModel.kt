@@ -24,7 +24,7 @@ class TasksViewModel @Inject constructor(
     }
 
     fun getTasksToList() {
-        runBlocking {
+        viewModelScope.launch {
             Firebase.auth.currentUser?.let {
                 tasks = getTasks(it.uid) ?: emptyList()
                 size = tasks.size

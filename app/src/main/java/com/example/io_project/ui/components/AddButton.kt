@@ -42,13 +42,13 @@ fun AddButton(
     ) {
         if (extended) {
             AddButtonExtendable(
-                name = "New Activity",
+                name = "Aktywność",
                 icon = Icons.Rounded.Create,
                 onClick = navigateTo,
                 dialogDestination = ADD_ACTIVITY_DIALOG
             )
             AddButtonExtendable(
-                name = "Assistant",
+                name = "Asystent",
                 icon = Icons.Rounded.Face,
                 onClick = {},
                 dialogDestination = ""
@@ -58,7 +58,7 @@ fun AddButton(
         ExtendedFloatingActionButton(
             text = {
                 Text(
-                    text = "Add",
+                    text = "Dodaj",
                     style = MaterialTheme.typography.labelSmall
                 )
             },

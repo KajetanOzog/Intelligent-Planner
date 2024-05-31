@@ -1,4 +1,4 @@
-package com.example.io_project.ui.screens.dialogs
+package com.example.io_project.ui.dialogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable

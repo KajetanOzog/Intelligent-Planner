@@ -7,6 +7,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -45,9 +46,11 @@ fun DatePickerCustom(
         onValueChange = {},
         enabled = false,
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
+            disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledPlaceholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledIndicatorColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            disabledTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer
         ),
         label = { Text(text = label) },
         modifier = modifier.clickable {

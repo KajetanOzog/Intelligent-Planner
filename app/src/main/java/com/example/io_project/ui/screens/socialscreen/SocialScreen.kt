@@ -1,14 +1,12 @@
 package com.example.io_project.ui.screens.socialscreen
 
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -28,15 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
-import com.example.io_project.Constants.GROUP_SCREEN
+import com.example.io_project.Constants.ADD_GROUP_DIALOG
 import com.example.io_project.R
-import com.example.io_project.ui.components.AddButton
+import com.example.io_project.dataclasses.Group
 import com.example.io_project.ui.components.BottomBar
-import com.example.io_project.ui.components.CalendarTile
-import com.example.io_project.ui.components.FriendButton
-import com.example.io_project.ui.components.GroupButton
-import com.example.io_project.ui.components.SmallTile
+import com.example.io_project.ui.components.FriendDisplay
+import com.example.io_project.ui.components.GroupDisplay
 import com.example.io_project.ui.components.TopBar
 
 @Composable
@@ -44,6 +39,8 @@ fun SocialScreen(
     navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val socialViewModel: SocialViewModel = hiltViewModel()
+
     Scaffold(
         topBar = {
             TopBar(
@@ -59,7 +56,7 @@ fun SocialScreen(
             )
         },
         floatingActionButton = {
-            AddButton(navigateTo = navigateTo)
+            //AddButton(navigateTo = navigateTo)
         }
     ) { paddingValues ->
         Column(
@@ -70,14 +67,14 @@ fun SocialScreen(
         ) {
 
 
-            Text(
-                text = "Potwierdź udział",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
-            )
-            SmallTile()
+//            Text(
+//                text = "Potwierdź udział",
+//                style = MaterialTheme.typography.labelLarge,
+//                modifier = modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
+//            )
+//            SmallTile()
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -93,22 +90,21 @@ fun SocialScreen(
                 Icon(
                     Icons.Rounded.Add,
                     contentDescription = "Dodaj grupę",
-                    modifier = modifier.size(32.dp)
+                    modifier = modifier
+                        .size(32.dp)
+                        .clickable {
+                            navigateTo(ADD_GROUP_DIALOG)
+                        }
                 )
             }
-            GroupButton(
-                navigateTo = navigateTo,
-                groupID = 1,
-                modifier = modifier.clickable { navigateTo(GROUP_SCREEN) }
-            )
-            GroupButton(
-                navigateTo = navigateTo,
-                groupID = 2
-            )
-            GroupButton(
-                navigateTo = navigateTo,
-                groupID = 3
-            )
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_medium)))
+
+            if (socialViewModel.groupCount == 0) {
+                NoGroupsText()
+            } else {
+                GroupsColumn(groups = socialViewModel.groups)
+            }
+
 
             Spacer(
                 modifier = modifier.height(dimensionResource(id = R.dimen.padding_medium))
@@ -130,18 +126,69 @@ fun SocialScreen(
                     modifier = modifier.size(32.dp)
                 )
             }
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_medium)))
 
-            FriendButton(
-                navigateTo = navigateTo,
-                friendID = 1
-            )
-            FriendButton(
-                navigateTo = navigateTo,
-                friendID = 2
-            )
+            if (socialViewModel.friendCount == 0){
+                NoFriendsText()
+            }
+            else {
+                FriendsColumn(friends = socialViewModel.friends)
+            }
         }
     }
 }
+
+@Composable
+fun NoGroupsText() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Brak grup do wyświetlenia")
+    }
+}
+
+@Composable
+fun GroupsColumn(groups: List<Group>) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(ScrollState(0))
+            .fillMaxSize()
+    ) {
+        groups.forEach { group ->
+            GroupDisplay(group)
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+        }
+    }
+}
+
+@Composable
+fun NoFriendsText() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Brak znajomych do wyświetlenia")
+    }
+}
+
+@Composable
+fun FriendsColumn(friends: List<String>) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(ScrollState(0))
+            .fillMaxSize()
+    ) {
+        friends.forEach { friend ->
+            FriendDisplay(friend)
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+        }
+    }
+}
+
+
 
 @Preview(showBackground = true)
 @Composable

@@ -8,7 +8,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
-import com.example.io_project.ui.screens.dialogs.AddActivityDialog
+import com.example.io_project.ui.dialogs.AddActivityDialog
+import com.example.io_project.ui.dialogs.AddGroupDialog
 import com.example.io_project.ui.screens.archivescreen.ArchiveScreen
 import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.authscreen.AuthScreen
@@ -73,6 +74,9 @@ fun NavGraph(
         }
         dialog(route = Screen.AddActivityDialog.route) {
             AddActivityDialog(navigateBack = { navController.popBackStack() })
+        }
+        dialog(route = Screen.AddGroupDialog.route) {
+            AddGroupDialog(navigateBack = { navController.popBackStack() })
         }
     }
 }

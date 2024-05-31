@@ -42,24 +42,27 @@ fun BottomBar(
             navigateTo = navigateTo,
             targetScreenName = "home_screen",
             isCurrent = (currentScreenName == "home_screen"),
-            label = "Home",
-            icon = Icons.Rounded.Home
+            label = "Ekran główny",
+            icon = Icons.Rounded.Home,
+            modifier = Modifier.weight(1f)
         )
 
         NavigationButton(
             navigateTo = navigateTo,
             targetScreenName = "calendar_screen",
             isCurrent = (currentScreenName == "calendar_screen"),
-            label = "Calendar",
-            icon = Icons.Rounded.DateRange
+            label = "Kalendarz",
+            icon = Icons.Rounded.DateRange,
+            modifier = Modifier.weight(1f)
         )
 
         NavigationButton(
             navigateTo = navigateTo,
             targetScreenName = "profile_screen",
             isCurrent = (currentScreenName == "profile_screen"),
-            label = "Profile",
-            icon = Icons.Rounded.Person
+            label = "Profil",
+            icon = Icons.Rounded.Person,
+            modifier = Modifier.weight(1f)
         )
 
 

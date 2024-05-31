@@ -11,11 +11,12 @@ suspend fun fetchGroups(userID: String): List<Group>? {
         if (documentSnapshot != null && documentSnapshot.exists()) {
             @Suppress("UNCHECKED_CAST")
             val groupIDs = documentSnapshot.get("groups") as? List<String> ?: emptyList()
-
+            Log.d("FetchUserGroups", "GroupIDs: $groupIDs")
             for (groupID in groupIDs) {
                 val groupDocument = getGroupDocument(groupID)
                 if (groupDocument != null && groupDocument.exists()) {
                     val groupData = groupDocument.data as Map<String, Any>
+                    Log.d("FetchUserGroups", "GroupData: $groupData")
                     val group = mapToGroup(groupData)
                     returnList.add(group)
                 }
