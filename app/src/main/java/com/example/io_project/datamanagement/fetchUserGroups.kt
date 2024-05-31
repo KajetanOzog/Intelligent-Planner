@@ -13,15 +13,17 @@ suspend fun fetchGroups(userID: String): List<Group>? {
             val groupIDs = documentSnapshot.get("groups") as? List<String> ?: emptyList()
             Log.d("FetchUserGroups", "GroupIDs: $groupIDs")
             for (groupID in groupIDs) {
-                val groupDocument = getGroupDocument(groupID)
+                val groupDocument = getGroupDocument()
                 if (groupDocument != null) {
                     Log.d("FetchUserGroups", "$groupDocument, ${groupDocument.exists()}")
                 }
                 if (groupDocument != null && groupDocument.exists()) {
-                    val groupData = groupDocument.data as Map<String, Any>
+                    val groupData = groupDocument.data?.get(groupID) as? Map<String, Any>
                     Log.d("FetchUserGroups", "GroupData: $groupData")
-                    val group = mapToGroup(groupData)
-                    returnList.add(group)
+                    if (groupData != null) {
+                        val group = mapToGroup(groupData)
+                        returnList.add(group)
+                    }
                 }
             }
             return returnList

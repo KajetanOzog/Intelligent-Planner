@@ -7,6 +7,6 @@ import kotlinx.coroutines.tasks.await
 suspend fun getGroupName(groupID: String): String {
     val firestore = FirebaseFirestore.getInstance()
     val documentSnapshot = firestore.collection("metadata")
-        .document("groups$groupID").get().await()
-    return documentSnapshot.getString("groupName") ?: ""
+        .document("groups").get().await()
+    return documentSnapshot.getString("$groupID.groupName") ?: ""
 }
