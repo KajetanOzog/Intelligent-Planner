@@ -26,9 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
+import com.example.io_project.Constants.ADD_FRIEND_DIALOG
 import com.example.io_project.Constants.ADD_GROUP_DIALOG
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Group
+import com.example.io_project.datamanagement.addFriends
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.FriendDisplay
 import com.example.io_project.ui.components.GroupDisplay
@@ -123,7 +125,11 @@ fun SocialScreen(
                 Icon(
                     Icons.Rounded.Add,
                     contentDescription = "Dodaj znajomych",
-                    modifier = modifier.size(32.dp)
+                    modifier = modifier
+                        .size(32.dp)
+                        .clickable {
+                            navigateTo(ADD_FRIEND_DIALOG)
+                        }
                 )
             }
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_medium)))
@@ -153,7 +159,6 @@ fun NoGroupsText() {
 fun GroupsColumn(groups: List<Group>) {
     Column(
         modifier = Modifier
-            .verticalScroll(ScrollState(0))
             .fillMaxSize()
     ) {
         groups.forEach { group ->
@@ -178,7 +183,6 @@ fun NoFriendsText() {
 fun FriendsColumn(friends: List<String>) {
     Column(
         modifier = Modifier
-            .verticalScroll(ScrollState(0))
             .fillMaxSize()
     ) {
         friends.forEach { friend ->

@@ -1,5 +1,6 @@
 package com.example.io_project.datamanagement
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,8 +15,9 @@ suspend fun addFriends(userId: String, email: String) {
     val firestore = FirebaseFirestore.getInstance()
 
     val metadataRef = firestore.collection("metadata").document("user_email")
+    Log.d("AddFriend", "$metadataRef")
     val document = metadataRef.get().await()
-
+    Log.d("AddFriend", "$document")
     if (document.exists())
     {
         val secondUserId = document.getString("$email.uid")

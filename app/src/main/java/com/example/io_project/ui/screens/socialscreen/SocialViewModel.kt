@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.io_project.dataclasses.Group
+import com.example.io_project.datamanagement.fetchFriends
 import com.example.io_project.datamanagement.fetchGroups
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -23,6 +24,7 @@ class SocialViewModel @Inject constructor(
     var friendCount: Int = 0
     init {
         getGroupsList()
+        getFriendsList()
         Log.d("SocialViewModel", "Fetched groups: $groups")
     }
 
@@ -38,7 +40,8 @@ class SocialViewModel @Inject constructor(
     fun getFriendsList() {
         runBlocking {
             Firebase.auth.currentUser?.let {
-
+                friends = fetchFriends(it.uid) ?: emptyList()
+                friendCount = friends.size
             }
         }
     }
