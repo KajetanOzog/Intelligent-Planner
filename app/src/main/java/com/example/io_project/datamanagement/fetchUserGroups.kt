@@ -12,8 +12,8 @@ suspend fun fetchGroups(userID: String): List<Group>? {
             @Suppress("UNCHECKED_CAST")
             val groupIDs = documentSnapshot.get("groups") as? List<String> ?: emptyList()
             Log.d("FetchUserGroups", "GroupIDs: $groupIDs")
+            val groupDocument = getGroupDocument()
             for (groupID in groupIDs) {
-                val groupDocument = getGroupDocument()
                 if (groupDocument != null) {
                     Log.d("FetchUserGroups", "$groupDocument, ${groupDocument.exists()}")
                 }

@@ -50,7 +50,7 @@ fun TasksScreen(
         bottomBar = {
             BottomBar(
                 navigateTo = navigateTo,
-                currentScreenName = "long_term_screen"
+                currentScreenName = "tasks_screen"
             )
         }
     ) { paddingValues ->

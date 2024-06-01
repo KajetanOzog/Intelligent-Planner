@@ -20,19 +20,17 @@ suspend fun fetchFriends(userID: String): List<String>? {
             val friendIDs = documentSnapshot.get("friends") as? List<String> ?: emptyList()
             Log.d("FetchFriends", "FriendIDs: $friendIDs")
 
+            val userEmailData = firestore.collection("metadata")
+                .document("user_email").get().await().data as Map<String,Map<String, Any>>
+            Log.d("FetchFriends", "$userEmailData")
+
             for (friendID in friendIDs) {
-                val querySnapshot = firestore.collection("metadata").document("user_email").get().await()
-                if (querySnapshot != null && querySnapshot.exists()) {
-                    @Suppress("UNCHECKED_CAST")
-                    val userEmailData = querySnapshot.data?.values as? List<Map<String, Any>>
-                    if (userEmailData != null) {
-                        for (data in userEmailData) {
-                            if (data["uid"] == friendID) {
-                                val username = data["userName"]?.toString()
-                                if (username != null) {
-                                    returnList.add(username)
-                                }
-                            }
+                for (key in userEmailData) {
+                    Log.d("FetchFriends", "$key")
+                    if (key.value["uid"] == friendID) {
+                        val username = key.value["userName"]?.toString()
+                        if (username != null) {
+                            returnList.add(username)
                         }
                     }
                 }

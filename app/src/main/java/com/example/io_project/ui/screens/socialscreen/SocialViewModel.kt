@@ -26,6 +26,7 @@ class SocialViewModel @Inject constructor(
         getGroupsList()
         getFriendsList()
         Log.d("SocialViewModel", "Fetched groups: $groups")
+        Log.d("SocialViewModel", "Fetched friends: $friends")
     }
 
     fun getGroupsList() {
