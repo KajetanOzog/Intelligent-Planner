@@ -29,6 +29,10 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.GreetingData
+import com.example.io_project.googleauthmodule.repository.ProfileRepository
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -37,6 +41,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun GreetingTile(modifier: Modifier = Modifier)
 {
+    val repo: ProfileRepository
     var isSummaryVisible by remember { mutableStateOf(false) }
 
     Column(
@@ -79,22 +84,32 @@ fun GreetingTile(modifier: Modifier = Modifier)
 fun Greeting()
 {
     var time by remember { mutableStateOf<Int?>(null) }
+    var displayName by remember { mutableStateOf(GreetingData.displayName) }
     LaunchedEffect(Unit)
     {
         val formatter = DateTimeFormatter.ofPattern("HH")
         time = LocalDateTime.now().format(formatter).toInt()
+        GreetingData.displayName = Firebase.auth.currentUser?.displayName.toString().substringBefore(" ")
+        displayName = GreetingData.displayName
     }
     time?.let {
         if(it >= 19 || it <= 3){
             GreetingData.greetingText = "Dobry wieczór"
         }
     }
-    // TO-DO:
-    // 1) Dodac nazwe uzytkownika z profilu (jesli sie da to tylko imie)
-    Text(
-        text = "${GreetingData.greetingText}!",
-        style = MaterialTheme.typography.displayLarge,
-    )
+
+    displayName?.let {
+        Text(
+            text = "${GreetingData.greetingText}, $it!",
+            style = MaterialTheme.typography.displayLarge,
+        )
+    }
+    ?: run {
+        Text(
+            text = "${GreetingData.greetingText}!",
+            style = MaterialTheme.typography.displayLarge,
+        )
+    }
 }
 
 @Composable

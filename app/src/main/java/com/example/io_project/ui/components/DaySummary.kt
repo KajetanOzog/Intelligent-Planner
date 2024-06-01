@@ -96,11 +96,11 @@ fun DaySummary(modifier: Modifier = Modifier)
             }
         }
     }
-        ?.let {
-            Row(
-                modifier = modifier.padding(4.dp, top = 8.dp)
-            ){}
-        }
+    ?:run {
+        Row(
+            modifier = modifier.padding(4.dp, top = 8.dp)
+        ){}
+    }
 }
 
 fun getFourMaxPrio(events: List<Event>): MutableList<Event>
