@@ -16,7 +16,8 @@ suspend fun fetchFriendsEvents(userID: String, targetDate: String): List<Event>?
             for (friendID in friends) {
                 val friendEvents = fetchEvents(friendID, targetDate)
                 if (friendEvents != null) {
-                    returnList.addAll(friendEvents)
+                    val visibleEvents = friendEvents.filter { it.visible }
+                    returnList.addAll(visibleEvents)
                 }
             }
             return returnList
