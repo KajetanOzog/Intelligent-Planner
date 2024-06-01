@@ -14,9 +14,7 @@ import kotlinx.coroutines.tasks.await
 suspend fun addFriends(userId: String, email: String) {
     val firestore = FirebaseFirestore.getInstance()
 
-    val metadataRef = firestore.collection("metadata").document("user_email")
-    Log.d("AddFriend", "$metadataRef")
-    val document = metadataRef.get().await()
+    val document = firestore.collection("metadata").document("user_email").get().await()
     Log.d("AddFriend", "$document")
     if (document.exists())
     {
