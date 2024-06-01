@@ -43,6 +43,7 @@ fun getCurrentDate(currentDate: LocalDate): String{
 @Composable
 fun CalendarScreen(
     modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
     navigateTo: (route: String) -> Unit
 ) {
     var currentData by remember { mutableStateOf(LocalDate.now()) }
@@ -51,7 +52,7 @@ fun CalendarScreen(
         topBar = {
             TopBar(
                 text = "Calendar",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },
@@ -125,6 +126,6 @@ fun CalendarScreen(
 @Composable
 fun HomeScreenPreview() {
     IO_ProjectTheme {
-        CalendarScreen(navigateTo = {})
+        CalendarScreen(navigateTo = {}, navigateBack = {})
     }
 }

@@ -30,13 +30,14 @@ import com.example.io_project.ui.components.TopBar
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
     navigateTo: (route: String) -> Unit
 ) {
     Scaffold(
         topBar = {
             TopBar(
                 text = stringResource(id = R.string.app_name),
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = false
             )
         },
@@ -106,6 +107,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     IO_ProjectTheme {
-        HomeScreen(navigateTo = {})
+        HomeScreen(navigateTo = {}, navigateBack = {})
     }
 }

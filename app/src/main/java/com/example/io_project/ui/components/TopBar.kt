@@ -31,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 fun TopBar(
     modifier: Modifier = Modifier,
     text: String,
-    navigateTo: (route: String) -> Unit,
+    navigateBack: () -> Unit,
     canNavigateBack: Boolean
 ) {
     TopAppBar(
@@ -44,7 +44,7 @@ fun TopBar(
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(
-                    onClick = { navigateTo("home_screen") }
+                    onClick = { navigateBack() }
                 ) {
                     Icon(
                         Icons.Rounded.ArrowBack,

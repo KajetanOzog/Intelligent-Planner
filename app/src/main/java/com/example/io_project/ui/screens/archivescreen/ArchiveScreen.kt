@@ -18,13 +18,14 @@ import com.example.io_project.R
 @Composable
 fun ArchiveScreen(
     navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
             TopBar(
                 text = "Archiwum",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },
@@ -58,6 +59,6 @@ fun ArchiveScreen(
 @Composable
 fun HomeScreenPreview() {
     IO_ProjectTheme {
-        ArchiveScreen(navigateTo = {})
+        ArchiveScreen(navigateTo = {}, navigateBack = {})
     }
 }

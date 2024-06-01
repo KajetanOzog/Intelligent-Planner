@@ -19,13 +19,14 @@ import com.example.io_project.ui.components.TopBar
 @Composable
 fun StatsScreen(
     navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
             TopBar(
                 text = "Statystyki",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },
@@ -70,6 +71,6 @@ fun StatsScreen(
 @Composable
 fun StatsScreenPreview() {
     IO_ProjectTheme {
-        StatsScreen(navigateTo = {})
+        StatsScreen(navigateTo = {}, navigateBack = {})
     }
 }

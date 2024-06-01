@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.example.io_project.R
 
 @Composable
-fun FriendDisplay(
-    friend: String
+fun UserDisplay(
+    user: String
 ) {
     Column(
         horizontalAlignment = Alignment.Start,
@@ -34,7 +34,8 @@ fun FriendDisplay(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = friend
+                text = user,
+                style = MaterialTheme.typography.labelLarge
             )
         }
     }

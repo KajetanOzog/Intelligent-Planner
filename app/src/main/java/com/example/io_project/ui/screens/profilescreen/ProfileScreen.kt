@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     navigateTo: (route: String) -> Unit,
+    navigateBack: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val snackbarHostState = remember {
@@ -57,7 +58,7 @@ fun ProfileScreen(
         topBar = {
             TopBar(
                 text = "Profile",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },

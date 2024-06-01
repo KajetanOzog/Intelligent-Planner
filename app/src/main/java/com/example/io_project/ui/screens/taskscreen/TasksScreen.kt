@@ -35,6 +35,7 @@ import com.example.io_project.ui.screens.goalsscreen.NoGoalsText
 @Composable
 fun TasksScreen(
     navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val tasksViewModel: TasksViewModel = hiltViewModel()
@@ -43,7 +44,7 @@ fun TasksScreen(
         topBar = {
             TopBar(
                 text = "Nawyki",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },
@@ -107,6 +108,6 @@ fun TasksColumn(
 @Composable
 fun HomeScreenPreview() {
     IO_ProjectTheme {
-        TasksScreen(navigateTo = {})
+        TasksScreen(navigateTo = {}, navigateBack = {})
     }
 }

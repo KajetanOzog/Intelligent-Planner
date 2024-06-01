@@ -31,14 +31,16 @@ import com.example.io_project.Constants.ADD_GROUP_DIALOG
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Group
 import com.example.io_project.datamanagement.addFriends
+import com.example.io_project.ui.components.AddToGroupButton
 import com.example.io_project.ui.components.BottomBar
-import com.example.io_project.ui.components.FriendDisplay
 import com.example.io_project.ui.components.GroupDisplay
 import com.example.io_project.ui.components.TopBar
+import com.example.io_project.ui.components.UsersColumn
 
 @Composable
 fun SocialScreen(
     navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val socialViewModel: SocialViewModel = hiltViewModel()
@@ -47,7 +49,7 @@ fun SocialScreen(
         topBar = {
             TopBar(
                 text = "Społeczność",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },
@@ -56,9 +58,6 @@ fun SocialScreen(
                 navigateTo = navigateTo,
                 currentScreenName = "long_term_screen"
             )
-        },
-        floatingActionButton = {
-            //AddButton(navigateTo = navigateTo)
         }
     ) { paddingValues ->
         Column(
@@ -87,7 +86,7 @@ fun SocialScreen(
             ) {
                 Text(
                     text = "Grupy",
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.displayMedium
                 )
                 Icon(
                     Icons.Rounded.Add,
@@ -104,7 +103,7 @@ fun SocialScreen(
             if (socialViewModel.groupCount == 0) {
                 NoGroupsText()
             } else {
-                GroupsColumn(groups = socialViewModel.groups)
+                GroupsColumn(groups = socialViewModel.groups, navigateTo = navigateTo)
             }
 
 
@@ -120,7 +119,7 @@ fun SocialScreen(
             ) {
                 Text(
                     text = "Znajomi",
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.displayMedium
                 )
                 Icon(
                     Icons.Rounded.Add,
@@ -134,11 +133,10 @@ fun SocialScreen(
             }
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_medium)))
 
-            if (socialViewModel.friendCount == 0){
+            if (socialViewModel.friendCount == 0) {
                 NoFriendsText()
-            }
-            else {
-                FriendsColumn(friends = socialViewModel.friends)
+            } else {
+                UsersColumn(users = socialViewModel.friends)
             }
         }
     }
@@ -156,13 +154,16 @@ fun NoGroupsText() {
 }
 
 @Composable
-fun GroupsColumn(groups: List<Group>) {
+fun GroupsColumn(groups: List<Group>, navigateTo: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
         groups.forEach { group ->
-            GroupDisplay(group)
+            GroupDisplay(
+                navigateTo = navigateTo,
+                group = group
+            )
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
         }
     }
@@ -179,25 +180,11 @@ fun NoFriendsText() {
     }
 }
 
-@Composable
-fun FriendsColumn(friends: List<String>) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        friends.forEach { friend ->
-            FriendDisplay(friend)
-            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-        }
-    }
-}
-
-
 
 @Preview(showBackground = true)
 @Composable
 fun SocialScreenPreview() {
     IO_ProjectTheme {
-        SocialScreen(navigateTo = {})
+        SocialScreen(navigateTo = {}, navigateBack = {})
     }
 }

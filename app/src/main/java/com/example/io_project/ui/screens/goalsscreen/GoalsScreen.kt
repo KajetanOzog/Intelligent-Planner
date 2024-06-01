@@ -34,6 +34,7 @@ import com.example.io_project.ui.components.GoalDisplay
 @Composable
 fun GoalsScreen(
     navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val goalsViewModel: GoalsViewModel = hiltViewModel()
@@ -42,7 +43,7 @@ fun GoalsScreen(
         topBar = {
             TopBar(
                 text = "Cele długoterminowe",
-                navigateTo = navigateTo,
+                navigateBack = navigateBack,
                 canNavigateBack = true
             )
         },
@@ -101,6 +102,6 @@ fun GoalsColumn(
 @Composable
 fun GoalsScreenPreview() {
     IO_ProjectTheme {
-        GoalsScreen(navigateTo = {})
+        GoalsScreen(navigateTo = {}, navigateBack = {})
     }
 }
