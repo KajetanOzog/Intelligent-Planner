@@ -27,6 +27,8 @@ object Constants {
     const val ADD_ACTIVITY_DIALOG = "add_activity_dialog"
     const val ADD_GROUP_DIALOG = "add_group_dialog"
     const val ADD_FRIEND_DIALOG = "add_friend_dialog"
+    const val ADD_USER_TO_GROUP_DIALOG = "add_user_to_group_dialog"
+    const val ADD_EVENT_TO_GROUP_DIALOG = "add_event_to_group_dialog"
     const val PROFILE_SCREEN = "profile_screen"
     const val GOALS_SCREEN = "goals_screen"
     const val TASKS_SCREEN = "tasks_screen"
@@ -41,6 +43,9 @@ object Constants {
 
     //Values
     const val SPLASH_DELAY: Long = 500
+    const val DATE_FORMATTER_PATTERN: String = "EEE, MMM d yyyy"
+    const val DAY_BEGINNING_TIME: Int = 7
+    const val DAY_ENDING_TIME: Int = 19
 
     //Messages
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."

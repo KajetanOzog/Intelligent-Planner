@@ -4,22 +4,34 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.Constants.CALENDAR_SCREEN
 import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.SOCIAL_SCREEN
 import com.example.io_project.Constants.TASKS_SCREEN
 import com.example.io_project.R
+import com.example.io_project.dataclasses.Event
 import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.CalendarTile
@@ -33,11 +45,20 @@ fun HomeScreen(
     navigateBack: () -> Unit,
     navigateTo: (route: String) -> Unit
 ) {
+    val homeViewModel: HomeViewModel = hiltViewModel()
+    var eventsState: List<Event> by remember {
+        mutableStateOf(homeViewModel.todaysEvents)
+    }
+
     Scaffold(
         topBar = {
             TopBar(
                 text = stringResource(id = R.string.app_name),
                 navigateBack = navigateBack,
+                refreshAction = {
+                    homeViewModel.refreshData()
+                    eventsState = homeViewModel.todaysEvents
+                },
                 canNavigateBack = false
             )
         },
@@ -64,8 +85,17 @@ fun HomeScreen(
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
             GreetingTile()
+            Row {
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                Text(
+                    text = "Kalendarz",
+                    style = MaterialTheme.typography.displayMedium
+                )
+            }
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
 
             CalendarTile(
+                events = eventsState,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                     .clickable(onClick = { navigateTo(CALENDAR_SCREEN) })

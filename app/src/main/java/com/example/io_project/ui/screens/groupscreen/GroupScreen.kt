@@ -1,6 +1,7 @@
 package com.example.io_project.ui.screens.groupscreen
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -26,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.Constants.GROUP_SCREEN
 import com.example.io_project.R
+import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.Group
 import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.AddToGroupButton
@@ -34,6 +40,8 @@ import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
 import com.example.io_project.ui.components.UsersColumn
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
 fun GroupScreen(
@@ -43,6 +51,12 @@ fun GroupScreen(
     navigateBack: () -> Unit
 ) {
     val groupViewModel = GroupViewModel(groupJSON)
+    var eventsState: List<Event> by remember {
+        mutableStateOf(groupViewModel.eventsListState)
+    }
+    var dateState: String by remember {
+        mutableStateOf(groupViewModel.getDateString())
+    }
 
     Scaffold(
         topBar = {
@@ -59,12 +73,18 @@ fun GroupScreen(
             )
         },
         floatingActionButton = {
-            AddToGroupButton()
+            if (groupViewModel.currentUserIsAdmin()) {
+                AddToGroupButton(
+                    groupID = groupViewModel.group.groupID,
+                    navigateTo =  navigateTo
+                )
+            }
         }
     ) { paddingValues ->
         Column(
             modifier = modifier
                 .padding(paddingValues)
+                .verticalScroll(ScrollState(0))
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
             Row(
@@ -76,21 +96,34 @@ fun GroupScreen(
             ) {
                 Icon(
                     Icons.Rounded.ArrowBack,
-                    contentDescription = "Poprzedni dzień"
+                    contentDescription = "Poprzedni dzień",
+                    modifier = modifier
+                            .clickable {
+                        groupViewModel.getPreviousDay()
+                        dateState = groupViewModel.getDateString()
+                        eventsState = groupViewModel.eventsListState
+                    }
                 )
                 Text(
-                    text = "27 maj 2024",
+                    text = dateState,
                     style = MaterialTheme.typography.displayMedium
                 )
                 Icon(
                     Icons.Rounded.ArrowForward,
-                    contentDescription = "Poprzedni dzień"
+                    contentDescription = "Poprzedni dzień",
+                    modifier = modifier
+                        .clickable {
+                            groupViewModel.getNextDay()
+                            dateState = groupViewModel.getDateString()
+                            eventsState = groupViewModel.eventsListState
+                        }
                 )
             }
             CalendarTile(
+                events = eventsState,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
-                    .aspectRatio(0.9f)
+                    .aspectRatio(1f)
             )
             Text(
                 text = "Członkowie:",
@@ -98,8 +131,7 @@ fun GroupScreen(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
             )
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-            //TODO(Zamien na groupViewModel.members i zobacz czy wyświetla poprawnie userName dla członków grupy)
-            UsersColumn(users = groupViewModel.group.groupMembers)
+            UsersColumn(users = groupViewModel.members)
 
         }
     }

@@ -1,111 +1,141 @@
 package com.example.io_project.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.modifier.modifierLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
+import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
-import com.example.io_project.datamanagement.fetchEvents
-import com.example.io_project.ui.screens.calendarscreen.getCurrentDate
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 @Composable
-fun CalendarTile(date: String? = getCurrentDate(LocalDate.now()), modifier: Modifier = Modifier) {
+fun CalendarTile(events: List<Event>, modifier: Modifier = Modifier) {
+    val eventsCount: Int = events.size
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
+            .verticalScroll(ScrollState(0))
             .background(MaterialTheme.colorScheme.outlineVariant)
             .padding(dimensionResource(id = R.dimen.padding_medium))
     ) {
-        Text(
-            text = "Kalendarz",
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier
-                .padding(start = 16.dp, top = 5.dp, bottom = 15.dp)
-        )
 
-        var list: List<Event> = emptyList()
-
-        if (date != null) {
-            LaunchedEffect(Unit){
-                Firebase.auth.currentUser?.let {
-                    list = fetchEvents(
-                        userID = it.uid,
-                        targetDate = date
-                    ) ?: emptyList()
-                }
+        if (eventsCount == 0) {
+            NoEventsText()
+        } else {
+            for (event in events) {
+                EventDisplay(event = event)
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             }
         }
-        Log.d("CalendarTile","Fetched Events: ${list}")
 
-        for(event in list) {
-            Log.d("CalendarTile","Fetched Events: ${event}")
-            EventDisplay(date = event.name, eventName = event.name)
-        }
-
-
-//        var i = 0
-//        while ((i < 3) && (i < (list?.size ?: 3))) {
-//            if (date != null) {
-//                EventDisplay(list?.get(i)?.date ?: "", list?.get(i)?.name ?: "")
-//            }
-//            i++
-//        }
 
     }
 }
 
 @Composable
-fun EventDisplay(date: String, eventName: String, modifier: Modifier = Modifier){
+fun NoEventsText() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(dimensionResource(id = R.dimen.padding_small))
+            .fillMaxSize()
+    ) {
+        Text(
+            text = "Brak wydarzeń na dany dzień.",
+            style = MaterialTheme.typography.labelSmall
+        )
+    }
+}
+
+
+@Composable
+fun EventDisplay(event: Event, modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, top = 30.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.error)
+            .padding(dimensionResource(id = R.dimen.padding_small))
     ) {
-        Row (
-            modifier = Modifier
-                .align(Alignment.Start)
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = date,
-                style = MaterialTheme.typography.labelSmall
+                text = event.name,
+                style = MaterialTheme.typography.displayMedium,
+                color = Color.White
+            )
+            if (event.alarm) {
+                Icon(
+                    Icons.Rounded.Notifications,
+                    tint = Color.White,
+                    contentDescription = "Czy ustawiony alarm"
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = event.time,
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.White
+            )
+            Text(
+                text = event.category,
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.White
             )
         }
 
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-        ) {
-            Text(
-                text = eventName,
-                style = MaterialTheme.typography.displayMedium
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EventDisplayPreview() {
+    IO_ProjectTheme {
+        EventDisplay(
+            event = Event(
+                name = "Spotkanie",
+                date = "sun, 2 Jun 2024",
+                time = "8:00",
+                category = "Szkoła",
+                alarm = true
             )
-        }
+        )
     }
 }

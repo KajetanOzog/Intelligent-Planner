@@ -11,4 +11,13 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
+    <color name="day_sky_blue">#87ceeb</color>
+    <color name="evening_sky_gray">#454B56</color>
+    <color name="evening_sky_blue">#2e4482</color>
+    <color name="calendar_red">#EF476F</color>
+    <color name="calendar_orange">#F78C6B</color>
+    <color name="calendar_yellow">#FFD166</color>
+    <color name="calendar_green">#06D6A0</color>
+    <color name="calendar_light_blue">#118AB2</color>
+    <color name="calendar_dark_blue">#073B4C</color>
 </resources>

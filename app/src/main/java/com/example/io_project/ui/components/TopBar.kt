@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.compose.IO_ProjectTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,14 +35,18 @@ fun TopBar(
     modifier: Modifier = Modifier,
     text: String,
     navigateBack: () -> Unit,
-    canNavigateBack: Boolean
+    canNavigateBack: Boolean,
+    refreshAction: () -> Unit = {}
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = text,
-                style = MaterialTheme.typography.displayMedium
-            )
+            Row {
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.displayMedium
+                )
+            }
         },
         navigationIcon = {
             if (canNavigateBack) {
@@ -52,6 +59,9 @@ fun TopBar(
                     )
                 }
             }
+        },
+        actions = {
+            RefreshAction(refreshAction = refreshAction)
         }
 
     )
@@ -59,35 +69,19 @@ fun TopBar(
 
 
 @Composable
-fun TopBar2(
-    modifier: Modifier = Modifier,
-    title: String,
-    navigateTo: (route: String) -> Unit,
-    canNavigateBack: Boolean
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .padding(PaddingValues(dimensionResource(id = R.dimen.padding_medium)))
-            .fillMaxWidth()
-    ) {
-        if (canNavigateBack) {
-            TextButton(
-                onClick = { navigateTo("home_screen") }
-            ) {
-                Icon(
-                    Icons.Rounded.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        } else {
-            Spacer(
-                modifier = modifier.width(dimensionResource(id = R.dimen.padding_medium))
-            )
-        }
-        Text(
-            text = title,
-            style = MaterialTheme.typography.displayMedium
+fun RefreshAction(refreshAction: () -> Unit) {
+    IconButton(onClick = { refreshAction() }) {
+        Icon(
+            Icons.Rounded.Refresh,
+            contentDescription = "Refresh data",
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TopBarPreview() {
+    IO_ProjectTheme {
+        TopBar(text = "Intelligent planner", navigateBack = {}, canNavigateBack = false)
     }
 }

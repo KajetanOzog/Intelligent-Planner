@@ -13,6 +13,8 @@ import androidx.navigation.navArgument
 import com.example.io_project.ui.dialogs.AddActivityDialog
 import com.example.io_project.ui.dialogs.AddFriendDialog
 import com.example.io_project.ui.dialogs.AddGroupDialog
+import com.example.io_project.ui.dialogs.AddUserToGroupDialog
+import com.example.io_project.ui.dialogs.AddEventToGroupDialog
 import com.example.io_project.ui.screens.archivescreen.ArchiveScreen
 import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.authscreen.AuthScreen
@@ -37,11 +39,7 @@ fun NavGraph(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        // TODO:
-        // 1) Zrobic nawigacje do pozostalych ekranow
-        // 2) Ustawic HomeScreen na startowy gdy uzytkownik jest juz zalogowany
-        //    (to moze wymagac trzymania stanu zalogowania w viewmodelu DO SPRAWDZENIA)
-        // 3) Dodac CONSTY zeby podmienic stringi uzywane do nawigacji (zgodnie z SOLID)
+        // TODO: Dodac CONSTY zeby podmienic stringi uzywane do nawigacji (zgodnie z SOLID)
 
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(navigateTo = { navController.navigate(it) },
@@ -103,6 +101,32 @@ fun NavGraph(
         }
         dialog(route = Screen.AddFriendDialog.route) {
             AddFriendDialog(navigateBack = { navController.popBackStack() })
+        }
+        dialog(
+            route = "${Screen.AddEventToGroupDialog.route}/{groupID}",
+            arguments = listOf(
+                navArgument(name = "groupID") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            AddEventToGroupDialog(
+                groupID = backStackEntry.arguments?.getString("groupID") ?: "",
+                navigateBack = { navController.popBackStack() }
+            )
+        }
+        dialog(
+            route = "${Screen.AddUserToGroupDialog.route}/{groupID}",
+            arguments = listOf(
+                navArgument(name = "groupID") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            AddUserToGroupDialog(
+                groupID = backStackEntry.arguments?.getString("groupID") ?: "",
+                navigateBack = { navController.popBackStack() }
+            )
         }
     }
 }

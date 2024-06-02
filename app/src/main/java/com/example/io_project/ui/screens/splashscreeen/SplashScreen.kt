@@ -38,7 +38,7 @@ fun SplashScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "Intelligent planer",
+            text = "Intelligent planner",
             style = MaterialTheme.typography.displayLarge,
             fontWeight = FontWeight.Bold
         )

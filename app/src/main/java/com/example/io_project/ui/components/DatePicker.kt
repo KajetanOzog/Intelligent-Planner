@@ -33,7 +33,6 @@ fun DatePickerCustom(
     label: String
 ) {
     val datePickerState: DatePickerState = rememberDatePickerState()
-    val calendar: Calendar = Calendar.getInstance()
     var dialogVisible: Boolean by remember { mutableStateOf(false) }
     val dateState = datePickerState.selectedDateMillis?.let {
         formatDate(it)

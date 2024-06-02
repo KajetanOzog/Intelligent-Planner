@@ -13,16 +13,15 @@ import java.lang.Thread.sleep
 suspend fun addFriends(userId: String, email: String) {
     val firestore = FirebaseFirestore.getInstance()
 
-    var secondUserId = ""
+    var secondUserID = ""
     firestore.collection("metadata").document("user_email")
         .get().addOnSuccessListener { document ->
-            val userDate = document.data?.get(email) as? Map<String, String>
-            secondUserId = userDate?.get("uid") ?: ""
-            if (secondUserId != "") {
+            val userData = document.data?.get(email) as? Map<String, String>
+            secondUserID = userData?.get("uid") ?: ""
+            if (secondUserID != "") {
                 val userRef = firestore.collection("users").document(userId)
-                val secondUserRef = firestore.collection("users").document(secondUserId)
-
-                userRef.update("friends", FieldValue.arrayUnion(secondUserId))
+                val secondUserRef = firestore.collection("users").document(secondUserID)
+                userRef.update("friends", FieldValue.arrayUnion(secondUserID))
                 secondUserRef.update("friends", FieldValue.arrayUnion(userId))
                 println("Users added to each other's friends list successfully.")
             } else {
@@ -32,7 +31,6 @@ suspend fun addFriends(userId: String, email: String) {
             Log.d("AddFriend", "${it.message}")
             println("No document found for provided email address.")
         }
-    Log.d("AddFriend", secondUserId)
 
 
 }

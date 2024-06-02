@@ -10,10 +10,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.TASKS_SCREEN
@@ -30,23 +37,33 @@ import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.TopBar
 import com.example.io_project.R
+import com.example.io_project.dataclasses.Event
 import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.SmallTile
+import com.example.io_project.ui.components.formatDate
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-fun getCurrentDate(currentDate: LocalDate): String{
-    val formatter = DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
-    return currentDate.format(formatter)
-}
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateTo: (route: String) -> Unit
 ) {
-    var currentData by remember { mutableStateOf(LocalDate.now()) }
+    val datePickerState: DatePickerState = rememberDatePickerState()
+    var datePickerVisible by remember {
+        mutableStateOf(false)
+    }
+    val calendarViewModel: CalendarViewModel = hiltViewModel()
+    var eventsState: List<Event> by remember {
+        mutableStateOf(calendarViewModel.eventsListState)
+    }
+    var dateState = datePickerState.selectedDateMillis?.let {
+        formatDate(it)
+    } ?: ""
 
     Scaffold(
         topBar = {
@@ -82,24 +99,35 @@ fun CalendarScreen(
                     Icons.Rounded.ArrowBack,
                     contentDescription = "Poprzedni dzień",
                     modifier = modifier
-                        .clickable { currentData = currentData.minusDays(1)}
+                        .clickable {
+                            calendarViewModel.getPreviousDay()
+                            dateState = calendarViewModel.getDateString()
+                            eventsState = calendarViewModel.eventsListState
+                        }
                 )
                 Text(
-                    text = getCurrentDate(currentData),
-                    style = MaterialTheme.typography.displayMedium
+                    text = calendarViewModel.getDateString(),
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = Modifier.clickable {
+                        datePickerVisible = !datePickerVisible
+                    }
                 )
                 Icon(
                     Icons.Rounded.ArrowForward,
-                    contentDescription = "Poprzedni dzień",
+                    contentDescription = "Następny dzień",
                     modifier = modifier
-                            .clickable { currentData = currentData.plusDays(1)}
+                            .clickable {
+                                calendarViewModel.getNextDay()
+                                dateState = calendarViewModel.getDateString()
+                                eventsState = calendarViewModel.eventsListState
+                            }
                 )
             }
             CalendarTile(
-                date = getCurrentDate(currentData),
+                events = eventsState,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
-                    .aspectRatio(0.9f)
+                    .aspectRatio(1f)
             )
             Row() {
                 SmallTile(
@@ -118,7 +146,34 @@ fun CalendarScreen(
                 )
             }
         }
-
+    }
+    if (datePickerVisible) {
+        DatePickerDialog(
+            onDismissRequest = {
+                datePickerVisible = false
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        calendarViewModel.changeDate(dateState)
+                        datePickerVisible = false
+                    }
+                ) {
+                    Text("Wybierz")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        datePickerVisible = false
+                    }
+                ) {
+                    Text("Anuluj")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
     }
 }
 

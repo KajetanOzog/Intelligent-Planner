@@ -1,32 +1,35 @@
 package com.example.io_project.datamanagement
 
+import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
-suspend fun addUserToGroup(email: String, groupID: String)
-{
+suspend fun addUserToGroup(email: String, groupID: String) {
     val firestore = FirebaseFirestore.getInstance()
 
-    val metadataRef = firestore.collection("metadata").document("user_email")
-    val document = metadataRef.get().await()
+    var userID = ""
 
-    if (document.exists())
-    {
-        val userID = document.getString("$email.uid")
-        if (userID != null)
-        {
-            val userRef = firestore.collection("users").document(userID)
-            userRef.update("groups", FieldValue.arrayUnion(groupID))
+    firestore.collection("metadata").document("user_email")
+        .get().addOnSuccessListener { document ->
+            val userData = document.data?.get(email) as? Map<String, String>
+            userID = userData?.get("uid") ?: ""
 
-            val groupRef = firestore.collection("metadata").document("groups")
-            groupRef.update("$groupID.groupMembers", FieldValue.arrayUnion(userID))
+            if (userID != "") {
+                val userRef = firestore.collection("users").document(userID)
+                userRef.update("groups", FieldValue.arrayUnion(groupID))
 
-            println("User added to group.")
-        } else {
-            println("No user found with the provided email.")
+                val groupRef = firestore.collection("metadata").document("groups")
+                groupRef.update("$groupID.groupMembers", FieldValue.arrayUnion(userID))
+
+                println("User added to group.")
+            } else {
+                println("No user found with the provided email address.")
+            }
+
+        }.addOnFailureListener {
+            Log.d("UserToGroup", "${it.message}")
+            println("No document found for provided email address.")
         }
-    } else {
-        println("No document found in metadata/user_email.")
-    }
+
 }
