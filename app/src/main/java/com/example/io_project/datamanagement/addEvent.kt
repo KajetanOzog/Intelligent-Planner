@@ -7,7 +7,6 @@ import kotlinx.coroutines.tasks.await
 
 suspend fun addEventToFirestore(userID: String, event: Event, isRegular: Boolean) {
     val firestore = FirebaseFirestore.getInstance()
-    println(userID)
     val userDocumentRef = firestore.collection("users").document(userID)
     try {
         val formattedDate = getDayOfWeek(event.date)
