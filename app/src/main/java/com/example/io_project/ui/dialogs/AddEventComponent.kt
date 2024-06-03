@@ -11,9 +11,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.R
 import com.example.io_project.ui.components.CheckboxRow
+import com.example.io_project.ui.components.ColorDropDownPicker
 import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.OutlinedTextFieldCustom
@@ -24,7 +27,13 @@ fun AddEventComponent(
     addEventViewModel: AddEventViewModel = hiltViewModel()
 ) {
     val categories = listOf("Szkoła", "Praca", "Aktywność fizyczna", "Znajomi", "Inne")
-    val colors = listOf("Czerwony", "Niebieski", "Zielony")
+    val colors = listOf(
+        colorResource(id = R.color.calendar_dark_blue),
+        colorResource(id = R.color.calendar_green),
+        colorResource(id = R.color.calendar_orange),
+        colorResource(id = R.color.calendar_red),
+        colorResource(id = R.color.calendar_light_blue)
+    )
 
     Column(
         modifier = Modifier
@@ -47,7 +56,7 @@ fun AddEventComponent(
             label = "Kategoria"
         )
 
-        DropDownPicker(
+        ColorDropDownPicker(
             onValueChange = addEventViewModel._changeColor,
             argList = colors,
             label = "Kolor"
@@ -91,18 +100,18 @@ fun AddEventComponent(
                 modifier = Modifier.weight(1f)
             )
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        CheckboxRow(
+            onValueChange = addEventViewModel._changeAlarm,
+            label = "Alarm"
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
         CheckboxRow(
             onValueChange = addEventViewModel._changeWeekly,
             label = "Tygodniowe"
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
-        CheckboxRow(
-            onValueChange = addEventViewModel._changeAlarm,
-            label = "Alarm"
-        )
+        
 
         Spacer(modifier = Modifier.height(8.dp))
         CheckboxRow(

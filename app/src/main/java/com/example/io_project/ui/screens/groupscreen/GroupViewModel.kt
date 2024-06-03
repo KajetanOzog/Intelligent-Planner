@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.groupscreen
 
+import android.util.Log
 import androidx.compose.ui.graphics.vector.Group
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,9 @@ import com.example.io_project.datamanagement.getUserNameFromUID
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,32 +23,35 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-
-class GroupViewModel(
-    groupJSON: String
+@HiltViewModel(assistedFactory = GroupViewModel.GroupViewModelFactory::class)
+class GroupViewModel @AssistedInject constructor(
+    @Assisted val groupJSON: String
 ) : ViewModel() {
+    @AssistedFactory
+    interface GroupViewModelFactory {
+        fun create(groupJSON: String): GroupViewModel
+    }
+
     var group: Group = Group()
     var members = ArrayList<String>()
 
     var eventsListState = mutableListOf<Event>()
-    val dateState = MutableStateFlow(LocalDate.now())
+    private var dateState = LocalDate.now()
 
     init {
+        Log.d("GroupVM","$dateState")
         group = Gson().fromJson(groupJSON, Group::class.java)
         refreshData()
     }
 
-    fun getDateString() = dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+    fun getDateString(): String = dateState.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
     fun changeDate(newDate: String) {
-        dateState.update {
-            LocalDate.parse(
-                newDate,
-                DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
-            )
-        }
+        dateState = LocalDate.parse(
+            newDate,
+            DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
+        )
         updateEvents()
     }
-
 
 
     fun currentUserIsAdmin(): Boolean {
@@ -54,28 +61,31 @@ class GroupViewModel(
     fun updateEvents() {
         runBlocking {
             Firebase.auth.currentUser?.let {
+                Log.d("GroupVM", "$dateState")
                 //TODO(Zmien funkcje na pobierajaca eventy z danej grupy)
-                eventsListState = fetchEvents(it.uid, getDateString())?.toMutableList() ?: eventsListState
+                eventsListState = fetchEvents(it.uid, getDateString())?.toMutableList()
+                    ?: emptyList<Event>().toMutableList()
+                Log.d("GroupVM", "$eventsListState")
             }
         }
     }
 
     fun getPreviousDay() {
-        dateState.update { date -> date.minusDays(1) }
+        dateState = dateState.minusDays(1)
         updateEvents()
     }
 
     fun getNextDay() {
-        dateState.update { date -> date.plusDays(1) }
+        dateState = dateState.plusDays(1)
         updateEvents()
     }
 
     fun refreshData() {
         runBlocking {
+            updateEvents()
             for (member in group.groupMembers) {
                 members.add(getUserNameFromUID(member))
             }
-            updateEvents()
         }
     }
 

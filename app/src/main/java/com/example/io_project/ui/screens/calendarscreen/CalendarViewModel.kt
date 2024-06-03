@@ -24,19 +24,18 @@ class CalendarViewModel @Inject constructor(
     val dateState = MutableStateFlow(LocalDate.now())
 
     init {
+        Log.d("CalendarVM", "$dateState")
         updateEvents()
     }
 
-    fun getDateString() = dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+    fun getDateString(): String = dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
     fun changeDate(newDate: String) {
-        Log.d("CalendarVM", newDate)
         dateState.update {
              LocalDate.parse(
                 newDate,
                 DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
             )
         }
-        Log.d("CalendarVM", "${dateState.value}")
         updateEvents()
     }
 
@@ -58,4 +57,7 @@ class CalendarViewModel @Inject constructor(
         updateEvents()
     }
 
+    fun refreshData() {
+        updateEvents()
+    }
 }

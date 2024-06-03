@@ -31,6 +31,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
+import com.example.io_project.Constants.CALENDAR_SCREEN
 import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.TASKS_SCREEN
 import com.example.io_project.ui.components.BottomBar
@@ -58,9 +59,9 @@ fun CalendarScreen(
         mutableStateOf(false)
     }
     val calendarViewModel: CalendarViewModel = hiltViewModel()
-    var eventsState: List<Event> by remember {
-        mutableStateOf(calendarViewModel.eventsListState)
-    }
+//    var eventsState: List<Event> by remember {
+//        mutableStateOf(calendarViewModel.eventsListState)
+//    }
     var dateState = datePickerState.selectedDateMillis?.let {
         formatDate(it)
     } ?: ""
@@ -70,13 +71,14 @@ fun CalendarScreen(
             TopBar(
                 text = "Calendar",
                 navigateBack = navigateBack,
-                canNavigateBack = true
+                canNavigateBack = true,
+                refreshAction = { calendarViewModel.refreshData() }
             )
         },
         bottomBar = {
             BottomBar(
                 navigateTo = navigateTo,
-                currentScreenName = "calendar_screen"
+                currentScreenName = CALENDAR_SCREEN
             )
         },
         floatingActionButton = {
@@ -102,7 +104,7 @@ fun CalendarScreen(
                         .clickable {
                             calendarViewModel.getPreviousDay()
                             dateState = calendarViewModel.getDateString()
-                            eventsState = calendarViewModel.eventsListState
+                            //eventsState = calendarViewModel.eventsListState
                         }
                 )
                 Text(
@@ -119,12 +121,12 @@ fun CalendarScreen(
                             .clickable {
                                 calendarViewModel.getNextDay()
                                 dateState = calendarViewModel.getDateString()
-                                eventsState = calendarViewModel.eventsListState
+                                //eventsState = calendarViewModel.eventsListState
                             }
                 )
             }
             CalendarTile(
-                events = eventsState,
+                events = calendarViewModel.eventsListState,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                     .aspectRatio(1f)

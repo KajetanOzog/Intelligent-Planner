@@ -14,10 +14,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,9 +46,11 @@ import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
 import com.example.io_project.ui.components.UsersColumn
+import com.example.io_project.ui.components.formatDate
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GroupScreen(
     modifier: Modifier = Modifier,
@@ -50,20 +58,24 @@ fun GroupScreen(
     navigateTo: (String) -> Unit,
     navigateBack: () -> Unit
 ) {
-    val groupViewModel = GroupViewModel(groupJSON)
-    var eventsState: List<Event> by remember {
-        mutableStateOf(groupViewModel.eventsListState)
+    val datePickerState: DatePickerState = rememberDatePickerState()
+    var datePickerVisible by remember {
+        mutableStateOf(false)
     }
-    var dateState: String by remember {
-        mutableStateOf(groupViewModel.getDateString())
+    val groupViewModel = hiltViewModel<GroupViewModel, GroupViewModel.GroupViewModelFactory> {
+        factory -> factory.create(groupJSON)
     }
+    var dateState = datePickerState.selectedDateMillis?.let {
+        formatDate(it)
+    } ?: ""
 
     Scaffold(
         topBar = {
             TopBar(
                 text = groupViewModel.group.groupName,
                 navigateBack = navigateBack,
-                canNavigateBack = true
+                canNavigateBack = true,
+                refreshAction = { groupViewModel.refreshData() }
             )
         },
         bottomBar = {
@@ -76,7 +88,7 @@ fun GroupScreen(
             if (groupViewModel.currentUserIsAdmin()) {
                 AddToGroupButton(
                     groupID = groupViewModel.group.groupID,
-                    navigateTo =  navigateTo
+                    navigateTo = navigateTo
                 )
             }
         }
@@ -101,12 +113,14 @@ fun GroupScreen(
                             .clickable {
                         groupViewModel.getPreviousDay()
                         dateState = groupViewModel.getDateString()
-                        eventsState = groupViewModel.eventsListState
                     }
                 )
                 Text(
-                    text = dateState,
-                    style = MaterialTheme.typography.displayMedium
+                    text = groupViewModel.getDateString(),
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = Modifier.clickable {
+                        datePickerVisible = !datePickerVisible
+                    }
                 )
                 Icon(
                     Icons.Rounded.ArrowForward,
@@ -115,12 +129,11 @@ fun GroupScreen(
                         .clickable {
                             groupViewModel.getNextDay()
                             dateState = groupViewModel.getDateString()
-                            eventsState = groupViewModel.eventsListState
                         }
                 )
             }
             CalendarTile(
-                events = eventsState,
+                events = groupViewModel.eventsListState,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                     .aspectRatio(1f)
@@ -133,6 +146,34 @@ fun GroupScreen(
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             UsersColumn(users = groupViewModel.members)
 
+        }
+    }
+    if (datePickerVisible) {
+        DatePickerDialog(
+            onDismissRequest = {
+                datePickerVisible = false
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        groupViewModel.changeDate(dateState)
+                        datePickerVisible = false
+                    }
+                ) {
+                    Text("Wybierz")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        datePickerVisible = false
+                    }
+                ) {
+                    Text("Anuluj")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
         }
     }
 }
