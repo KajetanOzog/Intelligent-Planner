@@ -4,35 +4,17 @@ import android.util.Log
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.Group
 
-suspend fun fetchUserGroups(userID: String): List<Group>? {
-    val documentSnapshot = getUserDocument(userID)
-    val returnList = ArrayList<Group>()
-    try {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            @Suppress("UNCHECKED_CAST")
-            val groupIDs = documentSnapshot.get("groups") as? List<String> ?: emptyList()
-            Log.d("FetchUserGroups", "GroupIDs: $groupIDs")
-            val groupDocument = getGroupDocument()
-            for (groupID in groupIDs) {
-                if (groupDocument != null) {
-                    Log.d("FetchUserGroups", "$groupDocument, ${groupDocument.exists()}")
-                }
-                if (groupDocument != null && groupDocument.exists()) {
-                    val groupData = groupDocument.data?.get(groupID) as? Map<String, Any>
-                    Log.d("FetchUserGroups", "GroupData: $groupData")
-                    if (groupData != null) {
-                        val group = mapToGroup(groupData)
-                        returnList.add(group)
-                    }
-                }
-            }
-            return returnList
+suspend fun fetchGroup(groupID: String): Group? {
+    @Suppress("UNCHECKED_CAST")
+    val groupDocument = getGroupDocument()
+    if(groupDocument != null)
+    {
+        val groupData = groupDocument.data?.get(groupID) as? Map<String, Any>
+        return if (groupData != null) {
+            mapToGroup(groupData)
         } else {
-            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+            null
         }
-    } catch (e: Exception) {
-        println("Błąd podczas pobierania danych dla danego dnia: ${e.message}")
-        e.printStackTrace()
     }
     return null
 }

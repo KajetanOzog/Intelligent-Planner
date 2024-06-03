@@ -3,7 +3,7 @@ package com.example.io_project.datamanagement
 import com.example.io_project.dataclasses.Event
 
 suspend fun fetchGroupsEvents(userID: String): Map<String, List<Event>>? {
-    val groups = fetchGroups(userID)
+    val groups = fetchUserGroups(userID)
     val groupEventsMap = mutableMapOf<String, List<Event>>()
 
     try {

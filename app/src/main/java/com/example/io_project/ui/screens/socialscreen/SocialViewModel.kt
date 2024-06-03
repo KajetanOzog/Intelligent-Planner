@@ -2,14 +2,12 @@ package com.example.io_project.ui.screens.socialscreen
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.io_project.dataclasses.Group
 import com.example.io_project.datamanagement.fetchFriends
-import com.example.io_project.datamanagement.fetchGroups
+import com.example.io_project.datamanagement.fetchUserGroups
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -32,7 +30,7 @@ class SocialViewModel @Inject constructor(
     fun getGroupsList() {
          runBlocking {
             Firebase.auth.currentUser?.let {
-                groups = fetchGroups(it.uid) ?: emptyList()
+                groups = fetchUserGroups(it.uid) ?: emptyList()
                 groupCount = groups.size
             }
         }
