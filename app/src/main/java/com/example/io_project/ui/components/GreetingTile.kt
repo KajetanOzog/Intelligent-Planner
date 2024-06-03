@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
@@ -57,6 +58,7 @@ fun GreetingTile(modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
             .fillMaxWidth()
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp))
             .background(backGroundColor)
             .padding(dimensionResource(id = R.dimen.padding_medium))

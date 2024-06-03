@@ -33,7 +33,7 @@ fun AddButtonExtendable(
 ) {
     Row(
         modifier = Modifier
-            .shadow(dimensionResource(id = R.dimen.padding_button))
+            .shadow(elevation = dimensionResource(id = R.dimen.padding_button), shape = RoundedCornerShape(dimensionResource(id = R.dimen.padding_small)))
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.padding_small)))
             .background(MaterialTheme.colorScheme.onPrimary)
             .clickable { onClick(dialogDestination) }

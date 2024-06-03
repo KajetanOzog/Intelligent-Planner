@@ -36,6 +36,10 @@ class AddGoalViewModel @Inject constructor(
         }
     }
 
+    fun necessaryArgumentsProvided(): Boolean {
+        return (goalState.value.name != "") && (goalState.value.deadline != "")
+    }
+
     val _changeName: (String) -> Unit = { it -> changeName(it) }
     fun changeName(newName: String) {
         goalState.update { currentState -> currentState.copy(name = newName) }

@@ -33,6 +33,7 @@ object Constants {
     const val GOALS_SCREEN = "goals_screen"
     const val TASKS_SCREEN = "tasks_screen"
     const val SOCIAL_SCREEN = "social_screen"
+    const val SPLASH_SCREEN = "splash_screen"
     const val GROUP_SCREEN = "group_screen"
     const val HOME_SCREEN = "home_screen"
     const val CALENDAR_SCREEN = "calendar_screen"
@@ -46,6 +47,8 @@ object Constants {
     const val DATE_FORMATTER_PATTERN: String = "EEE, MMM d yyyy"
     const val DAY_BEGINNING_TIME: Int = 7
     const val DAY_ENDING_TIME: Int = 19
+    const val DEFAULT_COLOR_HEX: String = "#FF073B4C"
+    const val GROUP_COLOR_HEX: String = "#FFFFD166"
 
     //Messages
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."

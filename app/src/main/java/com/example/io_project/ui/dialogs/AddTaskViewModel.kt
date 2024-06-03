@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.io_project.dataclasses.Task
 import com.example.io_project.datamanagement.addGoalToFirestore
 import com.example.io_project.datamanagement.addTaskToFirestore
+import com.example.io_project.notifications.AlarmScheduler
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,6 +40,10 @@ class AddTaskViewModel @Inject constructor(
     val _changeName: (String) -> Unit = { it -> changeName(it) }
     fun changeName(newName: String) {
         taskState.update { currentState -> currentState.copy(name = newName) }
+    }
+
+    fun necessaryArgumentsProvided(): Boolean {
+        return (taskState.value.name != "")
     }
 
 }

@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.getSystemService
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.IO_ProjectTheme
@@ -33,7 +35,8 @@ class MainActivity :
 {
 
     private lateinit var navController: NavHostController
-    private val viewModel by viewModels<AuthViewModel>()
+    private lateinit var dataStore: DataStore<Preferences>
+
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

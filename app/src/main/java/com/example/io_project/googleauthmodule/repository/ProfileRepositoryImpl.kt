@@ -21,6 +21,7 @@ class ProfileRepositoryImpl @Inject constructor(
     override val displayName = auth.currentUser?.displayName.toString()
     override val photoUrl = auth.currentUser?.photoUrl.toString()
 
+
     override suspend fun signOut(): SignOutResponse {
         return try {
             oneTapClient.signOut().await()

@@ -29,7 +29,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalStdlibApi::class)
 @Composable
 fun ColorDropDownPicker(
     modifier: Modifier = Modifier,
@@ -38,7 +37,7 @@ fun ColorDropDownPicker(
     label: String,
 ) {
     var selectedValue by remember { mutableStateOf(argList[0]) }
-    var selectedValueHex = Integer.toHexString(selectedValue.toArgb())
+    var selectedValueHex = "#" + Integer.toHexString(selectedValue.toArgb())
     var expanded by remember { mutableStateOf(false) }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
     val expansionIcon =
@@ -84,13 +83,13 @@ fun ColorDropDownPicker(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = Integer.toHexString(itemName.toArgb()),
+                            text = "#" + Integer.toHexString(itemName.toArgb()),
                             color = Color.White
                         )
                            },
                     onClick = {
                         selectedValue = itemName
-                        onValueChange(Integer.toHexString(itemName.toArgb()))
+                        onValueChange("#" + Integer.toHexString(itemName.toArgb()))
                         expanded = false
                     },
                     modifier = Modifier.background(itemName)

@@ -2,6 +2,7 @@ package com.example.io_project.ui.dialogs
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -108,7 +109,7 @@ fun AddActivityDialog(
 
             Spacer(modifier = modifier.padding(4.dp))
 
-            when (currentDialog){
+            when (currentDialog) {
                 "Event" -> AddEventComponent(addEventViewModel = addEventViewModel)
                 "Task" -> AddTaskComponent(addTaskViewModel = addTaskViewModel)
                 "Goal" -> AddGoalComponent(addGoalViewModel = addGoalViewModel)
@@ -125,42 +126,61 @@ fun AddActivityDialog(
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                            when(currentDialog) {
+                            when (currentDialog) {
                                 "Event" -> {
-                                    addEventViewModel.addEvent()
-                                    if (addEventViewModel.eventState.value.reminder) {
-                                        val alarm = Alarm(
-                                            message = addEventViewModel.eventState.value.name,
-                                            time = LocalDateTime.of(
-                                                LocalDate.parse(
-                                                    addEventViewModel.eventState.value.date,
-                                                    DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
-                                                ),
-                                                LocalTime.parse(addEventViewModel.eventState.value.reminderTime)
-                                            ),
-                                            sound = addEventViewModel.eventState.value.alarm
-                                        )
-                                        if (addEventViewModel.eventState.value.weekly) {
-                                            alarmScheduler.scheduleWeekly(alarm)
-                                            Log.d("AddActDia", "Scheduling weekly event")
-                                        }
-                                        else {
-                                            alarmScheduler.scheduleSingle(alarm)
-                                            Log.d("AddActDia", "Scheduling single event")
-                                        }
+                                    if (addEventViewModel.eventAddedSuccessfully(alarmScheduler)) {
+                                        Toast.makeText(
+                                            context,
+                                            "Dodano wydarzenie",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        navigateBack()
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Uzupełnij wszysktie dane",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
-                                    Log.d("EVENT", "New Event was added")
+
                                 }
+
                                 "Goal" -> {
-                                    addGoalViewModel.addGoal()
-                                    Log.d("GOAL", "New Goal was added")
+                                    if (addGoalViewModel.necessaryArgumentsProvided()) {
+                                        addGoalViewModel.addGoal()
+                                        Toast.makeText(
+                                            context,
+                                            "Dodano nowy cel",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        navigateBack()
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Uzupełnij wszysktie dane",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
+
                                 "Task" -> {
-                                    addTaskViewModel.addTask()
-                                    Log.d("TASK", "New Task was added")
+                                    if (addTaskViewModel.necessaryArgumentsProvided()) {
+                                        addTaskViewModel.addTask()
+                                        Toast.makeText(
+                                            context,
+                                            "Dodano nowe zadanie",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        navigateBack()
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Uzupełnij wszysktie dane",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
-                            navigateBack()
                         }
 
                     },

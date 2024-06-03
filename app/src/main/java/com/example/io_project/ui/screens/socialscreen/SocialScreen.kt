@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.Constants.ADD_FRIEND_DIALOG
 import com.example.io_project.Constants.ADD_GROUP_DIALOG
+import com.example.io_project.Constants.SOCIAL_SCREEN
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Group
 import com.example.io_project.datamanagement.addFriends
@@ -56,7 +57,7 @@ fun SocialScreen(
         bottomBar = {
             BottomBar(
                 navigateTo = navigateTo,
-                currentScreenName = "long_term_screen"
+                currentScreenName = SOCIAL_SCREEN
             )
         }
     ) { paddingValues ->
@@ -66,16 +67,6 @@ fun SocialScreen(
                 .verticalScroll(ScrollState(0))
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
-
-
-//            Text(
-//                text = "Potwierdź udział",
-//                style = MaterialTheme.typography.labelLarge,
-//                modifier = modifier
-//                    .fillMaxWidth()
-//                    .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
-//            )
-//            SmallTile()
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,

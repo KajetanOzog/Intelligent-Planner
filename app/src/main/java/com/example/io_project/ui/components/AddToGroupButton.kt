@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.io_project.Constants
+import com.example.io_project.Constants.ADD_EVENT_TO_GROUP_DIALOG
 import com.example.io_project.Constants.ADD_USER_TO_GROUP_DIALOG
 
 @Composable
@@ -37,7 +38,7 @@ fun AddToGroupButton(
                 name = "Wydarzenie",
                 icon = Icons.Rounded.DateRange,
                 onClick = navigateTo,
-                dialogDestination = ""
+                dialogDestination = "${ADD_EVENT_TO_GROUP_DIALOG}/${groupID}"
             )
             AddButtonExtendable(
                 name = "Użytkownika",

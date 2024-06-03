@@ -1,5 +1,7 @@
 package com.example.io_project.dataclasses
 
+import com.example.io_project.Constants.DEFAULT_COLOR_HEX
+
 data class Event(
     val name: String = "",
     val category: String = "",

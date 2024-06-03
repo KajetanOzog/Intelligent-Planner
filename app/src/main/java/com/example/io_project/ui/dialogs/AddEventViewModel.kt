@@ -1,9 +1,15 @@
 package com.example.io_project.ui.dialogs
 
 import addEventToFirestore
+import android.util.Log
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.io_project.Constants.DEFAULT_COLOR_HEX
+import com.example.io_project.dataclasses.Alarm
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.notifications.AlarmScheduler
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,16 +18,51 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEventViewModel @Inject constructor(
 ) : ViewModel() {
-    val eventState = MutableStateFlow(Event())
+    val eventState = MutableStateFlow(Event(color = DEFAULT_COLOR_HEX))
 
     fun getEvent(): Event {
         return eventState.value
     }
+
+
+    fun eventAddedSuccessfully(alarmScheduler: AlarmScheduler): Boolean {
+        if (necessaryArgumentsProvided()) {
+            addEvent()
+            if (eventState.value.reminder) {
+                val alarm = Alarm(
+                    message = eventState.value.name,
+                    time = LocalDateTime.of(
+                        LocalDate.parse(
+                            eventState.value.date,
+                            DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
+                        ),
+                        LocalTime.parse(eventState.value.reminderTime)
+                    ),
+                    sound = eventState.value.alarm
+                )
+                if (eventState.value.weekly) {
+                    alarmScheduler.scheduleWeekly(alarm)
+                    Log.d("AddActDia", "Scheduling weekly event")
+                } else {
+                    alarmScheduler.scheduleSingle(alarm)
+                    Log.d("AddActDia", "Scheduling single event")
+                }
+            }
+            return true
+        }
+        return false
+    }
+
+
 
     fun addEvent() {
         viewModelScope.launch {
@@ -35,6 +76,13 @@ class AddEventViewModel @Inject constructor(
 
         }
     }
+
+    fun necessaryArgumentsProvided(): Boolean {
+        return (eventState.value.name != "") && (eventState.value.date != "")
+                && !(eventState.value.reminder xor (eventState.value.reminderTime != ""))
+                && !(eventState.value.alarm xor eventState.value.reminder)
+    }
+
 
     val _changeName: (String) -> Unit = { it -> changeName(it) }
     fun changeName(newName: String) {

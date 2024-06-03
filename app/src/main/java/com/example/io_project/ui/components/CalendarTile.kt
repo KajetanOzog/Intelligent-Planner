@@ -2,6 +2,7 @@ package com.example.io_project.ui.components
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,10 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
@@ -39,8 +42,8 @@ fun CalendarTile(events: List<Event>, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .verticalScroll(ScrollState(0))
-            .background(MaterialTheme.colorScheme.outlineVariant)
-            .padding(dimensionResource(id = R.dimen.padding_medium))
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
+            .padding(dimensionResource(id = R.dimen.padding_small))
     ) {
 
         if (eventsCount == 0) {
@@ -80,7 +83,7 @@ fun EventDisplay(event: Event, modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.error)
+            .background(Color(event.color.toColorInt()))
             .padding(dimensionResource(id = R.dimen.padding_small))
     ) {
         Row(

@@ -39,7 +39,6 @@ fun NavGraph(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        // TODO: Dodac CONSTY zeby podmienic stringi uzywane do nawigacji (zgodnie z SOLID)
 
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(navigateTo = { navController.navigate(it) },
