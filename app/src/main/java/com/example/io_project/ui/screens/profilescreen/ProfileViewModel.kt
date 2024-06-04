@@ -34,4 +34,5 @@ class ProfileViewModel @Inject constructor(
         revokeAccessResponse = Loading
         revokeAccessResponse = repo.revokeAccess()
     }
+
 }

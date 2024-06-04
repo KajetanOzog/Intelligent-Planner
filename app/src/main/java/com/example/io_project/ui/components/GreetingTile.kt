@@ -27,14 +27,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.R
+import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.GreetingData
 import com.example.io_project.datamanagement.getNameFromUserName
 import com.example.io_project.datamanagement.getUserNameFromUID
@@ -45,12 +49,37 @@ import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import com.example.io_project.googleauthmodule.repository.ProfileRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 @Composable
-fun GreetingTile(modifier: Modifier = Modifier) {
-    var isSummaryVisible by remember { mutableStateOf(false) }
-    val backGroundColor = if (isItDayTime()) colorResource(id = R.color.day_sky_blue) else
-        colorResource(id = R.color.evening_sky_blue)
+fun GreetingTile(
+    modifier: Modifier = Modifier,
+    defaultSummaryVisibility: Boolean,
+    events: List<Event>
+) {
+    val repo: ProfileRepository
+    val defaultBool: Boolean = defaultSummaryVisibility
+    val dayGradient = Brush.verticalGradient(
+        colors = listOf(
+            colorResource(id = R.color.light_blue_600),
+            colorResource(id = R.color.day_sky_blue)
+        ),
+        tileMode = TileMode.Clamp,
+
+    )
+    val eveningGradient = Brush.verticalGradient(
+        colors = listOf(
+            colorResource(id = R.color.evening_sky_blue),
+            colorResource(id = R.color.evening_sky_purple)
+        ),
+        tileMode = TileMode.Clamp
+    )
+
+
+    var isSummaryVisible by remember { mutableStateOf(defaultBool) }
+    val backGroundColor = if (isItDayTime()) dayGradient else eveningGradient
     val dropDownIcon =
         if (isSummaryVisible) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown
 
@@ -58,7 +87,7 @@ fun GreetingTile(modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
             .fillMaxWidth()
-            .shadow(elevation = 4.dp, shape = RoundedCornerShape(16.dp))
+            .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp))
             .background(backGroundColor)
             .padding(dimensionResource(id = R.dimen.padding_medium))
@@ -66,9 +95,7 @@ fun GreetingTile(modifier: Modifier = Modifier) {
 
         Column(
             modifier = Modifier
-//                .clip(RoundedCornerShape(8.dp))
-//                .background(Color.White.copy(alpha = 0.4f))
-                .padding(dimensionResource(id = R.dimen.padding_small))
+                .padding(dimensionResource(id = R.dimen.padding_button))
         ) {
             Greeting()
             DateDisplay()
@@ -91,40 +118,55 @@ fun GreetingTile(modifier: Modifier = Modifier) {
                 modifier = modifier.clickable {
                     isSummaryVisible = !isSummaryVisible
                 }
-            )}
+            )
+        }
 
-            if (isSummaryVisible){
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-                DaySummary(modifier)
-            }
+        if (isSummaryVisible) {
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+            DaySummary(modifier = modifier, events = events)
+        }
     }
 }
 
 @Composable
 fun Greeting() {
     var time by remember { mutableStateOf<Int?>(null) }
-    var userName by remember { mutableStateOf(GreetingData.date) }
+    var displayName by remember { mutableStateOf(GreetingData.displayName) }
     LaunchedEffect(Unit)
     {
         val formatter = DateTimeFormatter.ofPattern("HH")
         time = LocalDateTime.now().format(formatter).toInt()
-        Firebase.auth.currentUser?.let {
-            userName = getNameFromUserName(getUserNameFromUID(it.uid))
-        }
+        GreetingData.displayName = Firebase.auth.currentUser?.displayName.toString().substringBefore(" ")
+        displayName = GreetingData.displayName
     }
     time?.let {
         if (it >= 19 || it <= 3) {
             GreetingData.greetingText = "Dobry wieczór"
         }
     }
-    // TO-DO:
-    // 1) Dodac nazwe uzytkownika z profilu (jesli sie da to tylko imie)
-    Text(
-        text = "${GreetingData.greetingText}, ${userName}",
-        style = MaterialTheme.typography.displayLarge,
-        color = Color.White,
-        fontWeight = FontWeight.Bold
-    )
+
+    displayName?.let {
+        Text(
+            text = "${GreetingData.greetingText}, $it!",
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.displayLarge,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+    }
+        ?: run {
+            Text(
+                text = "${GreetingData.greetingText}!",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.displayLarge,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+
 }
 
 @Composable
@@ -157,6 +199,6 @@ fun DateDisplay() {
 @Composable
 fun GreetingPreview() {
     IO_ProjectTheme {
-        GreetingTile()
+        GreetingTile(defaultSummaryVisibility = true, events = emptyList())
     }
 }

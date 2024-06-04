@@ -1,6 +1,8 @@
 package com.example.io_project.dataclasses
 
+import android.net.Uri
 import com.example.io_project.Constants.DEFAULT_COLOR_HEX
+import com.google.gson.Gson
 
 data class Event(
     val name: String = "",
@@ -18,6 +20,6 @@ data class Event(
     val description: String = ""
 ) {
     override fun toString(): String {
-        return super.toString() + name + category + color + date + place + time + endDate + weekly + reminder + alarm + reminderTime + visible + description
+        return Uri.encode(Gson().toJson(this))
     }
 }

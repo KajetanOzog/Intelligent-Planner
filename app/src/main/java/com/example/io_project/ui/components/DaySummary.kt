@@ -1,5 +1,6 @@
 package com.example.io_project.ui.components
 
+import android.graphics.Color.toArgb
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,8 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.GreetingData
 import com.example.io_project.dataclasses.Weather
@@ -32,9 +35,11 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
-fun DaySummary(modifier: Modifier = Modifier)
+fun DaySummary(
+    modifier: Modifier = Modifier,
+    events: List<Event>
+)
 {
-    var events by remember { mutableStateOf(GreetingData.events) }
     LaunchedEffect(Unit) {
         if(GreetingData.events == null)
         {
@@ -42,30 +47,29 @@ fun DaySummary(modifier: Modifier = Modifier)
             val formatter = DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.ENGLISH)
             val date = LocalDate.now().format(formatter)
             GreetingData.events = fetchEvents(userID, date)?.toMutableList()
-            Log.d("DaySummary", "Fetched Events: ${GreetingData.events}")
             for (i in 1..10)
             {
                 if(GreetingData.events != null) break
                 delay(500)
             }
-            GreetingData.events?.let {GreetingData.events = getFourMaxPrio(it)}
-            events = GreetingData.events
-            for (i in 1..10)
-            {
-                if(events != null && events!!.size <= 4) break
-                delay(500)
-            }
+//            GreetingData.events?.let {GreetingData.events = getFourMaxPrio(it)}
+//            events = GreetingData.events
+//            for (i in 1..10)
+//            {
+//                if(events != null && events!!.size <= 4) break
+//                delay(500)
+//            }
         }
     }
 
-    events?.let {
+    events.let {
         for (i in it.indices)
         {
             Row(
                 modifier = modifier
                     .padding(4.dp, top = 8.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                    .background(Color(it[i].color.toColorInt())),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
@@ -77,7 +81,8 @@ fun DaySummary(modifier: Modifier = Modifier)
                     Text(
                         text = it[i].time,
                         modifier = Modifier.padding(start = 4.dp),
-                        style = MaterialTheme.typography.labelLarge
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White
                     )
                 }
                 Column(modifier = modifier
@@ -90,17 +95,13 @@ fun DaySummary(modifier: Modifier = Modifier)
                         modifier = Modifier.padding(end = 4.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.labelLarge
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White
                     )
                 }
             }
         }
     }
-        ?.let {
-            Row(
-                modifier = modifier.padding(4.dp, top = 8.dp)
-            ){}
-        }
 }
 
 fun getFourMaxPrio(events: List<Event>): MutableList<Event>

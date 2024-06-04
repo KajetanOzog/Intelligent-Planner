@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.dimensionResource
 import com.example.io_project.R
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -23,15 +25,18 @@ fun SmallTile(
     Column(
         modifier = modifier
             .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
+            .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp))
-            .aspectRatio(1.4f)
-            .background(MaterialTheme.colorScheme.outlineVariant)
+            .aspectRatio(1.6f)
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
             .padding(dimensionResource(id = R.dimen.padding_medium))
 
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.displayMedium
+            style = MaterialTheme.typography.displayMedium,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }

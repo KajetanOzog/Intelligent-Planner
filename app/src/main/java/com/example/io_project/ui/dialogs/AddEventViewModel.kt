@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddEventViewModel @Inject constructor(
 ) : ViewModel() {
-    val eventState = MutableStateFlow(Event(color = DEFAULT_COLOR_HEX))
+    val eventState = MutableStateFlow(Event(color = DEFAULT_COLOR_HEX, category = "Inne"))
 
     fun getEvent(): Event {
         return eventState.value

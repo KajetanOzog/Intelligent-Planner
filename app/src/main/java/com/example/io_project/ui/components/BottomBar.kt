@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.dimensionResource
+import com.example.io_project.Constants.HOME_SCREEN
 import com.example.io_project.R
 
 
@@ -40,7 +41,7 @@ fun BottomBar(
 
         NavigationButton(
             navigateTo = navigateTo,
-            targetScreenName = "home_screen",
+            targetScreenName = "$HOME_SCREEN/false",
             isCurrent = (currentScreenName == "home_screen"),
             label = "Ekran główny",
             icon = Icons.Rounded.Home,

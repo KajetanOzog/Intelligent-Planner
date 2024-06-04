@@ -39,7 +39,7 @@ fun DropDownPicker(
     argList: List<String>,
     label: String,
 ) {
-    var selectedValue by remember { mutableStateOf("") }
+    var selectedValue by remember { mutableStateOf("INNE") }
     var expanded by remember { mutableStateOf(false) }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
     val expansionIcon =

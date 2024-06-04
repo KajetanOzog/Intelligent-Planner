@@ -15,6 +15,7 @@ import com.example.io_project.ui.dialogs.AddFriendDialog
 import com.example.io_project.ui.dialogs.AddGroupDialog
 import com.example.io_project.ui.dialogs.AddUserToGroupDialog
 import com.example.io_project.ui.dialogs.AddEventToGroupDialog
+import com.example.io_project.ui.dialogs.EventDetailsDialog
 import com.example.io_project.ui.screens.archivescreen.ArchiveScreen
 import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.authscreen.AuthScreen
@@ -40,9 +41,19 @@ fun NavGraph(
         exitTransition = { ExitTransition.None }
     ) {
 
-        composable(route = Screen.HomeScreen.route) {
-            HomeScreen(navigateTo = { navController.navigate(it) },
-                navigateBack = { navController.popBackStack() })
+        composable(
+            route = "${Screen.HomeScreen.route}/{showSummary}",
+            arguments = listOf(
+                navArgument("showSummary") {
+                    type = NavType.BoolType
+                }
+            )
+        ) {backStackEntry ->
+            HomeScreen(
+                navigateTo = { navController.navigate(it) },
+                showSummary = backStackEntry.arguments?.getBoolean("showSummary") ?: false,
+                navigateBack = { navController.popBackStack() }
+            )
         }
         composable(route = Screen.CalendarScreen.route) {
             CalendarScreen(navigateTo = { navController.navigate(it) },
@@ -124,6 +135,19 @@ fun NavGraph(
         ) { backStackEntry ->
             AddUserToGroupDialog(
                 groupID = backStackEntry.arguments?.getString("groupID") ?: "",
+                navigateBack = { navController.popBackStack() }
+            )
+        }
+        dialog(
+            route = "${Screen.EventDetailsDialog.route}/{eventJSON}",
+            arguments = listOf(
+                navArgument(name = "eventJSON") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            EventDetailsDialog(
+                eventJSON = backStackEntry.arguments?.getString("eventJSON") ?: "",
                 navigateBack = { navController.popBackStack() }
             )
         }

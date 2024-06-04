@@ -1,5 +1,6 @@
 package com.example.io_project.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -23,9 +24,10 @@ import androidx.compose.ui.graphics.Color
 fun CheckboxRow(
     modifier: Modifier = Modifier,
     onValueChange: (Boolean) -> Unit,
+    defaultCheckValue: Boolean = false,
     label: String
 ) {
-    var checked: Boolean by remember { mutableStateOf(false) }
+    var checked: Boolean by remember { mutableStateOf(defaultCheckValue) }
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
@@ -37,7 +39,7 @@ fun CheckboxRow(
             }
     ) {
         Checkbox(
-            checked = checked,
+            checked = defaultCheckValue,
             onCheckedChange = null
         )
         Spacer(modifier = Modifier.width(8.dp))

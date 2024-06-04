@@ -11,26 +11,50 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.Constants.AUTH_SCREEN
+import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.Constants.HOME_SCREEN
 import com.example.io_project.Constants.SPLASH_DELAY
+import com.example.io_project.user.Settings
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.delay
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @Composable
 fun SplashScreen(
     navigateTo: (String) -> Unit
 ) {
+    val splashViewModel: SplashViewModel = hiltViewModel()
+    val context = LocalContext.current
+    val dataStore = Settings(context = context)
+    val summarySettings = dataStore.getSummarySettings.collectAsState(initial = false)
+    val lastVisitDate = dataStore.getLastVisitDate.collectAsState(initial = "")
+
     LaunchedEffect(true) {
         delay(SPLASH_DELAY)
-        navigateTo(chooseNavigationDestination())
+        Log.d("Splash", "$summarySettings, $lastVisitDate")
+        val showSummary = splashViewModel.displaySummary(
+            lastVisitDate.value,
+            summarySettings.value
+        ) {
+            dataStore.saveLastVisitDate(
+                LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN))
+            )
+        }
+        delay(SPLASH_DELAY)
+        navigateTo(splashViewModel.chooseNavigationDestination(showSummary))
     }
     Column(
         verticalArrangement = Arrangement.Center,
@@ -46,10 +70,7 @@ fun SplashScreen(
 }
 
 
-fun chooseNavigationDestination(): String {
-    Log.d("LOGIN_STATUS", "Current user -> " + Firebase.auth.currentUser)
-    return if(Firebase.auth.currentUser != null) HOME_SCREEN else AUTH_SCREEN
-}
+
 
 @Preview (showBackground = true)
 @Composable

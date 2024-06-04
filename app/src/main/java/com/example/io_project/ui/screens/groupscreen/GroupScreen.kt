@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +50,7 @@ import com.example.io_project.ui.components.UsersColumn
 import com.example.io_project.ui.components.formatDate
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,12 +64,16 @@ fun GroupScreen(
     var datePickerVisible by remember {
         mutableStateOf(false)
     }
-    val groupViewModel = hiltViewModel<GroupViewModel, GroupViewModel.GroupViewModelFactory> {
-        factory -> factory.create(groupJSON)
+    val groupViewModel =
+        hiltViewModel<GroupViewModel, GroupViewModel.GroupViewModelFactory> { factory ->
+            factory.create(groupJSON)
+        }
+    val dateState = groupViewModel.dateState.collectAsState()
+        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+
+    var eventsState: List<Event> by remember {
+        mutableStateOf(groupViewModel.eventsListState)
     }
-    var dateState = datePickerState.selectedDateMillis?.let {
-        formatDate(it)
-    } ?: ""
 
     Scaffold(
         topBar = {
@@ -75,7 +81,10 @@ fun GroupScreen(
                 text = groupViewModel.group.groupName,
                 navigateBack = navigateBack,
                 canNavigateBack = true,
-                refreshAction = { groupViewModel.refreshData() }
+                refreshAction = {
+                    groupViewModel.refreshData()
+                    eventsState = groupViewModel.eventsListState
+                }
             )
         },
         bottomBar = {
@@ -110,13 +119,13 @@ fun GroupScreen(
                     Icons.Rounded.ArrowBack,
                     contentDescription = "Poprzedni dzień",
                     modifier = modifier
-                            .clickable {
-                        groupViewModel.getPreviousDay()
-                        dateState = groupViewModel.getDateString()
-                    }
+                        .clickable {
+                            groupViewModel.getPreviousDay()
+                            eventsState = groupViewModel.eventsListState
+                        }
                 )
                 Text(
-                    text = groupViewModel.getDateString(),
+                    text = dateState,
                     style = MaterialTheme.typography.displayMedium,
                     modifier = Modifier.clickable {
                         datePickerVisible = !datePickerVisible
@@ -128,12 +137,13 @@ fun GroupScreen(
                     modifier = modifier
                         .clickable {
                             groupViewModel.getNextDay()
-                            dateState = groupViewModel.getDateString()
+                            eventsState = groupViewModel.eventsListState
                         }
                 )
             }
             CalendarTile(
-                events = groupViewModel.eventsListState,
+                events = eventsState,
+                navigateTo = navigateTo,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                     .aspectRatio(1f)

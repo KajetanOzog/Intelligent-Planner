@@ -2,6 +2,7 @@ package com.example.io_project.ui.screens.calendarscreen
 
 
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.datamanagement.fetchEvents
@@ -48,12 +49,14 @@ class CalendarViewModel @Inject constructor(
     }
 
     fun getPreviousDay() {
-        dateState.update { date -> date.minusDays(1) }
+        dateState.update { it.minusDays(1) }
+        Log.d("CVM", getDateString())
         updateEvents()
     }
 
     fun getNextDay() {
-        dateState.update { date -> date.plusDays(1) }
+        dateState.update { it.plusDays(1) }
+        Log.d("CVM", getDateString())
         updateEvents()
     }
 

@@ -40,17 +40,17 @@ fun NavigationButton(
     val buttonColor = if (isCurrent) MaterialTheme.colorScheme.outlineVariant
     else MaterialTheme.colorScheme.background
 
-    val buttonModifier: Modifier = if (isCurrent) Modifier
-    else Modifier.clickable {
+    val buttonModifier: Modifier = if (isCurrent) modifier
+    else modifier.clickable {
         navigateTo(targetScreenName)
     }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
+        modifier = buttonModifier.fillMaxWidth()
     ) {
         Row(
-            modifier = buttonModifier
+            modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .background(buttonColor)
                 .padding(horizontal = 2.dp, vertical = 1.dp)

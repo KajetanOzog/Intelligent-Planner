@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -16,6 +17,7 @@ class Settings(private val context: Context) {
         val SHOW_DAY_SUMMARY = booleanPreferencesKey("show_day_summary")
         val SHOW_OTHER_EVENTS = booleanPreferencesKey("show_other_events")
         val FIRST_VISIT_TODAY = booleanPreferencesKey("first_visit_today")
+        val LAST_VISIT_DATE = stringPreferencesKey("last_visit_date")
     }
 
     val getSummarySettings: Flow<Boolean> = context.dataStore.data
@@ -48,6 +50,17 @@ class Settings(private val context: Context) {
     suspend fun saveFirstVisitBoolean(boolean: Boolean) {
         context.dataStore.edit {preferences ->
             preferences[FIRST_VISIT_TODAY] = boolean
+        }
+    }
+
+    val getLastVisitDate: Flow<String> = context.dataStore.data
+        .map { preferences ->
+            preferences[LAST_VISIT_DATE] ?: ""
+        }
+
+    suspend fun saveLastVisitDate(date: String) {
+        context.dataStore.edit {preferences ->
+            preferences[LAST_VISIT_DATE] = date
         }
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,12 +60,11 @@ fun CalendarScreen(
         mutableStateOf(false)
     }
     val calendarViewModel: CalendarViewModel = hiltViewModel()
-//    var eventsState: List<Event> by remember {
-//        mutableStateOf(calendarViewModel.eventsListState)
-//    }
-    var dateState = datePickerState.selectedDateMillis?.let {
-        formatDate(it)
-    } ?: ""
+    val dateState = calendarViewModel.dateState.collectAsState()
+        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+    var eventsState: List<Event> by remember {
+        mutableStateOf(calendarViewModel.eventsListState)
+    }
 
     Scaffold(
         topBar = {
@@ -72,7 +72,10 @@ fun CalendarScreen(
                 text = "Calendar",
                 navigateBack = navigateBack,
                 canNavigateBack = true,
-                refreshAction = { calendarViewModel.refreshData() }
+                refreshAction = {
+                    calendarViewModel.refreshData()
+                    eventsState = calendarViewModel.eventsListState
+                }
             )
         },
         bottomBar = {
@@ -103,12 +106,11 @@ fun CalendarScreen(
                     modifier = modifier
                         .clickable {
                             calendarViewModel.getPreviousDay()
-                            dateState = calendarViewModel.getDateString()
-                            //eventsState = calendarViewModel.eventsListState
+                            eventsState = calendarViewModel.eventsListState
                         }
                 )
                 Text(
-                    text = calendarViewModel.getDateString(),
+                    text = dateState,
                     style = MaterialTheme.typography.displayMedium,
                     modifier = Modifier.clickable {
                         datePickerVisible = !datePickerVisible
@@ -120,13 +122,13 @@ fun CalendarScreen(
                     modifier = modifier
                             .clickable {
                                 calendarViewModel.getNextDay()
-                                dateState = calendarViewModel.getDateString()
-                                //eventsState = calendarViewModel.eventsListState
+                                eventsState = calendarViewModel.eventsListState
                             }
                 )
             }
             CalendarTile(
-                events = calendarViewModel.eventsListState,
+                events = eventsState,
+                navigateTo = navigateTo,
                 modifier = modifier
                     .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                     .aspectRatio(1f)
@@ -140,7 +142,7 @@ fun CalendarScreen(
                         .clickable { navigateTo(TASKS_SCREEN) }
                 )
                 SmallTile(
-                    text = "Cele długotermi...",
+                    text = "Cele długoterminowe",
                     modifier = modifier
                         .padding(start = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)

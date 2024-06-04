@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.example.io_project.Constants.GROUP_SCREEN
@@ -28,8 +29,9 @@ fun GroupDisplay(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.outlineVariant)
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
             .clickable { navigateTo("$GROUP_SCREEN/${group}") }
             .padding(dimensionResource(id = R.dimen.padding_small))
             .fillMaxWidth()

@@ -3,6 +3,7 @@ package com.example.io_project.ui.components
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,16 +33,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.example.compose.IO_ProjectTheme
+import com.example.io_project.Constants.EVENT_DETAILS_DIALOG
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
-
 @Composable
-fun CalendarTile(events: List<Event>, modifier: Modifier = Modifier) {
+fun CalendarTile(
+    events: List<Event>,
+    navigateTo: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val eventsCount: Int = events.size
 
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(16.dp)
+            )
             .clip(RoundedCornerShape(16.dp))
             .verticalScroll(ScrollState(0))
             .background(MaterialTheme.colorScheme.inverseOnSurface)
@@ -50,7 +61,10 @@ fun CalendarTile(events: List<Event>, modifier: Modifier = Modifier) {
             NoEventsText()
         } else {
             for (event in events) {
-                EventDisplay(event = event)
+                EventDisplay(
+                    event = event,
+                    navigateTo = navigateTo
+                )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             }
         }
@@ -63,7 +77,7 @@ fun CalendarTile(events: List<Event>, modifier: Modifier = Modifier) {
 fun NoEventsText() {
     Column(
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_small))
             .fillMaxSize()
@@ -77,7 +91,11 @@ fun NoEventsText() {
 
 
 @Composable
-fun EventDisplay(event: Event, modifier: Modifier = Modifier) {
+fun EventDisplay(
+    event: Event,
+    navigateTo: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -100,13 +118,23 @@ fun EventDisplay(event: Event, modifier: Modifier = Modifier) {
                 Icon(
                     Icons.Rounded.Notifications,
                     tint = Color.White,
-                    contentDescription = "Czy ustawiony alarm"
+                    contentDescription = "Czy alarm jest ustawiony"
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-
+//        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_button)))
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = event.category,
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.White
+            )
+        }
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -117,11 +145,15 @@ fun EventDisplay(event: Event, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.White
             )
-            Text(
-                text = event.category,
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.White
+            Icon(
+                Icons.Rounded.Add,
+                contentDescription = "Data i czas",
+                tint = Color.White,
+                modifier = Modifier.clickable {
+                    navigateTo("${EVENT_DETAILS_DIALOG}/${event}")
+                }
             )
+
         }
 
     }
@@ -138,7 +170,8 @@ fun EventDisplayPreview() {
                 time = "8:00",
                 category = "Szkoła",
                 alarm = true
-            )
+            ),
+            {}
         )
     }
 }

@@ -29,6 +29,7 @@ object Constants {
     const val ADD_FRIEND_DIALOG = "add_friend_dialog"
     const val ADD_USER_TO_GROUP_DIALOG = "add_user_to_group_dialog"
     const val ADD_EVENT_TO_GROUP_DIALOG = "add_event_to_group_dialog"
+    const val EVENT_DETAILS_DIALOG = "event_details_dialog"
     const val PROFILE_SCREEN = "profile_screen"
     const val GOALS_SCREEN = "goals_screen"
     const val TASKS_SCREEN = "tasks_screen"
@@ -39,11 +40,10 @@ object Constants {
     const val CALENDAR_SCREEN = "calendar_screen"
     const val ARCHIVE_SCREEN = "archive_screen"
     const val STATS_SCREEN = "stats_screen"
-    const val SIGN_IN_SCREEN = "sign_in_screen"
     // TODO: Pozamieniac stringi w kodzie na consty
 
     //Values
-    const val SPLASH_DELAY: Long = 500
+    const val SPLASH_DELAY: Long = 300
     const val DATE_FORMATTER_PATTERN: String = "EEE, MMM d yyyy"
     const val DAY_BEGINNING_TIME: Int = 7
     const val DAY_ENDING_TIME: Int = 19

@@ -3,6 +3,7 @@ package com.example.io_project.ui.screens.profilescreen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,6 +15,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +42,8 @@ import com.example.io_project.Constants.ARCHIVE_SCREEN
 import com.example.io_project.Constants.REVOKE_ACCESS_MESSAGE
 import com.example.io_project.Constants.SIGN_OUT
 import com.example.io_project.Constants.STATS_SCREEN
+import com.example.io_project.ui.components.CheckboxRow
+import com.example.io_project.user.Settings
 import kotlinx.coroutines.launch
 
 @Composable
@@ -52,7 +56,11 @@ fun ProfileScreen(
     val snackbarHostState = remember {
         SnackbarHostState()
     }
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val dataStore = Settings(context = context)
+    val eventsSettings = dataStore.getEventSettings.collectAsState(initial = false)
+    val summarySettings = dataStore.getSummarySettings.collectAsState(initial = false)
 
     Scaffold(
         topBar = {
@@ -101,7 +109,15 @@ fun ProfileScreen(
                         style = MaterialTheme.typography.displayMedium,
                         modifier = modifier.padding(dimensionResource(id = R.dimen.padding_small))
                     )
-                    Button(onClick = { viewModel.signOut() }) {
+                    Button(onClick = {
+                        coroutineScope.launch {
+                            dataStore.saveLastVisitDate("")
+                            dataStore.saveEventSettings(false)
+                            dataStore.saveSummarySettings(false)
+                            dataStore.saveFirstVisitBoolean(false)
+                        }
+                        viewModel.signOut()
+                    }) {
                         Text(
                             text = "Sign out",
                             style = MaterialTheme.typography.labelSmall
@@ -140,6 +156,37 @@ fun ProfileScreen(
                         .weight(1f)
                 )
             }
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+
+            Text(
+                text = "Ustawienia:",
+                style = MaterialTheme.typography.displayMedium
+            )
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+
+            CheckboxRow(
+                onValueChange = {
+                    coroutineScope.launch {
+                        dataStore.saveEventSettings(it)
+                    }
+                },
+                defaultCheckValue = eventsSettings.value,
+                label = "Wyświetl w kalendarzu wydarzenia znajomych/grupowe."
+            )
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+
+            CheckboxRow(
+                onValueChange = {
+                    coroutineScope.launch {
+                        dataStore.saveSummarySettings(it)
+                    }
+                },
+                defaultCheckValue = summarySettings.value,
+                label = "Wyświetl codziennie podsumowanie dnia."
+            )
         }
 
     }

@@ -87,7 +87,6 @@ fun AddEventToGroupDialog(
 
             Column(
                 modifier = Modifier
-                    .fillMaxHeight(0.7f)
                     .verticalScroll(ScrollState(0))
             ) {
                 OutlinedTextFieldCustom(

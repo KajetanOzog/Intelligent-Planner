@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.Group
 import com.example.io_project.datamanagement.fetchEvents
+import com.example.io_project.datamanagement.fetchGroup
 import com.example.io_project.datamanagement.getUserNameFromUID
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -36,20 +37,24 @@ class GroupViewModel @AssistedInject constructor(
     var members = ArrayList<String>()
 
     var eventsListState = mutableListOf<Event>()
-    private var dateState = LocalDate.now()
+    var dateState = MutableStateFlow(LocalDate.now())
 
     init {
-        Log.d("GroupVM","$dateState")
+        Log.d("GroupVM", "$dateState")
         group = Gson().fromJson(groupJSON, Group::class.java)
         refreshData()
     }
 
-    fun getDateString(): String = dateState.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+    fun getDateString(): String =
+        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+
     fun changeDate(newDate: String) {
-        dateState = LocalDate.parse(
-            newDate,
-            DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
-        )
+        dateState.update {
+            LocalDate.parse(
+                newDate,
+                DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
+            )
+        }
         updateEvents()
     }
 
@@ -62,8 +67,8 @@ class GroupViewModel @AssistedInject constructor(
         runBlocking {
             Firebase.auth.currentUser?.let {
                 Log.d("GroupVM", "$dateState")
-                //TODO(Zmien funkcje na pobierajaca eventy z danej grupy)
-                eventsListState = fetchEvents(it.uid, getDateString())?.toMutableList()
+                //TODO(WYSWIETLANIE TYLKO Z DANEGO DNIA)
+                eventsListState = fetchGroup(group.groupID)?.events?.toMutableList()
                     ?: emptyList<Event>().toMutableList()
                 Log.d("GroupVM", "$eventsListState")
             }
@@ -71,18 +76,19 @@ class GroupViewModel @AssistedInject constructor(
     }
 
     fun getPreviousDay() {
-        dateState = dateState.minusDays(1)
+        dateState.update { it.minusDays(1) }
         updateEvents()
     }
 
     fun getNextDay() {
-        dateState = dateState.plusDays(1)
+        dateState.update { it.plusDays(1) }
         updateEvents()
     }
 
     fun refreshData() {
         runBlocking {
             updateEvents()
+            members.clear()
             for (member in group.groupMembers) {
                 members.add(getUserNameFromUID(member))
             }

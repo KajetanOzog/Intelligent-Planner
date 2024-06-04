@@ -8,6 +8,7 @@ import com.example.io_project.Constants.ADD_USER_TO_GROUP_DIALOG
 import com.example.io_project.Constants.ARCHIVE_SCREEN
 import com.example.io_project.Constants.AUTH_SCREEN
 import com.example.io_project.Constants.CALENDAR_SCREEN
+import com.example.io_project.Constants.EVENT_DETAILS_DIALOG
 import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.GROUP_SCREEN
 import com.example.io_project.Constants.HOME_SCREEN
@@ -34,6 +35,7 @@ sealed class Screen(val route: String) {
     object AddFriendDialog: Screen(ADD_FRIEND_DIALOG)
     object AddEventToGroupDialog: Screen(ADD_EVENT_TO_GROUP_DIALOG)
     object AddUserToGroupDialog: Screen(ADD_USER_TO_GROUP_DIALOG)
+    object EventDetailsDialog: Screen(EVENT_DETAILS_DIALOG)
 
 
 }

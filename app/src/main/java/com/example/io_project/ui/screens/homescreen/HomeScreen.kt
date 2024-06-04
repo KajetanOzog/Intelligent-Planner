@@ -16,12 +16,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,12 +44,14 @@ import com.example.io_project.ui.components.CalendarTile
 import com.example.io_project.ui.components.GreetingTile
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
+import com.example.io_project.user.Settings
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-    navigateTo: (route: String) -> Unit
+    navigateTo: (route: String) -> Unit,
+    showSummary: Boolean
 ) {
     val homeViewModel: HomeViewModel = hiltViewModel()
     var eventsState: List<Event> by remember {
@@ -87,7 +92,10 @@ fun HomeScreen(
                 .verticalScroll(ScrollState(0))
                 .padding(dimensionResource(id = R.dimen.padding_medium))
         ) {
-            GreetingTile()
+            GreetingTile(
+                defaultSummaryVisibility = showSummary,
+                events = eventsState
+            )
             Row {
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
@@ -99,6 +107,7 @@ fun HomeScreen(
 
             CalendarTile(
                 events = eventsState,
+                navigateTo = navigateTo,
                 modifier = modifier
                     .clickable(onClick = { navigateTo(CALENDAR_SCREEN) })
                     .aspectRatio(1.2f)
@@ -129,6 +138,8 @@ fun HomeScreen(
                             .weight(1f)
                             .clickable { navigateTo(GOALS_SCREEN) }
                     )
+                    Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                    Spacer(modifier = modifier.weight(1f))
                 }
             }
         }
@@ -140,6 +151,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     IO_ProjectTheme {
-        HomeScreen(navigateTo = {}, navigateBack = {})
+        HomeScreen(navigateTo = {}, navigateBack = {}, showSummary = false)
     }
 }
