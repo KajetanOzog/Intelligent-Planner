@@ -3,23 +3,28 @@ import com.example.io_project.datamanagement.getDayOfWeek
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
-
+// prosze evencik bez id sam je ustawie
 suspend fun addEventToFirestore(userID: String, event: Event, isRegular: Boolean) {
     val firestore = FirebaseFirestore.getInstance()
+    event.eventID = UUID.randomUUID().toString()
     val userDocumentRef = firestore.collection("users").document(userID)
     try {
         val formattedDate = getDayOfWeek(event.date)
-        if (isRegular) {
-            println("Dodawanie wydarzenia regularnego na dzień $formattedDate")
+        if (isRegular)
+        {
+            println("Adding regular event for day: $formattedDate")
             userDocumentRef.update("regular.$formattedDate", FieldValue.arrayUnion(event)).await()
-        } else {
-            println("Dodawanie wydarzenia nieregularnego")
+        }
+        else
+        {
+            println("Adding nonregular event")
             userDocumentRef.update("nonregular.data", FieldValue.arrayUnion(event)).await()
         }
-        println("Wydarzenie dodane pomyślnie")
+        println("Event added")
     } catch (e: Exception) {
-        println("Błąd podczas dodawania wydarzenia: ${e.message}")
+        println("Error when adding event: ${e.message}")
         e.printStackTrace()
     }
 }

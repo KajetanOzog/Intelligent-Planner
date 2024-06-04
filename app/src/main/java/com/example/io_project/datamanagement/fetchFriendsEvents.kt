@@ -1,15 +1,10 @@
 package com.example.io_project.datamanagement
-import android.util.Log
+import com.example.io_project.Constants.FRIEND_COLOR_HEX
 import com.example.io_project.dataclasses.Event
-import com.google.firebase.firestore.DocumentSnapshot
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 suspend fun fetchFriendsEvents(userID: String, targetDate: String): List<Event>? {
     val documentSnapshot = getUserDocument(userID)
     val returnList = ArrayList<Event>()
-
     try {
         if (documentSnapshot != null && documentSnapshot.exists()) {
             val friends = documentSnapshot.get("friends") as List<String>
@@ -17,17 +12,19 @@ suspend fun fetchFriendsEvents(userID: String, targetDate: String): List<Event>?
                 val friendEvents = fetchEvents(friendID, targetDate)
                 if (friendEvents != null) {
                     val visibleEvents = friendEvents.filter { it.visible }
+                    visibleEvents.forEach { it.color = FRIEND_COLOR_HEX }
                     returnList.addAll(visibleEvents)
                 }
             }
             return returnList
-        } else {
-            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+        }
+        else
+        {
+            println("User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Błąd podczas pobierania danych dla danego dnia: ${e.message}")
+        println("Error while fetching data for the given day: ${e.message}")
         e.printStackTrace()
     }
-
     return null
 }

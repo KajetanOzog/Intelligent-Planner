@@ -6,7 +6,7 @@ import com.google.gson.Gson
 data class Goal(
     val name: String = "",
     val deadline: String = "",
-    val done: Boolean = false
+    var done: Boolean = false
 ) {
     override fun toString(): String {
         return Uri.encode(Gson().toJson(this))

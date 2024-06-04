@@ -1,11 +1,6 @@
 package com.example.io_project.datamanagement
-
 import android.util.Log
-import com.example.io_project.dataclasses.Goal
-import com.example.io_project.dataclasses.Group
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
 

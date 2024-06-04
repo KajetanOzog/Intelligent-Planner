@@ -1,39 +1,41 @@
 package com.example.io_project.datamanagement
-
 import com.example.io_project.dataclasses.Task
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 suspend fun getTasks(userID: String): List<Task>? {
     val documentSnapshot = getUserDocument(userID)
     val returnList = ArrayList<Task>()
     try {
-
         if (documentSnapshot != null && documentSnapshot.exists()) {
             @Suppress("UNCHECKED_CAST")
             val tasksData = documentSnapshot.get("tasks") as List<Map<String, Task>>
+            for (task in tasksData) {
+                val taskObj = Task(
+                    name = task["name"].toString(),
+                    completed = task["completed"].toString() == "true",
+                    doneCount = task["doneCount"].toString().toInt(),
+                    addedDate = task["addedDate"].toString(),
+                    maxStreak = task["maxStreak"].toString().toInt(),
+                    lastCheck = task["lastCheck"].toString()
+                )
 
-            if (tasksData is List<*>)
-            {
-                for (task in tasksData) {
-                    returnList.add (
-                        Task(
-                            name = task["name"].toString(),
-                            completed = task["completed"].toString() == "true",
-                            daysCount = task["daysCount"].toString().toInt(),
-                            daysCounter = task["daysCounter"].toString().toInt(),
-                            maxStreak = task["maxStreak"].toString().toInt()
-                        )
-                    )
+                val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+                if (taskObj.lastCheck != today && taskObj.completed)
+                {
+                    taskObj.completed = false
                 }
 
-                return returnList
+                returnList.add(taskObj)
             }
+            return returnList
         } else {
-            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+            println("User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Błąd podczas pobierania zadań: ${e.message}")
+        println("Error while fetching tasks: ${e.message}")
         e.printStackTrace()
     }
-
     return null
 }

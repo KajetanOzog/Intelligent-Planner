@@ -2,9 +2,10 @@ package com.example.io_project.dataclasses
 
 data class Task(
     val name: String = "",
-    val completed: Boolean = false,
-    val daysCount: Int = 0,
-    val daysCounter: Int = 0,
-    val maxStreak: Int = 0
+    var completed: Boolean = false,
+    var doneCount: Int = 0,
+    var addedDate: String = "",
+    var maxStreak: Int = 0,
+    var lastCheck: String = "",
 )
 

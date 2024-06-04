@@ -1,20 +1,16 @@
 package com.example.io_project.datamanagement
-
 import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
+
 
 suspend fun addUserToGroup(email: String, groupID: String) {
     val firestore = FirebaseFirestore.getInstance()
-
     var userID = ""
-
     firestore.collection("metadata").document("user_email")
         .get().addOnSuccessListener { document ->
             val userData = document.data?.get(email) as? Map<String, String>
             userID = userData?.get("uid") ?: ""
-
             if (userID != "") {
                 val userRef = firestore.collection("users").document(userID)
                 userRef.update("groups", FieldValue.arrayUnion(groupID))
@@ -26,10 +22,8 @@ suspend fun addUserToGroup(email: String, groupID: String) {
             } else {
                 println("No user found with the provided email address.")
             }
-
         }.addOnFailureListener {
             Log.d("UserToGroup", "${it.message}")
             println("No document found for provided email address.")
         }
-
 }

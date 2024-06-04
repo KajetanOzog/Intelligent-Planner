@@ -1,18 +1,10 @@
 package com.example.io_project.datamanagement
-
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
-import java.lang.Thread.sleep
 
 suspend fun addFriends(userId: String, email: String) {
     val firestore = FirebaseFirestore.getInstance()
-
     var secondUserID = ""
     firestore.collection("metadata").document("user_email")
         .get().addOnSuccessListener { document ->
@@ -31,6 +23,4 @@ suspend fun addFriends(userId: String, email: String) {
             Log.d("AddFriend", "${it.message}")
             println("No document found for provided email address.")
         }
-
-
 }

@@ -1,7 +1,8 @@
 package com.example.io_project.datamanagement
-
 import android.util.Log
+import com.example.io_project.Constants
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.dataclasses.EventPriority
 import com.example.io_project.dataclasses.Group
 
 suspend fun fetchUserGroups(userID: String): List<Group>? {
@@ -28,10 +29,10 @@ suspend fun fetchUserGroups(userID: String): List<Group>? {
             }
             return returnList
         } else {
-            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+            println("User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Błąd podczas pobierania danych dla danego dnia: ${e.message}")
+        println("Error while fetching data for the given day: ${e.message}")
         e.printStackTrace()
     }
     return null
@@ -55,18 +56,21 @@ private fun mapToGroup(group: Map<String, Any>): Group {
 
 private fun mapToEvent(event: Map<String, Event>): Event {
     return Event(
+        eventID = event["eventID"].toString(),
         name = event["name"].toString(),
         category = event["category"].toString(),
-        color = event["color"].toString(),
+        color = Constants.GROUP_COLOR_HEX,
         date = event["date"].toString(),
         place = event["place"].toString(),
         time = event["time"].toString(),
         endDate = event["endDate"].toString(),
+        endTime = event["endTime"].toString(),
         weekly = event["weekly"].toString() == "true",
         reminder = event["reminder"].toString() == "true",
         alarm = event["alarm"].toString() == "true",
         reminderTime = event["reminderDate"].toString(),
         visible = event["visible"].toString() == "true",
-        description = event["description"].toString()
+        description = event["description"].toString(),
+        priority = EventPriority.valueOf(event["priority"].toString())
     )
 }
