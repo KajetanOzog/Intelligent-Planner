@@ -1,9 +1,16 @@
 package com.example.io_project.dataclasses
 
-object Weather
+object WeatherCurrent
 {
     var temperature: Double? = null
     var code: Int? = null
+    var acquired: Boolean = false
+}
+
+object WeatherForecast
+{
+    var temperatures: Array<Double?> = arrayOfNulls(7)
+    var codes: Array<Int?> = arrayOfNulls(7)
     var acquired: Boolean = false
 }
 
