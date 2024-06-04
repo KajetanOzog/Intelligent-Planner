@@ -84,6 +84,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.1.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("co.yml:ycharts:2.1.0")
     implementation("androidx.datastore:datastore-preferences-rxjava2:1.1.1")
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.1.1")
 }

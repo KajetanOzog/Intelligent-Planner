@@ -7,7 +7,8 @@ import java.io.IOException
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.example.io_project.R
-import com.example.io_project.dataclasses.Weather
+import com.example.io_project.dataclasses.WeatherCurrent
+import com.example.io_project.dataclasses.WeatherForecast
 import com.example.io_project.permissions.AskingForPermissions
 import com.example.io_project.permissions.checkLocationPermission
 import com.google.android.gms.location.LocationCallback
@@ -38,23 +39,30 @@ fun loadWeatherInfo(activity: Activity)
 {
     getLastLocation(activity,
         onSuccess = { lat, lon ->
-            val url = "https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current=temperature_2m,weather_code"
+            val url = "https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current=temperature_2m,weather_code&daily=weather_code,apparent_temperature_max&timezone=auto"
             Log.d("URL", url)
 
             sendHttpRequest(url,
                 onResponse =
                 { response ->
-                    val data = parseJson(response)
-                    if (data != null) {
-                        Weather.temperature = data.first
-                        Weather.code = data.second
-                        Weather.acquired = true
-                        Log.d("Weather", "acquired")
-                    }
-                    else
-                    {
-                        Log.d("Weather", "not acquired, data null")
-                    }
+                    parseJson(response,
+                        onSuccess =
+                        { temp, wc, arr1, arr2 ->
+                            WeatherCurrent.temperature = temp
+                            WeatherCurrent.code = wc
+                            WeatherCurrent.acquired = true
+                            for(i in 0..6)
+                            {
+                                WeatherForecast.temperatures[i] = arr1[i]
+                                WeatherForecast.codes[i] = arr2[i]
+                            }
+                            WeatherForecast.acquired = true
+                            Log.d("Weather", "acquired")
+                        },
+                        onError =
+                        {
+                            Log.d("Weather", "not acquired, data null or json parse fail")
+                        })
                 },
                 onError =
                 {
@@ -89,20 +97,33 @@ private fun sendHttpRequest(url: String, onResponse: (String) -> Unit, onError: 
     })
 }
 
-private fun parseJson(json: String): Pair<Double, Int>? {
-    return try
+private fun parseJson(json: String, onSuccess: (Double, Int, DoubleArray, IntArray) -> Unit, onError: () -> Unit){
+    try
     {
         val gson = Gson()
         val jsonObject = gson.fromJson(json, JsonObject::class.java)
+
         val currentJsonObject = jsonObject.getAsJsonObject("current")
         val temperature = currentJsonObject.get("temperature_2m").asDouble
         val weatherCode = currentJsonObject.get("weather_code").asInt
-        Pair(temperature, weatherCode)
+
+        val dailyJsonObject = jsonObject.getAsJsonObject("daily")
+        val temperatureForecastJson = dailyJsonObject.getAsJsonArray("apparent_temperature_max")
+        val weatherCodeForecastJson = dailyJsonObject.getAsJsonArray("weather_code")
+
+        val temperatureForecast = DoubleArray(7)
+        val weatherCodeForecast = IntArray(7)
+        for(i in 0..6)
+        {
+            temperatureForecast[i] = temperatureForecastJson[i].asDouble
+            weatherCodeForecast[i] = weatherCodeForecastJson[i].asInt
+        }
+        onSuccess(temperature, weatherCode, temperatureForecast, weatherCodeForecast)
     }
     catch (e: Exception)
     {
         e.printStackTrace()
-        null
+        onError()
     }
 }
 

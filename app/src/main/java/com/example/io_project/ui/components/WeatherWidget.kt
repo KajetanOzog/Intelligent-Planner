@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.io_project.dataclasses.WeatherCurrent
 import com.example.io_project.R
-import com.example.io_project.dataclasses.Weather
 import com.example.io_project.datamanagement.getIcon
 import com.example.io_project.permissions.AskingForPermissions
 import com.example.io_project.permissions.Permissions
@@ -33,43 +33,37 @@ import kotlinx.coroutines.delay
 @Composable
 fun WeatherWidget(modifier: Modifier = Modifier)
 {
-    var temp by remember { mutableStateOf(Weather.temperature) }
-    var wc by remember { mutableStateOf(Weather.code) }
+    var temp by remember { mutableStateOf(WeatherCurrent.temperature) }
+    var wc by remember { mutableStateOf(WeatherCurrent.code) }
     val activity = LocalContext.current as Activity
 
     if(!AskingForPermissions.started){
         LaunchedEffect(Unit)
         {
             Permissions(activity)
-            while(!AskingForPermissions.finished || !Weather.acquired && checkLocationPermission(activity))
+            while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
             {
                 delay(500)
             }
-            temp = Weather.temperature
-            wc = Weather.code
+            temp = WeatherCurrent.temperature
+            wc = WeatherCurrent.code
         }
     }
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
-    ) {
-        wc?.let {
-            Image(
-                painter = painterResource(
-                    id = getIcon(it)
-                ),
-                contentDescription = "Ikona pogody",
-                modifier = modifier.size(64.dp)
-            )
-        }
-        temp?.let {
-            Spacer(modifier = modifier.width(16.dp))
-            Text(
-                text = "$it°C",
-                style = MaterialTheme.typography.displayMedium,
-                color = Color.White,
-            )
-        }
+    wc?.let {
+        Image(
+            painter = painterResource(
+                id = getIcon(it)
+            ),
+            contentDescription = "Ikona pogody",
+            modifier = modifier.size(64.dp)
+        )
+    }
+    temp?.let {
+        Spacer(modifier = modifier.width(16.dp))
+        Text(
+            text = "$it°C",
+            style = MaterialTheme.typography.labelLarge
+        )
     }
 }
