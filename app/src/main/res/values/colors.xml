@@ -12,7 +12,7 @@
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
     <color name="day_sky_blue">#87ceeb</color>
-    <color name="evening_sky_gray">#454B56</color>
+    <color name="calendar_gray">#454B56</color>
     <color name="evening_sky_blue">#2e4482</color>
     <color name="calendar_red">#EF476F</color>
     <color name="calendar_orange">#F78C6B</color>

@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.statsscreen
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -351,7 +352,7 @@ fun countCategories()
 
 fun filterEvents(events: List<Event>)
 {
-    val formatter = DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.ENGLISH)
+    val formatter = DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH)
     val now = LocalDate.now()
     val nowFormatted = now.format(formatter)
 
@@ -360,6 +361,7 @@ fun filterEvents(events: List<Event>)
 
     val oneWeekAgo = now.minus(7, ChronoUnit.DAYS)
     StatsData.dayEvents = events.filter {
+        Log.d("Stats screen", "${it.date}")
         val date = LocalDate.parse(it.date, formatter)
         date.isAfter(oneWeekAgo) || it.weekly
     }.toMutableList()

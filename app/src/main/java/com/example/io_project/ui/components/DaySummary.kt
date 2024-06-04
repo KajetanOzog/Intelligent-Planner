@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.GreetingData
-import com.example.io_project.dataclasses.Weather
 import com.example.io_project.datamanagement.fetchEvents
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth

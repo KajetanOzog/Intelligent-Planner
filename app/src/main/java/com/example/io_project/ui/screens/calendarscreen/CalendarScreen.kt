@@ -65,6 +65,9 @@ fun CalendarScreen(
     var eventsState: List<Event> by remember {
         mutableStateOf(calendarViewModel.eventsListState)
     }
+    val pickedDate = datePickerState.selectedDateMillis?.let {
+        formatDate(it)
+    } ?: ""
 
     Scaffold(
         topBar = {
@@ -159,7 +162,8 @@ fun CalendarScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        calendarViewModel.changeDate(dateState)
+                        calendarViewModel.changeDate(pickedDate)
+                        eventsState = calendarViewModel.eventsListState
                         datePickerVisible = false
                     }
                 ) {

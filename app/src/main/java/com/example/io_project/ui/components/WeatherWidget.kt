@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.io_project.dataclasses.WeatherCurrent
 import com.example.io_project.R
@@ -63,7 +64,9 @@ fun WeatherWidget(modifier: Modifier = Modifier)
         Spacer(modifier = modifier.width(16.dp))
         Text(
             text = "$it°C",
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.displayLarge,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
     }
 }

@@ -43,6 +43,7 @@ import com.example.io_project.Constants.REVOKE_ACCESS_MESSAGE
 import com.example.io_project.Constants.SIGN_OUT
 import com.example.io_project.Constants.STATS_SCREEN
 import com.example.io_project.ui.components.CheckboxRow
+import com.example.io_project.ui.components.SettingsCheckboxRow
 import com.example.io_project.user.Settings
 import kotlinx.coroutines.launch
 
@@ -166,7 +167,7 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
 
-            CheckboxRow(
+            SettingsCheckboxRow(
                 onValueChange = {
                     coroutineScope.launch {
                         dataStore.saveEventSettings(it)
@@ -178,7 +179,7 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
 
-            CheckboxRow(
+            SettingsCheckboxRow(
                 onValueChange = {
                     coroutineScope.launch {
                         dataStore.saveSummarySettings(it)

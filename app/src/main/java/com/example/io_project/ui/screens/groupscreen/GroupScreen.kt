@@ -74,7 +74,9 @@ fun GroupScreen(
     var eventsState: List<Event> by remember {
         mutableStateOf(groupViewModel.eventsListState)
     }
-
+    val pickedDate = datePickerState.selectedDateMillis?.let {
+        formatDate(it)
+    } ?: ""
     Scaffold(
         topBar = {
             TopBar(
@@ -166,7 +168,8 @@ fun GroupScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        groupViewModel.changeDate(dateState)
+                        groupViewModel.changeDate(pickedDate)
+                        eventsState = groupViewModel.eventsListState
                         datePickerVisible = false
                     }
                 ) {

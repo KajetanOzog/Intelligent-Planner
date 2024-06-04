@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose.IO_ProjectTheme
+import com.example.io_project.Constants.HOME_SCREEN
 import com.example.io_project.ui.components.AuthContent
 import com.example.io_project.ui.components.AuthTopBar
 import com.example.io_project.ui.components.OneTapSignIn
@@ -74,7 +75,7 @@ fun AuthScreen(
     SignInWithGoogle(
         navigateToHomeScreen = { signedIn ->
             if (signedIn) {
-                navigateTo("home_screen")
+                navigateTo("$HOME_SCREEN/false")
             }
         }
     )

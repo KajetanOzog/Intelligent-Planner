@@ -18,7 +18,6 @@ object GreetingData
 {
     var date: String? = null
     var greetingText: String = "Dzień dobry"
-    var displayName: String? = null
     var events: MutableList<Event>? = null
     var displayName: String? = null
 }

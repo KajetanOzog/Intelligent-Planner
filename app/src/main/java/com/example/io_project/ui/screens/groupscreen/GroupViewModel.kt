@@ -70,6 +70,10 @@ class GroupViewModel @AssistedInject constructor(
                 //TODO(WYSWIETLANIE TYLKO Z DANEGO DNIA)
                 eventsListState = fetchGroup(group.groupID)?.events?.toMutableList()
                     ?: emptyList<Event>().toMutableList()
+
+                eventsListState = eventsListState.filter {
+                    it.date == getDateString()
+                }.toMutableList()
                 Log.d("GroupVM", "$eventsListState")
             }
         }
