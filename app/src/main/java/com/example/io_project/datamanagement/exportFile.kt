@@ -43,7 +43,7 @@ suspend fun exportUserFiler(userId: String): String {
     val completedGoals = completedGoalsData.map { data ->
         Gson().fromJson(Gson().toJson(data), Goal::class.java)
     }
-    val uncompletedGoalsData = userData["goals.uncompleted"] as? List<Map<String, Any>> ?: emptyList()
+    val uncompletedGoalsData = userData["goals.unfinished"] as? List<Map<String, Any>> ?: emptyList()
     val uncompletedGoals = uncompletedGoalsData.map { data ->
         Gson().fromJson(Gson().toJson(data), Goal::class.java)
     }
@@ -57,7 +57,7 @@ suspend fun exportUserFiler(userId: String): String {
         "Tasks" to tasks,
         "Goals" to mapOf(
             "Completed" to completedGoals,
-            "Uncompleted" to uncompletedGoals
+            "unfinished" to uncompletedGoals
         )
     )
 
