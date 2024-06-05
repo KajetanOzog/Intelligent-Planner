@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.io_project.dataclasses.Task
 import com.example.io_project.datamanagement.getTasks
+import com.example.io_project.datamanagement.updateTasks
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,14 @@ class TasksViewModel @Inject constructor(
     init{
         getTasksToList()
         Log.d("TasksViewModel", "Pobrane zadania: $tasks")
+    }
+
+    fun acceptChanges() {
+        Firebase.auth.currentUser?.let{
+            viewModelScope.launch {
+                updateTasks(tasks, it.uid)
+            }
+        }
     }
 
     fun getTasksToList() {

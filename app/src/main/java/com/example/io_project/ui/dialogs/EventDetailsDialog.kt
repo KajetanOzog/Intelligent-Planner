@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -36,6 +37,7 @@ import com.example.compose.IO_ProjectTheme
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.EventPriority
 import com.example.io_project.datamanagement.JSONToEvent
+import com.example.io_project.datamanagement.fetchAllEvents
 import com.example.io_project.ui.components.EventDisplay
 
 @Composable
@@ -63,6 +65,12 @@ fun EventDetailsDialog(
     navigateBack: () -> Unit
 ) {
     val event = JSONToEvent(eventJSON)
+    val priorityMap: Map<EventPriority, String> = mapOf(
+        EventPriority.LOW to "niski",
+        EventPriority.MEDIUM to "średni",
+        EventPriority.HIGH to "wysoki"
+    )
+    val timeString: String = event.time + "-" + if (event.endTime != "") event.endTime else ""
     Dialog(onDismissRequest = navigateBack) {
         Column(
             horizontalAlignment = Alignment.Start,
@@ -105,7 +113,7 @@ fun EventDetailsDialog(
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
                 Text(
-                    text = event.time,
+                    text = timeString,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
@@ -150,9 +158,13 @@ fun EventDetailsDialog(
             }
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             Row(
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Text(
+                    text = "Priorytet: ${priorityMap[event.priority]}",
+                    color = Color.White
+                )
                 Icon(
                     Icons.Rounded.Clear,
                     contentDescription = "Zamknij",

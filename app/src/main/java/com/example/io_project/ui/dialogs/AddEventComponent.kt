@@ -83,21 +83,21 @@ fun AddEventComponent(
             Spacer(modifier = Modifier.width(8.dp))
             TimePickerCustom(
                 onValueChange = addEventViewModel._changeTime,
-                label = "Godzina",
-                modifier = Modifier.weight(1f)
+                label = "Godzina r.",
+                modifier = Modifier.weight(1.3f)
             )
         }
-
         Row() {
             DatePickerCustom(
                 onValueChange = addEventViewModel._changeEndDate,
-                label = "Data zakończenia"
+                label = "Data zakończenia",
+                modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.width(8.dp))
             TimePickerCustom(
                 onValueChange = addEventViewModel._changeEndTime,
-                label = "Godzina zakończenia",
-                modifier = Modifier.weight(1f)
+                label = "Godzina z.",
+                modifier = Modifier.weight(1.3f)
             )
         }
 
@@ -109,10 +109,11 @@ fun AddEventComponent(
                 label = "Przypomnij",
                 modifier = Modifier.weight(2f)
             )
+            Spacer(modifier = Modifier.width(8.dp))
             TimePickerCustom(
                 onValueChange = addEventViewModel._changeReminderTime,
                 label = "O której",
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1.3f)
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -121,14 +122,14 @@ fun AddEventComponent(
             label = "Alarm"
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         CheckboxRow(
             onValueChange = addEventViewModel._changeWeekly,
             label = "Tygodniowe"
         )
         
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         CheckboxRow(
             onValueChange = addEventViewModel._changeVisible,
             label = "Widoczne dla znajomych"

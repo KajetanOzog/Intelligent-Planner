@@ -98,6 +98,7 @@ fun EventDisplay(
     navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val timeString: String = event.time + " - " + if (event.endTime != "") event.endTime else ""
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -143,7 +144,7 @@ fun EventDisplay(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = event.time,
+                text = timeString,
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.White
             )

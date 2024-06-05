@@ -1,4 +1,5 @@
 package com.example.io_project.datamanagement
+import android.util.Log
 import com.example.io_project.dataclasses.Task
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -20,7 +21,8 @@ suspend fun getTasks(userID: String): List<Task>? {
                     lastCheck = task["lastCheck"].toString()
                 )
 
-                val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy MM dd"))
+                Log.d("FetchTask", "$task, $today, ${taskObj.lastCheck}")
 
                 if (taskObj.lastCheck != today && taskObj.completed)
                 {

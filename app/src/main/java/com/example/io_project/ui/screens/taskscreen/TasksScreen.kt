@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,10 +28,12 @@ import com.example.io_project.ui.components.TopBar
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Goal
 import com.example.io_project.dataclasses.Task
+import com.example.io_project.ui.components.AcceptChangesButton
 import com.example.io_project.ui.components.GoalDisplay
 import com.example.io_project.ui.components.TaskDisplay
 import com.example.io_project.ui.screens.goalsscreen.GoalsColumn
 import com.example.io_project.ui.screens.goalsscreen.NoGoalsText
+import kotlinx.coroutines.delay
 
 @Composable
 fun TasksScreen(
@@ -53,7 +56,8 @@ fun TasksScreen(
                 navigateTo = navigateTo,
                 currentScreenName = "tasks_screen"
             )
-        }
+        },
+        floatingActionButton = { AcceptChangesButton(acceptChanges = { tasksViewModel.acceptChanges() }) }
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -95,13 +99,15 @@ fun TasksColumn(
             .verticalScroll(ScrollState(0))
             .fillMaxSize()
     ) {
+
+
         tasks.forEach { task ->
-            TaskDisplay(task)
+            Log.d("TasksDisplay", "$task")
+            TaskDisplay(task, task.completed)
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
         }
     }
 }
-
 
 
 @Preview(showBackground = true)

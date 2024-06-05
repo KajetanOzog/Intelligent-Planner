@@ -5,7 +5,7 @@ import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-suspend fun updateTasks(tasks: ArrayList<Task>, userID: String) {
+suspend fun updateTasks(tasks: List<Task>, userID: String) {
     val firestore = FirebaseFirestore.getInstance()
     val userDocumentRef = firestore.collection("users").document(userID)
     val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy MM dd"))
