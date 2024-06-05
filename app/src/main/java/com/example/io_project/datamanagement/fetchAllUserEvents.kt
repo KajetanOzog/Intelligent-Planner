@@ -9,6 +9,9 @@ suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
     val friendsEvents: List<Event>? = fetchFriendsEvents(userID, date)
     friendsEvents?.let { allEvents.addAll(it) }
 
+    val userEvents: List<Event>? = fetchEvents(userID, date)
+    userEvents?.let { allEvents.addAll(it) }
+
     val groupsEvents: Map<String, List<Event>>? = fetchGroupsEvents(userID)
     groupsEvents?.forEach { (_, events) ->
         events.filter { it.date == date }.let { allEvents.addAll(it) }
