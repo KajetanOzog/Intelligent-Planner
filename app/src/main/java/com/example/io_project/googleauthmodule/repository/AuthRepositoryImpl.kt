@@ -4,14 +4,14 @@ import com.example.io_project.Constants.CREATED_AT
 import com.example.io_project.Constants.DISPLAY_NAME
 import com.example.io_project.Constants.EMAIL
 import com.example.io_project.Constants.PHOTO_URL
-import com.example.io_project.googleauthmodule.model.Response.Failure
-import com.example.io_project.googleauthmodule.model.Response.Success
 import com.example.io_project.Constants.SIGN_IN_REQUEST
 import com.example.io_project.Constants.SIGN_UP_REQUEST
 import com.example.io_project.Constants.USERS
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.Goal
 import com.example.io_project.dataclasses.Task
+import com.example.io_project.googleauthmodule.model.Response.Failure
+import com.example.io_project.googleauthmodule.model.Response.Success
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.AuthCredential
@@ -24,7 +24,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
-import kotlinx.coroutines.tasks.await
 
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
