@@ -229,7 +229,7 @@ fun getBarChartData(): List<BarChartInput> {
     val res: MutableList<BarChartInput> = mutableListOf()
 
     StatsData.tasks?.forEach { task ->
-        res.add(BarChartInput(task.daysCounter, task.name))
+        res.add(BarChartInput(task.doneCount, task.name))
     }
 
     return res

@@ -55,7 +55,7 @@ fun TaskDisplay(
             text = task.name
         )
         Text(
-            text = "Ile razy wykonano: ${task.daysCounter}"
+            text = "Ile razy wykonano: ${task.doneCount}"
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,

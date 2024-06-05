@@ -34,6 +34,7 @@ import androidx.core.graphics.toColorInt
 import com.example.io_project.R
 import com.example.compose.IO_ProjectTheme
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.dataclasses.EventPriority
 import com.example.io_project.datamanagement.JSONToEvent
 import com.example.io_project.ui.components.EventDisplay
 
@@ -47,7 +48,9 @@ fun EventDetailsDialog() {
         alarm = true,
         color = "#FFF78C6B",
         place = "Kraków, ul. Piastowska 47",
-        description = "Spotkanie mające na celu ustalenie wymagań funkcjonalnych projektu"
+        description = "Spotkanie mające na celu ustalenie wymagań funkcjonalnych projektu",
+        priority = EventPriority.MEDIUM
+
     )
     val navigateBack = {}
     EventDetailsDialog(eventJSON = event.toString(), navigateBack = navigateBack)

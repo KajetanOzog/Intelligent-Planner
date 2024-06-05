@@ -83,7 +83,8 @@ fun AddEventToGroupDialog(
 
             Spacer(modifier = modifier.padding(dimensionResource(id = R.dimen.padding_small)))
 
-            val categories = listOf("Szkoła", "Praca", "Aktywność fizyczna", "Znajomi", "Inne")
+            val categories = listOf("Szkoła", "Inne", "Praca", "Aktywność fizyczna", "Znajomi")
+            val priorities = listOf("Niski", "Średni", "Wysoki")
 
             Column(
                 modifier = Modifier
@@ -103,6 +104,12 @@ fun AddEventToGroupDialog(
                     onValueChange = addEventToGroupViewModel._changeCategory,
                     argList = categories,
                     label = "Kategoria"
+                )
+
+                DropDownPicker(
+                    onValueChange = addEventToGroupViewModel._changePriority,
+                    argList = priorities,
+                    label = "Priorytet"
                 )
 
                 OutlinedTextFieldCustom(

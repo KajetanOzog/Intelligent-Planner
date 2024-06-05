@@ -26,7 +26,8 @@ import com.example.io_project.ui.components.TimePickerCustom
 fun AddEventComponent(
     addEventViewModel: AddEventViewModel = hiltViewModel()
 ) {
-    val categories = listOf("Szkoła", "Praca", "Aktywność fizyczna", "Znajomi", "Inne")
+    val categories = listOf("Szkoła", "Inne", "Praca", "Aktywność fizyczna", "Znajomi")
+    val priorities = listOf("Niski", "Średni", "Wysoki")
     val colors = listOf(
         colorResource(id = R.color.calendar_dark_blue),
         colorResource(id = R.color.calendar_green),
@@ -56,6 +57,12 @@ fun AddEventComponent(
             label = "Kategoria"
         )
 
+        DropDownPicker(
+            onValueChange = addEventViewModel._changePriority,
+            argList = priorities,
+            label = "Priorytet"
+        )
+
         ColorDropDownPicker(
             onValueChange = addEventViewModel._changeColor,
             argList = colors,
@@ -81,10 +88,18 @@ fun AddEventComponent(
             )
         }
 
-        DatePickerCustom(
-            onValueChange = addEventViewModel._changeEndDate,
-            label = "Data zakończenia"
-        )
+        Row() {
+            DatePickerCustom(
+                onValueChange = addEventViewModel._changeEndDate,
+                label = "Data zakończenia"
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            TimePickerCustom(
+                onValueChange = addEventViewModel._changeEndTime,
+                label = "Godzina zakończenia",
+                modifier = Modifier.weight(1f)
+            )
+        }
 
         Row(
             verticalAlignment = Alignment.CenterVertically

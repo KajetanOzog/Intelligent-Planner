@@ -36,6 +36,8 @@ import com.example.compose.IO_ProjectTheme
 import com.example.io_project.Constants.EVENT_DETAILS_DIALOG
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.dataclasses.EventPriority
+
 @Composable
 fun CalendarTile(
     events: List<Event>,
@@ -169,7 +171,8 @@ fun EventDisplayPreview() {
                 date = "sun, 2 Jun 2024",
                 time = "8:00",
                 category = "Szkoła",
-                alarm = true
+                alarm = true,
+                priority = EventPriority.MEDIUM
             ),
             {}
         )

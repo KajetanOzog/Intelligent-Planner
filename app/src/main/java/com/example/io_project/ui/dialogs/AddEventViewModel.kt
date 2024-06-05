@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.io_project.Constants.DEFAULT_COLOR_HEX
 import com.example.io_project.dataclasses.Alarm
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.dataclasses.EventPriority
 import com.example.io_project.notifications.AlarmScheduler
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -27,7 +28,13 @@ import javax.inject.Inject
 @HiltViewModel
 class AddEventViewModel @Inject constructor(
 ) : ViewModel() {
-    val eventState = MutableStateFlow(Event(color = DEFAULT_COLOR_HEX, category = "Inne"))
+    val eventState = MutableStateFlow(
+        Event(
+            color = DEFAULT_COLOR_HEX,
+            priority = EventPriority.MEDIUM,
+            category = "Inne"
+        )
+    )
 
     fun getEvent(): Event {
         return eventState.value
@@ -63,7 +70,6 @@ class AddEventViewModel @Inject constructor(
     }
 
 
-
     fun addEvent() {
         viewModelScope.launch {
             Firebase.auth.currentUser?.let {
@@ -94,6 +100,16 @@ class AddEventViewModel @Inject constructor(
         eventState.update { currentState -> currentState.copy(category = newCategory) }
     }
 
+    val _changePriority: (String) -> Unit = { it -> changePriority(it) }
+    fun changePriority(newPriorityString: String) {
+        val priorityMap: Map<String, EventPriority> = mapOf(
+            "Niski" to EventPriority.LOW,
+            "Średni" to EventPriority.MEDIUM,
+            "Wysoki" to EventPriority.HIGH
+        )
+        eventState.update { currentState -> currentState.copy(priority = priorityMap[newPriorityString]!!) }
+    }
+
     val _changeColor: (String) -> Unit = { it -> changeColor(it) }
     fun changeColor(newColor: String) {
         eventState.update { currentState -> currentState.copy(color = newColor) }
@@ -107,6 +123,11 @@ class AddEventViewModel @Inject constructor(
     val _changeTime: (String) -> Unit = { it -> changeTime(it) }
     fun changeTime(newTime: String) {
         eventState.update { currentState -> currentState.copy(time = newTime) }
+    }
+
+    val _changeEndTime: (String) -> Unit = { it -> changeEndTime(it) }
+    fun changeEndTime(newEndTime: String) {
+        eventState.update { currentState -> currentState.copy(endTime = newEndTime) }
     }
 
     val _changeDate: (String) -> Unit = { it -> changeDate(it) }

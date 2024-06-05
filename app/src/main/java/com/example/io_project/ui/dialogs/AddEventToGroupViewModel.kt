@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.io_project.Constants.GROUP_COLOR_HEX
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.dataclasses.EventPriority
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,7 +17,8 @@ class AddEventToGroupViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    val eventState = MutableStateFlow(Event(color = GROUP_COLOR_HEX))
+    val eventState =
+        MutableStateFlow(Event(color = GROUP_COLOR_HEX, priority = EventPriority.MEDIUM))
 
     fun getEvent(): Event {
         return eventState.value
@@ -55,6 +57,16 @@ class AddEventToGroupViewModel @Inject constructor(
     val _changeCategory: (String) -> Unit = { it -> changeCategory(it) }
     private fun changeCategory(newCategory: String) {
         eventState.update { currentState -> currentState.copy(category = newCategory) }
+    }
+
+    val _changePriority: (String) -> Unit = { it -> changePriority(it) }
+    fun changePriority(newPriorityString: String) {
+        val priorityMap: Map<String, EventPriority> = mapOf(
+            "Niski" to EventPriority.LOW,
+            "Średni" to EventPriority.MEDIUM,
+            "Wysoki" to EventPriority.HIGH
+        )
+        eventState.update { currentState -> currentState.copy(priority = priorityMap[newPriorityString]!!) }
     }
 
     val _changePlace: (String) -> Unit = { it -> changePlace(it) }
