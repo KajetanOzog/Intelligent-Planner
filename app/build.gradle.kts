@@ -87,6 +87,7 @@ dependencies {
     implementation("co.yml:ycharts:2.1.0")
     implementation("androidx.datastore:datastore-preferences-rxjava2:1.1.1")
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.1.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1") // check for the latest version
 }
 
 kapt {
