@@ -25,6 +25,7 @@ object Constants {
     //Screens
     const val AUTH_SCREEN = "auth_screen"
     const val ADD_ACTIVITY_DIALOG = "add_activity_dialog"
+    const val ASSISTANT_DIALOG = "assistant_dialog"
     const val PROFILE_SCREEN = "profile_screen"
     const val GOALS_SCREEN = "goals_screen"
     const val TASKS_SCREEN = "tasks_screen"

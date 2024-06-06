@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.io_project.dataclasses.Weather
+import com.example.io_project.dataclasses.WeatherCurrent
 import com.example.io_project.datamanagement.getIcon
 import com.example.io_project.permissions.AskingForPermissions
 import com.example.io_project.permissions.Permissions
@@ -27,20 +27,20 @@ import kotlinx.coroutines.delay
 @Composable
 fun WeatherWidget(modifier: Modifier = Modifier)
 {
-    var temp by remember { mutableStateOf(Weather.temperature) }
-    var wc by remember { mutableStateOf(Weather.code) }
+    var temp by remember { mutableStateOf(WeatherCurrent.temperature) }
+    var wc by remember { mutableStateOf(WeatherCurrent.code) }
     val activity = LocalContext.current as Activity
 
     if(!AskingForPermissions.started){
         LaunchedEffect(Unit)
         {
             Permissions(activity)
-            while(!AskingForPermissions.finished || !Weather.acquired && checkLocationPermission(activity))
+            while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
             {
                 delay(500)
             }
-            temp = Weather.temperature
-            wc = Weather.code
+            temp = WeatherCurrent.temperature
+            wc = WeatherCurrent.code
         }
     }
 

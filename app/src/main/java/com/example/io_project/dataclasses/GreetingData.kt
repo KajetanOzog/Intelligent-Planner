@@ -1,6 +1,6 @@
 package com.example.io_project.dataclasses
 
-object Weather
+object WeatherCurrent
 {
     var temperature: Double? = null
     var code: Int? = null
@@ -12,4 +12,11 @@ object GreetingData
     var date: String? = null
     var greetingText: String = "Dzień dobry"
     var events: MutableList<Event>? = null
+}
+
+object WeatherForecast
+{
+    var temperatures: Array<Double?> = arrayOfNulls(7)
+    var codes: Array<Int?> = arrayOfNulls(7)
+    var acquired: Boolean = false
 }
