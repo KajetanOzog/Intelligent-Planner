@@ -35,7 +35,7 @@ import javax.inject.Inject
 class CalendarViewModel @AssistedInject constructor(
     @Assisted val allEvents: State<Boolean>
 ) : ViewModel() {
-    var eventsListState = mutableStateListOf<Event>()
+    var eventsListState = mutableListOf<Event>()
     val dateState = MutableStateFlow(LocalDate.now())
 
     @AssistedFactory
@@ -67,11 +67,11 @@ class CalendarViewModel @AssistedInject constructor(
             Firebase.auth.currentUser?.let {
                 eventsListState =
                     if (allEvents.value) {
-                        fetchAllUserEvents(it.uid, getDateString())?.toMutableStateList()
-                            ?: emptyList<Event>().toMutableList() as SnapshotStateList<Event>
+                        fetchAllUserEvents(it.uid, getDateString())?.toMutableList()
+                            ?: emptyList<Event>().toMutableList()
                     }  else {
-                        fetchEvents(it.uid, getDateString())?.toMutableStateList()
-                            ?: emptyList<Event>().toMutableList() as SnapshotStateList<Event>
+                        fetchEvents(it.uid, getDateString())?.toMutableList()
+                            ?: emptyList<Event>().toMutableList()
                     }
             }
         }
