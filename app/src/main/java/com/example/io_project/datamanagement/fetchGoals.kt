@@ -42,7 +42,7 @@ suspend fun fetchUncompletedGoals(userID: String): List<Goal>? {
 }
 
 
-suspend fun CompletedGoals(userID: String): List<Goal>? {
+suspend fun fetchCompletedGoals(userID: String): List<Goal>? {
     val returnList = ArrayList<Goal>()
     val documentSnapshot = getUserDocument(userID)
     try {

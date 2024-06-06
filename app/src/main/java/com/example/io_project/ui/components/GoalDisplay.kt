@@ -1,5 +1,6 @@
 package com.example.io_project.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -26,7 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,37 +46,34 @@ fun GoalDisplay() {
 
 @Composable
 fun GoalDisplay(
-    goal: Goal
+    goal: Goal,
+    canChangeValue: Boolean = true
 ) {
     var markedDone: Boolean by remember {
         mutableStateOf(goal.done)
     }
+    val backgroundColor =
+        if (markedDone)
+            colorResource(id = R.color.goal_deletion_indicator)
+        else
+            MaterialTheme.colorScheme.inverseOnSurface
 
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.outlineVariant)
-            .padding(dimensionResource(id = R.dimen.padding_small))
             .fillMaxWidth()
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = goal.name
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(16.dp)
             )
-            if (markedDone) {
-                Icon(
-                    Icons.Rounded.Clear,
-                    contentDescription = "Delete goal from display",
-                    modifier = Modifier.clickable {
-                        /* TODO: Przenoszenie celu do completed i usuwanie go z widoku */
-                    }
-                )
-            }
-        }
+            .clip(RoundedCornerShape(8.dp))
+            .background(backgroundColor)
+            .padding(dimensionResource(id = R.dimen.padding_small))
+    ) {
+        Text(
+            text = goal.name,
+            style = MaterialTheme.typography.displayMedium
+        )
         Text(
             text = "Data zakończenia: ${goal.deadline}"
         )
@@ -82,7 +82,11 @@ fun GoalDisplay(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    markedDone = !markedDone
+                    if (canChangeValue) {
+                        markedDone = !markedDone
+                        goal.done = !goal.done
+                        Log.d("GoalsVM", "$goal")
+                    }
                 }
         ) {
             Checkbox(

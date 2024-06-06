@@ -1,4 +1,5 @@
 package com.example.io_project.datamanagement
+import android.util.Log
 import com.example.io_project.dataclasses.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -11,6 +12,7 @@ suspend fun updateTasks(tasks: List<Task>, userID: String) {
     val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy MM dd"))
 
     for (task in tasks) {
+        Log.d("UpdateTask", "$task, $today")
         if (task.lastCheck != today && task.completed) {
             task.doneCount++
             task.lastCheck = today

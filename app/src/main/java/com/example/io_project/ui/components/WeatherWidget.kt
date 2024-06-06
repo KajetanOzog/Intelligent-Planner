@@ -2,8 +2,10 @@ package com.example.io_project.ui.components
 
 import android.app.Activity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -51,22 +53,29 @@ fun WeatherWidget(modifier: Modifier = Modifier)
         }
     }
 
-    wc?.let {
-        Image(
-            painter = painterResource(
-                id = getIcon(it)
-            ),
-            contentDescription = "Ikona pogody",
-            modifier = modifier.size(64.dp)
-        )
-    }
-    temp?.let {
-        Spacer(modifier = modifier.width(16.dp))
-        Text(
-            text = "$it°C",
-            style = MaterialTheme.typography.displayLarge,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
+    Row(
+        verticalAlignment = Alignment.Bottom
+    ) {
+        wc?.let {
+            Image(
+                painter = painterResource(
+                    id = getIcon(it)
+                ),
+                contentDescription = "Ikona pogody",
+                modifier = modifier.size(64.dp)
+            )
+        }
+        temp?.let {
+            Spacer(modifier = modifier.width(16.dp))
+            Column {
+                Text(
+                    text = "$it°C",
+                    style = MaterialTheme.typography.displayLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+            }
+        }
     }
 }

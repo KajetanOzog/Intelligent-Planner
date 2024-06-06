@@ -18,7 +18,11 @@ class AddEventToGroupViewModel @Inject constructor(
 ) : ViewModel() {
 
     val eventState =
-        MutableStateFlow(Event(color = GROUP_COLOR_HEX, priority = EventPriority.MEDIUM))
+        MutableStateFlow(Event(
+            color = GROUP_COLOR_HEX,
+            priority = EventPriority.MEDIUM,
+            category = "Inne"
+            ))
 
     fun getEvent(): Event {
         return eventState.value
@@ -46,6 +50,7 @@ class AddEventToGroupViewModel @Inject constructor(
 
     private fun necessaryArgumentsProvided(): Boolean {
         return (eventState.value.name != "") && (eventState.value.date != "")
+                && (eventState.value.time < eventState.value.endTime)
     }
 
 

@@ -32,11 +32,11 @@ import com.example.compose.IO_ProjectTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
-    modifier: Modifier = Modifier,
     text: String,
     navigateBack: () -> Unit,
     canNavigateBack: Boolean,
-    refreshAction: () -> Unit = {}
+    refreshAction: () -> Unit = {},
+    showRefresh: Boolean = false
 ) {
     TopAppBar(
         title = {
@@ -61,9 +61,10 @@ fun TopBar(
             }
         },
         actions = {
-            RefreshAction(refreshAction = refreshAction)
+            if (showRefresh) {
+                RefreshAction(refreshAction = refreshAction)
+            }
         }
-
     )
 }
 

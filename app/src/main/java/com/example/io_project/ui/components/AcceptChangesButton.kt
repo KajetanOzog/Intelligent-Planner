@@ -1,5 +1,7 @@
 package com.example.io_project.ui.components
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Button
@@ -11,7 +13,8 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun AcceptChangesButton(
-    acceptChanges: () -> Unit
+    acceptChanges: () -> Unit,
+    context: Context
 ) {
     ExtendedFloatingActionButton(
         text = {
@@ -27,6 +30,9 @@ fun AcceptChangesButton(
             )
         },
         containerColor = MaterialTheme.colorScheme.primary,
-        onClick = acceptChanges
+        onClick = {
+            acceptChanges()
+            Toast.makeText(context, "Zatwierdzono zmiany", Toast.LENGTH_SHORT).show()
+        }
     )
 }

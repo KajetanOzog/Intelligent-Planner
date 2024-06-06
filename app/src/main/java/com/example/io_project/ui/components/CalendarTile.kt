@@ -98,7 +98,7 @@ fun EventDisplay(
     navigateTo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val timeString: String = event.time + " - " + if (event.endTime != "") event.endTime else ""
+    val timeString: String = event.time +  if (event.endTime != "") " - " + event.endTime else ""
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier

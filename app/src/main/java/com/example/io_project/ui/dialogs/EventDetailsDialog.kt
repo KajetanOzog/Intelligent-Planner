@@ -66,11 +66,11 @@ fun EventDetailsDialog(
 ) {
     val event = JSONToEvent(eventJSON)
     val priorityMap: Map<EventPriority, String> = mapOf(
-        EventPriority.LOW to "niski",
-        EventPriority.MEDIUM to "średni",
-        EventPriority.HIGH to "wysoki"
+        EventPriority.LOW to "NISKI",
+        EventPriority.MEDIUM to "ŚREDNI",
+        EventPriority.HIGH to "WYSOKI"
     )
-    val timeString: String = event.time + "-" + if (event.endTime != "") event.endTime else ""
+    val timeString: String = event.time + if (event.endTime != "") "-" + event.endTime else ""
     Dialog(onDismissRequest = navigateBack) {
         Column(
             horizontalAlignment = Alignment.Start,

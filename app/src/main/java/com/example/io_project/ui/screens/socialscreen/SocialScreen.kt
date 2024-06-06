@@ -19,6 +19,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -45,13 +49,25 @@ fun SocialScreen(
     modifier: Modifier = Modifier
 ) {
     val socialViewModel: SocialViewModel = hiltViewModel()
+    var friendsState: List<String> by remember {
+        mutableStateOf(socialViewModel.friends)
+    }
+    var groupsState: List<Group> by remember {
+        mutableStateOf(socialViewModel.groups)
+    }
 
     Scaffold(
         topBar = {
             TopBar(
                 text = "Społeczność",
                 navigateBack = navigateBack,
-                canNavigateBack = true
+                canNavigateBack = true,
+                refreshAction = {
+                    socialViewModel.refreshData()
+                    friendsState = socialViewModel.friends
+                    groupsState = socialViewModel.groups
+                },
+                showRefresh = true
             )
         },
         bottomBar = {
@@ -94,7 +110,7 @@ fun SocialScreen(
             if (socialViewModel.groupCount == 0) {
                 NoGroupsText()
             } else {
-                GroupsColumn(groups = socialViewModel.groups, navigateTo = navigateTo)
+                GroupsColumn(groups = groupsState, navigateTo = navigateTo)
             }
 
 
@@ -127,7 +143,7 @@ fun SocialScreen(
             if (socialViewModel.friendCount == 0) {
                 NoFriendsText()
             } else {
-                UsersColumn(users = socialViewModel.friends)
+                UsersColumn(users = friendsState)
             }
         }
     }

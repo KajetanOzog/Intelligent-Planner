@@ -21,4 +21,5 @@
     <color name="calendar_light_blue">#118AB2</color>
     <color name="calendar_dark_blue">#073B4C</color>
     <color name="evening_sky_purple">#FF6942e3</color>
+    <color name="goal_deletion_indicator">#FFF78F7E</color>
 </resources>

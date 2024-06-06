@@ -1,6 +1,7 @@
 package com.example.io_project.ui.screens.taskscreen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,6 +45,7 @@ fun TasksScreen(
     modifier: Modifier = Modifier
 ) {
     val tasksViewModel: TasksViewModel = hiltViewModel()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -57,7 +61,12 @@ fun TasksScreen(
                 currentScreenName = "tasks_screen"
             )
         },
-        floatingActionButton = { AcceptChangesButton(acceptChanges = { tasksViewModel.acceptChanges() }) }
+        floatingActionButton = {
+            AcceptChangesButton(
+                acceptChanges = { tasksViewModel.acceptChanges() },
+                context = context
+            )
+        }
     ) { paddingValues ->
         Column(
             modifier = modifier

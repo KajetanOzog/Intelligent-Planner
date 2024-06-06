@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.calendarscreen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,13 +22,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,9 +47,11 @@ import com.example.io_project.dataclasses.Event
 import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.formatDate
+import com.example.io_project.user.Settings
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,13 +59,22 @@ import java.time.format.DateTimeFormatter
 fun CalendarScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-    navigateTo: (route: String) -> Unit
+    navigateTo: (String) -> Unit
 ) {
+
+
+    val context = LocalContext.current
+    val dataStore = Settings(context = context)
+
+    val showAllEvents = dataStore.getEventSettings.collectAsState(initial = false)
     val datePickerState: DatePickerState = rememberDatePickerState()
     var datePickerVisible by remember {
         mutableStateOf(false)
     }
-    val calendarViewModel: CalendarViewModel = hiltViewModel()
+    val calendarViewModel: CalendarViewModel =
+        hiltViewModel<CalendarViewModel, CalendarViewModel.CalendarViewModelFactory> { factory ->
+            factory.create(showAllEvents)
+        }
     val dateState = calendarViewModel.dateState.collectAsState()
         .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
     var eventsState: List<Event> by remember {
@@ -68,6 +83,8 @@ fun CalendarScreen(
     val pickedDate = datePickerState.selectedDateMillis?.let {
         formatDate(it)
     } ?: ""
+
+
 
     Scaffold(
         topBar = {
@@ -78,7 +95,8 @@ fun CalendarScreen(
                 refreshAction = {
                     calendarViewModel.refreshData()
                     eventsState = calendarViewModel.eventsListState
-                }
+                },
+                showRefresh = true
             )
         },
         bottomBar = {
@@ -123,10 +141,10 @@ fun CalendarScreen(
                     Icons.Rounded.ArrowForward,
                     contentDescription = "Następny dzień",
                     modifier = modifier
-                            .clickable {
-                                calendarViewModel.getNextDay()
-                                eventsState = calendarViewModel.eventsListState
-                            }
+                        .clickable {
+                            calendarViewModel.getNextDay()
+                            eventsState = calendarViewModel.eventsListState
+                        }
                 )
             }
             CalendarTile(

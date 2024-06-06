@@ -44,4 +44,9 @@ class SocialViewModel @Inject constructor(
             }
         }
     }
+
+    fun refreshData() {
+        getFriendsList()
+        getGroupsList()
+    }
 }

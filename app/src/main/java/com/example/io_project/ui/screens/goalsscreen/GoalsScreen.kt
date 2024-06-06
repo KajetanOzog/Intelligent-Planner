@@ -1,6 +1,7 @@
 package com.example.io_project.ui.screens.goalsscreen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +19,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,7 +32,9 @@ import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Goal
+import com.example.io_project.ui.components.AcceptChangesButton
 import com.example.io_project.ui.components.GoalDisplay
+import kotlinx.coroutines.delay
 
 @Composable
 fun GoalsScreen(
@@ -38,6 +43,11 @@ fun GoalsScreen(
     modifier: Modifier = Modifier
 ) {
     val goalsViewModel: GoalsViewModel = hiltViewModel()
+    val context = LocalContext.current
+    var goalsState: List<Goal> by remember {
+        mutableStateOf(goalsViewModel.goals)
+    }
+
 
     Scaffold(
         topBar = {
@@ -52,6 +62,15 @@ fun GoalsScreen(
                 navigateTo = navigateTo,
                 currentScreenName = "long_term_screen"
             )
+        },
+        floatingActionButton = {
+            AcceptChangesButton(
+                acceptChanges = {
+                    goalsViewModel.acceptChanges(goalsState)
+                    goalsState = goalsViewModel.goals
+                    },
+                context = context
+            )
         }
     ) { paddingValues ->
         Column(
@@ -62,7 +81,7 @@ fun GoalsScreen(
             if (goalsViewModel.size == 0) {
                 NoGoalsText()
             } else {
-                GoalsColumn(goals = goalsViewModel.goals)
+                GoalsColumn(goals = goalsState)
             }
 
         }

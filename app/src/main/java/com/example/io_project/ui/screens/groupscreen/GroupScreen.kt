@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.groupscreen
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,6 +79,7 @@ fun GroupScreen(
     val pickedDate = datePickerState.selectedDateMillis?.let {
         formatDate(it)
     } ?: ""
+
     Scaffold(
         topBar = {
             TopBar(
@@ -86,7 +89,8 @@ fun GroupScreen(
                 refreshAction = {
                     groupViewModel.refreshData()
                     eventsState = groupViewModel.eventsListState
-                }
+                },
+                showRefresh = true
             )
         },
         bottomBar = {

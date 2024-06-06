@@ -30,14 +30,19 @@ val AppTypography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp
     ),
-    bodyLarge = TextStyle(
+    titleSmall = TextStyle(
         fontFamily = Rubik,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp
     ),
     labelSmall = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
-    )
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
 )

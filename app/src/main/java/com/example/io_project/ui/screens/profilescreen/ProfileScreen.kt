@@ -1,5 +1,11 @@
 package com.example.io_project.ui.screens.profilescreen
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +44,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.example.io_project.Constants.ARCHIVE_SCREEN
 import com.example.io_project.Constants.REVOKE_ACCESS_MESSAGE
 import com.example.io_project.Constants.SIGN_OUT
@@ -62,6 +69,19 @@ fun ProfileScreen(
     val dataStore = Settings(context = context)
     val eventsSettings = dataStore.getEventSettings.collectAsState(initial = false)
     val summarySettings = dataStore.getSummarySettings.collectAsState(initial = false)
+    var path: Uri
+
+    val importResultLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) {
+        path = it ?: Uri.parse("")
+        Log.d("FILE", path.path.toString())
+        viewModel.importDataFromTextFile(path, context)
+    }
+
+    val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+        addCategory(Intent.CATEGORY_OPENABLE)
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TITLE, "invoice.pdf")
+    }
 
     Scaffold(
         topBar = {
@@ -149,12 +169,18 @@ fun ProfileScreen(
                     modifier = modifier
                         .padding(end = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)
+                        .clickable {
+                            viewModel.createDataTextFile(context)
+                        }
                 )
                 SmallTile(
                     text = "Import danych",
                     modifier = modifier
                         .padding(start = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)
+                        .clickable {
+                            importResultLauncher.launch("text/plain")
+                        }
                 )
             }
 

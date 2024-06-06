@@ -5,7 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 
-suspend fun updateGoals(goals: ArrayList<Goal>, userID: String) {
+suspend fun updateGoals(goals: List<Goal>, userID: String) {
     val firestore = FirebaseFirestore.getInstance()
     val userDocumentRef = firestore.collection("users").document(userID)
     val completedGoals = goals.filter { it.done }

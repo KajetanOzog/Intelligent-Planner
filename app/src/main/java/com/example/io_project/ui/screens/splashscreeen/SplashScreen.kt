@@ -24,6 +24,8 @@ import com.example.io_project.Constants.AUTH_SCREEN
 import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.Constants.HOME_SCREEN
 import com.example.io_project.Constants.SPLASH_DELAY
+import com.example.io_project.datamanagement.getTasks
+import com.example.io_project.datamanagement.updateTasks
 import com.example.io_project.user.Settings
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -43,7 +45,12 @@ fun SplashScreen(
     val lastVisitDate = dataStore.getLastVisitDate.collectAsState(initial = "")
 
     LaunchedEffect(true) {
-        delay(SPLASH_DELAY)
+        Firebase.auth.currentUser?.let {
+            val tasksToUpdate = getTasks(it.uid)
+            delay(SPLASH_DELAY)
+            if (tasksToUpdate != null)
+                updateTasks(tasksToUpdate, it.uid)
+        }
         Log.d("Splash", "$summarySettings, $lastVisitDate")
         val showSummary = splashViewModel.displaySummary(
             lastVisitDate.value,
