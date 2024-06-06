@@ -51,7 +51,7 @@ class ProfileViewModel @Inject constructor(
     fun createDataTextFile(context: Context): Boolean {
         return try {
             Log.d("FILE", context.getExternalFilesDir(null).toString())
-            val file = File(context.getExternalFilesDir(null), "savedDatabase.txt")
+            val file = File("/storage/emulated/0/Download", "savedDatabase.txt")
             viewModelScope.launch {
                 Firebase.auth.currentUser?.let {
                     FileOutputStream(file).use { output ->

@@ -50,7 +50,7 @@ class AddEventToGroupViewModel @Inject constructor(
 
     private fun necessaryArgumentsProvided(): Boolean {
         return (eventState.value.name != "") && (eventState.value.date != "")
-                && (eventState.value.time < eventState.value.endTime)
+                && ((eventState.value.time < eventState.value.endTime) || (eventState.value.endTime == ""))
     }
 
 
@@ -82,6 +82,11 @@ class AddEventToGroupViewModel @Inject constructor(
     val _changeTime: (String) -> Unit = { it -> changeTime(it) }
     private fun changeTime(newTime: String) {
         eventState.update { currentState -> currentState.copy(time = newTime) }
+    }
+
+    val _changeEndTime: (String) -> Unit = { it -> changeEndTime(it) }
+    fun changeEndTime(newEndTime: String) {
+        eventState.update { currentState -> currentState.copy(endTime = newEndTime) }
     }
 
     val _changeDate: (String) -> Unit = { it -> changeDate(it) }

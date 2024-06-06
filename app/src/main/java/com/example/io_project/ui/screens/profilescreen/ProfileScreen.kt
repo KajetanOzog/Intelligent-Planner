@@ -61,9 +61,7 @@ fun ProfileScreen(
     navigateBack: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    val snackbarHostState = remember {
-        SnackbarHostState()
-    }
+    val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val dataStore = Settings(context = context)
@@ -75,13 +73,9 @@ fun ProfileScreen(
         path = it ?: Uri.parse("")
         Log.d("FILE", path.path.toString())
         viewModel.importDataFromTextFile(path, context)
+
     }
 
-    val outputIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-        addCategory(Intent.CATEGORY_OPENABLE)
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TITLE, "invoice.pdf")
-    }
 
     Scaffold(
         topBar = {

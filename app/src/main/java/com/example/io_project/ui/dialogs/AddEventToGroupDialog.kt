@@ -81,8 +81,6 @@ fun AddEventToGroupDialog(
                 fontSize = 20.sp
             )
 
-            Spacer(modifier = modifier.padding(dimensionResource(id = R.dimen.padding_small)))
-
             val categories = listOf("Szkoła", "Inne", "Praca", "Aktywność fizyczna", "Znajomi")
             val priorities = listOf("Niski", "Średni", "Wysoki")
 
@@ -126,16 +124,26 @@ fun AddEventToGroupDialog(
                     Spacer(modifier = Modifier.width(8.dp))
                     TimePickerCustom(
                         onValueChange = addEventToGroupViewModel._changeTime,
-                        label = "Godzina",
-                        modifier = Modifier.weight(1f)
+                        label = "Godzina r.",
+                        modifier = Modifier.weight(1.3f)
                     )
                 }
-
-                DatePickerCustom(
-                    onValueChange = addEventToGroupViewModel._changeEndDate,
-                    label = "Data zakończenia"
-                )
+                Row() {
+                    DatePickerCustom(
+                        onValueChange = addEventToGroupViewModel._changeEndDate,
+                        label = "Data zakończenia",
+                        modifier = Modifier.weight(2f)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    TimePickerCustom(
+                        onValueChange = addEventToGroupViewModel._changeEndTime,
+                        label = "Godzina z.",
+                        modifier = Modifier.weight(1.3f)
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
