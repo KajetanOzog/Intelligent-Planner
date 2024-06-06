@@ -87,7 +87,7 @@ class AddEventViewModel @Inject constructor(
         return (eventState.value.name != "") && (eventState.value.date != "")
                 && !(eventState.value.reminder xor (eventState.value.reminderTime != ""))
                 && !(eventState.value.alarm xor eventState.value.reminder)
-                && ((eventState.value.time < eventState.value.endTime) && eventState.value.endTime != "")
+//                && ((eventState.value.time < eventState.value.endTime) && eventState.value.endTime != "")
     }
 
 
