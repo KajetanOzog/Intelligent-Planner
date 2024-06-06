@@ -1,5 +1,6 @@
 package com.example.io_project.ui.screens.dialogs
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,9 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.compose.IO_ProjectTheme
+import com.example.io_project.dataclasses.WeatherForecast
+import com.example.io_project.datamanagement.getIcon
 import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.TimePickerCustom
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @Composable
@@ -40,7 +46,7 @@ fun AssistantDialog(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit
 ) {
-    var state by remember { mutableIntStateOf(0) } // można zmieniać żeby zobaczyć podgląd danego stanu
+    var state by remember { mutableIntStateOf(4) } // można zmieniać żeby zobaczyć podgląd danego stanu
     // 0 -> pytanie czy użytkownik ma pomysł na aktywność
     // 1 -> użytkownik nie ma pomysłu na aktywność
     // 2 -> użytkownik ma pomysł na aktywność (wybór kategorii)
@@ -231,7 +237,42 @@ fun AssistantDialog(
                 }
 
                 4 -> {
-                    /*TODO*/
+                    val todayDate = LocalDate.now()
+                    val formatter = DateTimeFormatter.ofPattern("dd MMM")
+                    Text(
+                        text = "Wybierz termin:",
+                        fontSize = 14.sp
+                    )
+                    Spacer(modifier = modifier.padding(8.dp))
+                    for(i in 1..4)
+                    {
+                        Button(onClick = {
+                            // TODO: ustawienie daty i godziny
+                             state = 6
+                        },
+                            modifier = modifier
+                                .size(height = 40.dp, width = 240.dp)
+                        ) {
+                            val nextDate = todayDate.plusDays(i.toLong()).format(formatter)
+                            Text(
+                                text = "$nextDate, 8:00", // TODO: ściąganie wolnej godziny z kalendarza
+                                fontSize = 16.sp
+                            )
+                            WeatherForecast.codes[i]?.let {
+                                Image(
+                                    painter = painterResource(
+                                        id = getIcon(it)
+                                    ),
+                                    contentDescription = "Ikona pogody",
+                                    modifier = modifier.size(48.dp).padding(start = 16.dp)
+                                )
+                            }
+                            WeatherForecast.temperatures[i]?.let {
+                                Text(text = "$it°C", modifier.padding(start = 4.dp))
+                            }
+                        }
+                        Spacer(modifier = modifier.padding(4.dp))
+                    }
                 }
 
                 5 -> {
@@ -341,12 +382,12 @@ fun AssistantDialog(
 
                 9 -> {
                     // addEvent
+                    navigateBack()
                 }
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
