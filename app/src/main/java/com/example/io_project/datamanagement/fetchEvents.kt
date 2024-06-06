@@ -12,7 +12,6 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
             val dayOfWeek = getDayOfWeek(targetDate)
             val regularDataForDayOfWeek = documentSnapshot.get("regular.$dayOfWeek") as List<Map<String, Event>>
             Log.d("FetchEvents","Fetched events list: ${regularDataForDayOfWeek}")
-            val allEvents = mutableListOf<Event>()
             if (regularDataForDayOfWeek is List<*>) {
                 @Suppress("UNCHECKED_CAST")
                 for (event in regularDataForDayOfWeek)
