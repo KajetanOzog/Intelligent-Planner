@@ -16,12 +16,9 @@ suspend fun importUserFile(userId: String, jsonString: String) {
     val userDocRef = db.collection("users").document(userId)
 
     try {
-        // Parse JSON string back to a map
         val gson = Gson()
         val mapType = object : TypeToken<Map<String, Any>>() {}.type
         val dataMap: Map<String, Any> = gson.fromJson(jsonString, mapType)
-        println(dataMap)
-        // Convert map entries to data classes
         val regularEvents = (dataMap["Events"] as Map<String, Any>)["Regular"] as Map<String, List<Map<String, Any>>>
         val nonregularEvents = (dataMap["Events"] as Map<String, Any>)["Nonregular"] as List<Map<String, Any>>
         val tasks = dataMap["Tasks"] as List<Map<String, Any>>
@@ -50,7 +47,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 )
             }
         }
-        println("A")
         val nonregularEventObjects = nonregularEvents.map { event ->
             Event(
                 eventID = event["eventID"].toString(),
@@ -71,7 +67,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 priority = EventPriority.valueOf(event["priority"].toString())
             )
         }
-        println("B")
         val completedGoalObjects = completedGoals.map { goal ->
             Goal(
                 name = goal["name"].toString(),
@@ -79,7 +74,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 done = goal["done"].toString() == "true"
             )
         }
-        println("D")
         val taskObjects = tasks.map { task ->
             val doneCount = floor(task["doneCount"].toString().toFloatOrNull() ?: 0.0f).toInt()
             val max = floor(task["maxStreak"].toString().toFloatOrNull() ?: 0.0f).toInt()
@@ -92,7 +86,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 lastCheck = task["lastCheck"].toString()
             )
         }
-        println("C")
         val unfinishedGoalObjects = unfinishedGoals.map { goal ->
             Goal(
                 name = goal["name"].toString(),
@@ -100,7 +93,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 done = goal["done"].toString() == "true"
             )
         }
-        println("D")
         regularEventObjectsByDay.forEach { (day, events) ->
             userDocRef.update("regular.$day", events).await()
         }
