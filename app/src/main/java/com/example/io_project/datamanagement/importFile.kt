@@ -14,12 +14,12 @@ suspend fun importUserFile(userId: String, jsonData: String) {
 
         (dataStructure["Events"] as? Map<*, *>)?.get("Regular")?.let { regular ->
             (regular as? Map<*, *>)?.forEach { (day, events) ->
-                userDocRef.update("events.regular.$day", events).await()
+                userDocRef.update("regular.$day", events).await()
             }
         }
 
         (dataStructure["Events"] as? Map<*, *>)?.get("Nonregular")?.let { nonregular ->
-            userDocRef.update("events.nonregular", nonregular).await()
+            userDocRef.update("nonregular", nonregular).await()
         }
 
         dataStructure["Tasks"]?.let { tasks ->
