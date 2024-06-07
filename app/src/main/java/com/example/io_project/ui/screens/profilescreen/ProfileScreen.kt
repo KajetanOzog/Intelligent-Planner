@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -65,7 +66,6 @@ fun ProfileScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val dataStore = Settings(context = context)
-    val eventsSettings = dataStore.getEventSettings.collectAsState(initial = false)
     val summarySettings = dataStore.getSummarySettings.collectAsState(initial = false)
     var path: Uri
 
@@ -164,7 +164,10 @@ fun ProfileScreen(
                         .padding(end = dimensionResource(id = R.dimen.padding_small))
                         .weight(1f)
                         .clickable {
-                            viewModel.createDataTextFile(context)
+                            if (viewModel.createDataTextFile(context))
+                                Toast.makeText(context,"Wyeksportowano dane do /Documents", Toast.LENGTH_SHORT).show()
+                            else
+                                Toast.makeText(context,"Coś poszło nie tak", Toast.LENGTH_SHORT).show()
                         }
                 )
                 SmallTile(
@@ -185,17 +188,6 @@ fun ProfileScreen(
                 style = MaterialTheme.typography.displayMedium
             )
 
-            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-
-            SettingsCheckboxRow(
-                onValueChange = {
-                    coroutineScope.launch {
-                        dataStore.saveEventSettings(it)
-                    }
-                },
-                defaultCheckValue = eventsSettings.value,
-                label = "Wyświetl w kalendarzu wydarzenia znajomych/grupowe."
-            )
 
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
 

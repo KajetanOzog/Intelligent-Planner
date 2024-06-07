@@ -68,7 +68,13 @@ fun HomeScreen(
                     eventsState = homeViewModel.todaysEvents
                 },
                 canNavigateBack = false,
-                showRefresh = true
+                showVisibility = true,
+                showRefresh = true,
+                otherEvents = {
+                    homeViewModel.allEvents = !homeViewModel.allEvents
+                    homeViewModel.refreshData()
+                    eventsState = homeViewModel.todaysEvents
+                }
             )
         },
 

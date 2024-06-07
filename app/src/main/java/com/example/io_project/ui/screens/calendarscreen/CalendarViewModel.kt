@@ -31,24 +31,20 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 
-@HiltViewModel(assistedFactory = CalendarViewModel.CalendarViewModelFactory::class)
-class CalendarViewModel @AssistedInject constructor(
-    @Assisted val allEvents: State<Boolean>
+@HiltViewModel
+class CalendarViewModel @Inject constructor(
 ) : ViewModel() {
+    var allEvents: Boolean = false
     var eventsListState = mutableListOf<Event>()
     val dateState = MutableStateFlow(LocalDate.now())
 
-    @AssistedFactory
-    interface CalendarViewModelFactory {
-        fun create(allEvents: State<Boolean>): CalendarViewModel
-    }
 
 
     init {
         updateEvents()
     }
 
-    fun getDateString(): String =
+    private fun getDateString(): String =
         dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
 
     fun changeDate(newDate: String) {
@@ -66,7 +62,7 @@ class CalendarViewModel @AssistedInject constructor(
         runBlocking {
             Firebase.auth.currentUser?.let {
                 eventsListState =
-                    if (allEvents.value) {
+                    if (allEvents) {
                         fetchAllUserEvents(it.uid, getDateString())?.toMutableList()
                             ?: emptyList<Event>().toMutableList()
                     }  else {
@@ -90,6 +86,7 @@ class CalendarViewModel @AssistedInject constructor(
     }
 
     fun refreshData() {
+        Log.d("CalendarVM", "$allEvents")
         updateEvents()
     }
 }

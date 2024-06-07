@@ -23,11 +23,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,19 +64,11 @@ fun CalendarScreen(
     navigateTo: (String) -> Unit
 ) {
 
-
-    val context = LocalContext.current
-    val dataStore = Settings(context = context)
-
-    val showAllEvents = dataStore.getEventSettings.collectAsState(initial = false)
     val datePickerState: DatePickerState = rememberDatePickerState()
     var datePickerVisible by remember {
         mutableStateOf(false)
     }
-    val calendarViewModel: CalendarViewModel =
-        hiltViewModel<CalendarViewModel, CalendarViewModel.CalendarViewModelFactory> { factory ->
-            factory.create(showAllEvents)
-        }
+    val calendarViewModel: CalendarViewModel = hiltViewModel()
     val dateState = calendarViewModel.dateState.collectAsState()
         .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
     var eventsState: List<Event> by remember {
@@ -96,7 +90,13 @@ fun CalendarScreen(
                     calendarViewModel.refreshData()
                     eventsState = calendarViewModel.eventsListState
                 },
-                showRefresh = true
+                showRefresh = true,
+                showVisibility = true,
+                otherEvents = {
+                    calendarViewModel.allEvents = !calendarViewModel.allEvents
+                    calendarViewModel.refreshData()
+                    eventsState = calendarViewModel.eventsListState
+                }
             )
         },
         bottomBar = {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.dataclasses.Event
+import com.example.io_project.datamanagement.fetchAllUserEvents
 import com.example.io_project.datamanagement.fetchEvents
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -19,8 +20,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
 
 ) : ViewModel() {
+    var allEvents: Boolean = false
     var todaysEvents = mutableListOf<Event>()
-
     init {
         refreshData()
     }
@@ -32,7 +33,13 @@ class HomeViewModel @Inject constructor(
         runBlocking {
             Firebase.auth.currentUser?.let {
                 todaysEvents =
-                    fetchEvents(it.uid, getTodaysDateString())?.toMutableList() ?: todaysEvents
+                    if (allEvents) {
+                        fetchAllUserEvents(it.uid, getTodaysDateString())?.toMutableList()
+                            ?: emptyList<Event>().toMutableList()
+                    }  else {
+                        fetchEvents(it.uid, getTodaysDateString())?.toMutableList()
+                            ?: emptyList<Event>().toMutableList()
+                    }
             }
         }
     }
