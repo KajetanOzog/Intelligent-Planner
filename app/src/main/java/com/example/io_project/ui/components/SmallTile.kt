@@ -35,7 +35,7 @@ fun SmallTile(
         Text(
             text = text,
             style = MaterialTheme.typography.displayMedium,
-            maxLines = 2,
+            maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
     }

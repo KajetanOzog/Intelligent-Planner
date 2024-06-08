@@ -39,7 +39,6 @@ class CalendarViewModel @Inject constructor(
     val dateState = MutableStateFlow(LocalDate.now())
 
 
-
     init {
         updateEvents()
     }

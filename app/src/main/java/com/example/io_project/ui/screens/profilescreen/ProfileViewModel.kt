@@ -43,10 +43,6 @@ class ProfileViewModel @Inject constructor(
         signOutResponse = repo.signOut()
     }
 
-    fun revokeAccess() = viewModelScope.launch {
-        revokeAccessResponse = Loading
-        revokeAccessResponse = repo.revokeAccess()
-    }
 
     fun createDataTextFile(context: Context): Boolean {
         return try {

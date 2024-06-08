@@ -66,27 +66,5 @@ fun BottomBar(
             modifier = Modifier.weight(1f)
         )
 
-
-//        Icon(
-//            Icons.Rounded.Home,
-//            contentDescription = null,
-//            modifier = modifier.clickable {
-//                navigateTo("home_screen")
-//            }
-//        )
-//        Icon(
-//            Icons.Rounded.DateRange,
-//            contentDescription = null,
-//            modifier = modifier.clickable {
-//                navigateTo("calendar_screen")
-//            }
-//        )
-//        Icon(
-//            Icons.Rounded.AccountCircle,
-//            contentDescription = null,
-//            modifier = modifier.clickable {
-//                navigateTo("profile_screen")
-//            }
-//        )
     }
 }

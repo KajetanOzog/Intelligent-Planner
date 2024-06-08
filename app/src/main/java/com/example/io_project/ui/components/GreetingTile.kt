@@ -148,7 +148,7 @@ fun Greeting() {
     displayName?.let {
         Text(
             text = "${GreetingData.greetingText}, $it!",
-            maxLines = 1,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.displayLarge,
             color = Color.White,

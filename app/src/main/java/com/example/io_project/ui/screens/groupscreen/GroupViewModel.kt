@@ -45,7 +45,7 @@ class GroupViewModel @AssistedInject constructor(
         refreshData()
     }
 
-    fun getDateString(): String =
+    private fun getDateString(): String =
         dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
 
     fun changeDate(newDate: String) {
@@ -63,7 +63,7 @@ class GroupViewModel @AssistedInject constructor(
         return Firebase.auth.currentUser?.uid == group.ownerID
     }
 
-    fun updateEvents() {
+    private fun updateEvents() {
         runBlocking {
             Firebase.auth.currentUser?.let {
                 Log.d("GroupVM", "$dateState")

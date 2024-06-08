@@ -21,7 +21,7 @@ class ArchiveViewModel @Inject constructor(
         getTasksToList()
     }
 
-    fun getTasksToList() {
+    private fun getTasksToList() {
         runBlocking {
             Firebase.auth.currentUser?.let {
                 goals = fetchCompletedGoals(it.uid) ?: emptyList()
