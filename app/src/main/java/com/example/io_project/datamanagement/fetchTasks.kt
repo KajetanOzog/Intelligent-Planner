@@ -25,10 +25,6 @@ suspend fun getTasks(userID: String): List<Task>? {
                 // Get today's date
                 val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy MM dd"))
                 Log.d("FetchTask", "$task, $today, ${taskObj.lastCheck}")
-                // Check if task was completed today and reset completion status if necessary
-                if (taskObj.lastCheck != today && taskObj.completed) {
-                    taskObj.completed = false
-                }
                 returnList.add(taskObj)
             }
             return returnList
