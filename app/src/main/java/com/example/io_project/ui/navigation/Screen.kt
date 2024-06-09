@@ -36,6 +36,6 @@ sealed class Screen(val route: String) {
     object AddEventToGroupDialog: Screen(ADD_EVENT_TO_GROUP_DIALOG)
     object AddUserToGroupDialog: Screen(ADD_USER_TO_GROUP_DIALOG)
     object EventDetailsDialog: Screen(EVENT_DETAILS_DIALOG)
-
+    object AssistantDialog: Screen("assistant_dialog")
 
 }

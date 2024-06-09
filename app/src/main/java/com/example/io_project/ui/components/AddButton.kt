@@ -29,6 +29,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.io_project.Constants.ADD_ACTIVITY_DIALOG
+import com.example.io_project.Constants.ASSISTANT_DIALOG
 import com.example.io_project.R
 
 @Composable
@@ -51,8 +52,8 @@ fun AddButton(
             AddButtonExtendable(
                 name = "Asystent",
                 icon = Icons.Rounded.Face,
-                onClick = {},
-                dialogDestination = ""
+                onClick = navigateTo,
+                dialogDestination = ASSISTANT_DIALOG
             )
         }
 

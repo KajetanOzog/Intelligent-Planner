@@ -20,6 +20,7 @@ import com.example.io_project.ui.screens.archivescreen.ArchiveScreen
 import com.example.io_project.ui.screens.profilescreen.ProfileScreen
 import com.example.io_project.ui.screens.authscreen.AuthScreen
 import com.example.io_project.ui.screens.calendarscreen.CalendarScreen
+import com.example.io_project.ui.screens.dialogs.AssistantDialog
 import com.example.io_project.ui.screens.goalsscreen.GoalsScreen
 import com.example.io_project.ui.screens.groupscreen.GroupScreen
 import com.example.io_project.ui.screens.homescreen.HomeScreen
@@ -150,6 +151,9 @@ fun NavGraph(
                 eventJSON = backStackEntry.arguments?.getString("eventJSON") ?: "",
                 navigateBack = { navController.popBackStack() }
             )
+        }
+        dialog(route = Screen.AssistantDialog.route) {
+            AssistantDialog(navigateBack = { navController.popBackStack() })
         }
     }
 }

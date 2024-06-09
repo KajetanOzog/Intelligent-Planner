@@ -97,28 +97,21 @@ private fun sendHttpRequest(url: String, onResponse: (String) -> Unit, onError: 
     })
 }
 
-private fun parseJson(json: String, onSuccess: (Double, Int, DoubleArray, IntArray) -> Unit, onError: () -> Unit){
+private fun parseJson(json: String, onSuccess: (Double, Int, Array<Double>, Array<Int>) -> Unit, onError: () -> Unit){
     try
     {
         val gson = Gson()
         val jsonObject = gson.fromJson(json, JsonObject::class.java)
 
-        val currentJsonObject = jsonObject.getAsJsonObject("current")
-        val temperature = currentJsonObject.get("temperature_2m").asDouble
-        val weatherCode = currentJsonObject.get("weather_code").asInt
+        val current = jsonObject.getAsJsonObject("current")
+        val temperature = current.get("temperature_2m").asDouble
+        val weatherCode = current.get("weather_code").asInt
 
-        val dailyJsonObject = jsonObject.getAsJsonObject("daily")
-        val temperatureForecastJson = dailyJsonObject.getAsJsonArray("apparent_temperature_max")
-        val weatherCodeForecastJson = dailyJsonObject.getAsJsonArray("weather_code")
+        val daily = jsonObject.getAsJsonObject("daily")
+        val apparentTemperatureMax = daily.getAsJsonArray("apparent_temperature_max").map { it.asDouble }.toTypedArray()
+        val weatherCodeArr = daily.getAsJsonArray("weather_code").map { it.asInt }.toTypedArray()
 
-        val temperatureForecast = DoubleArray(7)
-        val weatherCodeForecast = IntArray(7)
-        for(i in 0..6)
-        {
-            temperatureForecast[i] = temperatureForecastJson[i].asDouble
-            weatherCodeForecast[i] = weatherCodeForecastJson[i].asInt
-        }
-        onSuccess(temperature, weatherCode, temperatureForecast, weatherCodeForecast)
+        onSuccess(temperature, weatherCode, apparentTemperatureMax, weatherCodeArr)
     }
     catch (e: Exception)
     {
