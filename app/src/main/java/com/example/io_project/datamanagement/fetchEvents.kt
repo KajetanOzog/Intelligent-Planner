@@ -1,9 +1,11 @@
 package com.example.io_project.datamanagement
+
 import android.util.Log
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.EventPriority
 import com.google.firebase.firestore.DocumentSnapshot
 
+// Function to fetch events for a user on a specific date
 suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
     val documentSnapshot = getUserDocument(userID)
     val returnList = ArrayList<Event>()
@@ -29,16 +31,16 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
 
             return returnList
         } else {
-            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+            Log.d("FetchEvents", "User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Błąd podczas pobierania danych dla danego dnia: ${e.message}")
-        e.printStackTrace()
+        Log.d("FetchEvents", "Error fetching user events for the day: ${e.message}")
     }
     return null
 }
 
 
+// Function to fetch all events for a user
 suspend fun fetchAllEvents(userID: String): List<Event>? {
     val documentSnapshot = getUserDocument(userID)
     val returnList = ArrayList<Event>()
@@ -52,9 +54,6 @@ suspend fun fetchAllEvents(userID: String): List<Event>? {
                 val regularData = documentSnapshot
                     .get("regular.${daysOfWeek[i]}") as List<Map<String, Event>>
                 Log.d("FetchEvents","Fetched events list: ${regularData}")
-
-                val allEvents = mutableListOf<Event>()
-
                 if (regularData is List<*>) {
                     @Suppress("UNCHECKED_CAST")
                     for (event in regularData) {
@@ -62,31 +61,22 @@ suspend fun fetchAllEvents(userID: String): List<Event>? {
                     }
                     Log.d("FetchEvents","ConvertedEvents: ${regularData}")
 
-//                allEvents.addAll(regularDataForDayOfWeek as List<Event>)
                 }
             }
-
-//
-//            val nonRegularData = documentSnapshot.get("nonregular") //as List<Map<String, Event>>
-//            Log.d("FetchEvents(NonReg)","ConvertedEvents: ${nonRegularData}")
-//            //nonRegularData.filter { event -> event["date"].toString() == targetDate }
-//            //Log.d("FetchEvents(NonReg)","ConvertedEvents: ${nonRegularData}")
-
 
             val nonRegularData = getNonRegularData(documentSnapshot)
             if (nonRegularData != null) {
                 for (event in nonRegularData) {
                     returnList.add(mapToEvent(event))
                 }
-//                allEvents.addAll(nonRegularDataForDate)
             }
 
             return returnList
         } else {
-            println("Dokument użytkownika nie istnieje lub nie został pobrany")
+            Log.d("FetchAllEvents", "User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Błąd podczas pobierania danych dla danego dnia: ${e.message}")
+        Log.d("FetchAllEvents", "Error fetching user events: ${e.message}")
         e.printStackTrace()
     }
 
@@ -94,6 +84,7 @@ suspend fun fetchAllEvents(userID: String): List<Event>? {
 }
 
 
+// Function to map event data from Firestore document to Event object
 private fun mapToEvent(event: Map<String, Event>): Event {
     return Event(
 
@@ -116,6 +107,7 @@ private fun mapToEvent(event: Map<String, Event>): Event {
     )
 }
 
+// Function to retrieve non-regular events for a specific date
 private fun getNonRegularDataForDate(
     documentSnapshot: DocumentSnapshot,
     targetDate: String
@@ -130,6 +122,7 @@ private fun getNonRegularDataForDate(
     }
     return null
 }
+
 
 private fun getNonRegularData(documentSnapshot: DocumentSnapshot): List<Map<String, Event>>?
 {

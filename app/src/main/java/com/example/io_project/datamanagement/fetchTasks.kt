@@ -9,9 +9,11 @@ suspend fun getTasks(userID: String): List<Task>? {
     val returnList = ArrayList<Task>()
     try {
         if (documentSnapshot != null && documentSnapshot.exists()) {
+            // Extract tasks data from document
             @Suppress("UNCHECKED_CAST")
             val tasksData = documentSnapshot.get("tasks") as List<Map<String, Task>>
             for (task in tasksData) {
+                // Create Task object from data
                 val taskObj = Task(
                     name = task["name"].toString(),
                     completed = task["completed"].toString() == "true",
@@ -20,24 +22,22 @@ suspend fun getTasks(userID: String): List<Task>? {
                     maxStreak = task["maxStreak"].toString().toInt(),
                     lastCheck = task["lastCheck"].toString()
                 )
-
+                // Get today's date
                 val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy MM dd"))
                 Log.d("FetchTask", "$task, $today, ${taskObj.lastCheck}")
-
-                if (taskObj.lastCheck != today && taskObj.completed)
-                {
+                // Check if task was completed today and reset completion status if necessary
+                if (taskObj.lastCheck != today && taskObj.completed) {
                     taskObj.completed = false
                 }
-
                 returnList.add(taskObj)
             }
             return returnList
         } else {
-            println("User document does not exist or was not fetched")
+            Log.d("FetchTask", "User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Error while fetching tasks: ${e.message}")
-        e.printStackTrace()
+        Log.e("FetchTask", "Error while fetching tasks: ${e.message}")
     }
+    // Return null if an error occurred
     return null
 }

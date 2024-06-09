@@ -1,58 +1,21 @@
 package com.example.io_project.datamanagement
+
 import android.util.Log
 import com.example.io_project.dataclasses.Goal
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 
-
+// Function to fetch uncompleted goals for a user
 suspend fun fetchUncompletedGoals(userID: String): List<Goal>? {
     val returnList = ArrayList<Goal>()
     val documentSnapshot = getUserDocument(userID)
     try {
         if (documentSnapshot != null && documentSnapshot.exists()) {
+            // Retrieve uncompleted goals data from the user document
             val uncompletedGoalsData =  documentSnapshot
                 .get("goals.unfinished") as List<Map<String, Any>>
             for (goal in uncompletedGoalsData) {
                 if (goal != null) {
                     Log.d(
-                        "FetchGoals",
-                        "Single fetched goal: ${goal.javaClass.simpleName} -> ${goal}"
-                    )
-                    returnList.add(
-                        Goal(
-                            name = goal["name"].toString(),
-                            deadline = goal["deadline"].toString(),
-                            done = goal["done"].toString() == "true"
-                        )
-                    )
-                }
-            }
-                @Suppress("UNCHECKED_CAST")
-                return returnList
-        }
-        else
-        {
-            println("User document does not exist or was not fetched")
-        }
-    } catch (e: Exception) {
-        println("Error while fetching uncompleted goals: ${e.message}")
-        e.printStackTrace()
-    }
-    return null
-}
-
-
-suspend fun fetchCompletedGoals(userID: String): List<Goal>? {
-    val returnList = ArrayList<Goal>()
-    val documentSnapshot = getUserDocument(userID)
-    try {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            val CompletedGoalsData =  documentSnapshot
-                .get("goals.completed") as List<Map<String, Any>>
-            for (goal in CompletedGoalsData) {
-                if (goal != null) {
-                    Log.d(
-                        "FetchGoals",
+                        "FetchUncompletedGoals",
                         "Single fetched goal: ${goal.javaClass.simpleName} -> ${goal}"
                     )
                     returnList.add(
@@ -66,42 +29,47 @@ suspend fun fetchCompletedGoals(userID: String): List<Goal>? {
             }
             @Suppress("UNCHECKED_CAST")
             return returnList
-        }
-        else
-        {
-            println("User document does not exist or was not fetched")
+        } else {
+            Log.d("FetchUncompletedGoals", "User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Error while fetching uncompleted goals: ${e.message}")
-        e.printStackTrace()
+        Log.d("FetchUncompletedGoals", "Error while fetching uncompleted goals: ${e.message}")
     }
     return null
 }
 
-
-
-suspend fun fetchGoalsSnapshot(userID: String) {
-    val goalsPath = Firebase.firestore.collection("users")
-        .document(userID).collection("goals.unfinished")
-
-    goalsPath.addSnapshotListener { value, e ->
-        if (e != null) {
-            Log.w("FetchGoalsSnapshot", "Listen failed.", e)
-            return@addSnapshotListener
+// Function to fetch completed goals for a user
+suspend fun fetchCompletedGoals(userID: String): List<Goal>? {
+    val returnList = ArrayList<Goal>()
+    val documentSnapshot = getUserDocument(userID)
+    try {
+        if (documentSnapshot != null && documentSnapshot.exists()) {
+            // Retrieve completed goals data from the user document
+            val completedGoalsData =  documentSnapshot
+                .get("goals.completed") as List<Map<String, Any>>
+            for (goal in completedGoalsData) {
+                if (goal != null) {
+                    Log.d(
+                        "FetchCompletedGoals",
+                        "Single fetched goal: ${goal.javaClass.simpleName} -> ${goal}"
+                    )
+                    returnList.add(
+                        Goal(
+                            name = goal["name"].toString(),
+                            deadline = goal["deadline"].toString(),
+                            done = goal["done"].toString() == "true"
+                        )
+                    )
+                }
+            }
+            @Suppress("UNCHECKED_CAST")
+            return returnList
+        } else {
+            Log.d("FetchCompletedGoals", "User document does not exist or was not fetched")
         }
-        val goals = ArrayList<Goal>()
-        for (doc in value!!) {
-            val goal = Goal(
-                name = doc.data["name"].toString(),
-                deadline = doc.data["deadline"].toString(),
-                done = doc.data["done"].toString() == "true"
-            )
-            goals.add(goal)
-        }
-        Log.d("FetchGoalsSnapshot", "Retrieved data: $goals")
+    } catch (e: Exception) {
+        Log.d("FetchCompletedGoals", "Error while fetching completed goals: ${e.message}")
     }
+    return null
 }
-
-
-
 
