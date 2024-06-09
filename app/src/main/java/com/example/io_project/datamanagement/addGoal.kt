@@ -1,4 +1,6 @@
 package com.example.io_project.datamanagement
+
+import android.util.Log
 import com.example.io_project.dataclasses.Goal
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,15 +12,16 @@ suspend fun addGoalToFirestore(userID: String, goal: Goal, isCompleted: Boolean)
 
     try {
         if (isCompleted) {
-            println("Completed goal added")
+            // Adding a completed goal
+            Log.d("AddGoalToFirestore", "Completed goal added")
             userDocumentRef.update("goals.completed", FieldValue.arrayUnion(goal)).await()
         } else {
-            println("Unfinished goal added")
+            // Adding an unfinished goal
+            Log.d("AddGoalToFirestore", "Unfinished goal added")
             userDocumentRef.update("goals.unfinished", FieldValue.arrayUnion(goal)).await()
         }
-        println("Goal added")
+        Log.d("AddGoalToFirestore", "Goal added")
     } catch (e: Exception) {
-        println("Error when adding goal: ${e.message}")
+        Log.d("AddGoalToFirestore", "Error when adding goal: ${e.message}")
     }
 }
-

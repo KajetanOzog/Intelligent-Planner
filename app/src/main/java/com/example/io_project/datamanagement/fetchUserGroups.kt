@@ -1,4 +1,5 @@
 package com.example.io_project.datamanagement
+
 import android.util.Log
 import com.example.io_project.Constants
 import com.example.io_project.dataclasses.Event
@@ -14,11 +15,13 @@ suspend fun fetchUserGroups(userID: String): List<Group>? {
             val groupIDs = documentSnapshot.get("groups") as? List<String> ?: emptyList()
             Log.d("FetchUserGroups", "GroupIDs: $groupIDs")
             val groupDocument = getGroupDocument()
+            // Iterate through group IDs
             for (groupID in groupIDs) {
                 if (groupDocument != null) {
                     Log.d("FetchUserGroups", "$groupDocument, ${groupDocument.exists()}")
                 }
                 if (groupDocument != null && groupDocument.exists()) {
+                    // Extract group data from group document
                     val groupData = groupDocument.data?.get(groupID) as? Map<String, Any>
                     Log.d("FetchUserGroups", "GroupData: $groupData")
                     if (groupData != null) {
@@ -29,22 +32,25 @@ suspend fun fetchUserGroups(userID: String): List<Group>? {
             }
             return returnList
         } else {
-            println("User document does not exist or was not fetched")
+            Log.d("FetchUserGroups", "User document does not exist or was not fetched")
         }
     } catch (e: Exception) {
-        println("Error while fetching data for the given day: ${e.message}")
-        e.printStackTrace()
+        Log.e("FetchUserGroups", "Error while fetching data for the given day: ${e.message}")
     }
     return null
 }
 
+// Map group data to Group object
 private fun mapToGroup(group: Map<String, Any>): Group {
+    // Extract events data from group and map it to Event objects
     @Suppress("UNCHECKED_CAST")
     val events = (group["events"] as? List<Map<String, Event>>)?.map { mapToEvent(it) } ?: emptyList()
 
+    // Extract group members from group data
     @Suppress("UNCHECKED_CAST")
     val groupMembers = group["groupMembers"] as? List<String> ?: emptyList()
 
+    // Create Group object from group data
     return Group(
         groupName = group["groupName"].toString(),
         groupID = group["groupID"].toString(),
@@ -54,6 +60,7 @@ private fun mapToGroup(group: Map<String, Any>): Group {
     )
 }
 
+// Map event data to Event object
 private fun mapToEvent(event: Map<String, Event>): Event {
     return Event(
         eventID = event["eventID"].toString(),

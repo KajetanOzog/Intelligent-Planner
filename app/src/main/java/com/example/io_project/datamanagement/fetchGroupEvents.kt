@@ -1,4 +1,6 @@
 package com.example.io_project.datamanagement
+
+import android.util.Log
 import com.example.io_project.dataclasses.Event
 
 suspend fun fetchGroupsEvents(userID: String): Map<String, List<Event>>? {
@@ -11,11 +13,10 @@ suspend fun fetchGroupsEvents(userID: String): Map<String, List<Event>>? {
             }
             return groupEventsMap
         } else {
-            println("No groups found for the user.")
+            Log.d("FetchGroupsEvents", "No groups found for the user.")
         }
     } catch (e: Exception) {
-        println("Error while fetching group events: ${e.message}")
-        e.printStackTrace()
+        Log.d("FetchGroupsEvents", "Error while fetching group events: ${e.message}")
     }
     return null
 }

@@ -1,4 +1,6 @@
 package com.example.io_project.datamanagement
+
+import android.util.Log
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.EventPriority
 import com.example.io_project.dataclasses.Goal
@@ -10,7 +12,6 @@ import com.google.gson.Gson
 import kotlinx.coroutines.tasks.await
 import kotlin.math.floor
 
-
 suspend fun importUserFile(userId: String, jsonString: String) {
     val db = Firebase.firestore
     val userDocRef = db.collection("users").document(userId)
@@ -19,12 +20,15 @@ suspend fun importUserFile(userId: String, jsonString: String) {
         val gson = Gson()
         val mapType = object : TypeToken<Map<String, Any>>() {}.type
         val dataMap: Map<String, Any> = gson.fromJson(jsonString, mapType)
+
+        // Extract data from the map
         val regularEvents = (dataMap["Events"] as Map<String, Any>)["Regular"] as Map<String, List<Map<String, Any>>>
         val nonregularEvents = (dataMap["Events"] as Map<String, Any>)["Nonregular"] as List<Map<String, Any>>
         val tasks = dataMap["Tasks"] as List<Map<String, Any>>
         val completedGoals = (dataMap["Goals"] as Map<String, Any>)["Completed"] as List<Map<String, Any>>
         val unfinishedGoals = (dataMap["Goals"] as Map<String, Any>)["Unfinished"] as List<Map<String, Any>>
 
+        // Convert data into corresponding data class objects
         val regularEventObjectsByDay = regularEvents.mapValues { (_, events) ->
             events.map { event ->
                 Event(
@@ -93,17 +97,17 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 done = goal["done"].toString() == "true"
             )
         }
+
+        // Update Firestore document with imported data
         regularEventObjectsByDay.forEach { (day, events) ->
             userDocRef.update("regular.$day", events).await()
         }
-
         userDocRef.update("nonregular.data", nonregularEventObjects).await()
         userDocRef.update("tasks", taskObjects).await()
         userDocRef.update("goals.completed", completedGoalObjects).await()
         userDocRef.update("goals.unfinished", unfinishedGoalObjects).await()
 
     } catch (e: Exception) {
-        println("An error occurred while exporting data to Firestore: ${e.message}")
-        e.printStackTrace()
+        Log.e("importUserFile", "An error occurred while exporting data to Firestore: ${e.message}")
     }
 }

@@ -1,35 +1,31 @@
 package com.example.io_project.datamanagement
+import android.util.Log
 import com.example.io_project.Constants.GROUP_COLOR_HEX
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.EventPriority
 import com.example.io_project.dataclasses.Group
 
+// Function to fetch group data
 suspend fun fetchGroup(groupID: String): Group? {
     try {
         @Suppress("UNCHECKED_CAST")
         val groupDocument = getGroupDocument()
-        if(groupDocument != null)
-        {
+        if(groupDocument != null) {
             val groupData = groupDocument.data?.get(groupID) as? Map<String, Any>
-            return if (groupData != null)
-            {
+            return if (groupData != null) {
                 mapToGroup(groupData)
-            }
-            else
-            {
-                println("GroupDocument is null")
+            } else {
+                Log.d("FetchGroup", "GroupDocument is null")
                 null
             }
         }
     } catch (e: Exception) {
-        println("Error when fetching group: ${e.message}")
-        e.printStackTrace()
+        Log.d("FetchGroup", "Error when fetching group: ${e.message}")
     }
     return null
 }
 
-
-
+// Function to map group data to Group object
 private fun mapToGroup(group: Map<String, Any>): Group {
     @Suppress("UNCHECKED_CAST")
     val events = (group["events"] as? List<Map<String, Event>>)?.map { mapToEvent(it) } ?: emptyList()
@@ -46,6 +42,7 @@ private fun mapToGroup(group: Map<String, Any>): Group {
     )
 }
 
+// Function to map event data to Event object
 private fun mapToEvent(event: Map<String, Event>): Event {
     return Event(
         eventID = event["eventID"].toString(),
