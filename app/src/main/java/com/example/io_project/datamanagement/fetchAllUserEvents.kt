@@ -17,15 +17,16 @@ suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
         events.filter { it.date == date }.let { allEvents.addAll(it) }
     }
 
-    val dateFormat = SimpleDateFormat("EEE, MMM d yyyy", Locale.ENGLISH)
+    val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
 
     try {
         allEvents.sortWith(compareBy { event ->
-            dateFormat.parse(event.date)
+            timeFormat.parse(event.time)
         })
     } catch (e: ParseException) {
-        println("Error parsing date: ${e.message}")
+        println("Error parsing time: ${e.message}")
     }
 
     return if (allEvents.isEmpty()) null else allEvents
 }
+

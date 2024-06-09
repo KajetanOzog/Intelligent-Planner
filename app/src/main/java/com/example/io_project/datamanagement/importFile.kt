@@ -8,6 +8,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import kotlinx.coroutines.tasks.await
+import kotlin.math.floor
 
 
 suspend fun importUserFile(userId: String, jsonString: String) {
@@ -15,12 +16,9 @@ suspend fun importUserFile(userId: String, jsonString: String) {
     val userDocRef = db.collection("users").document(userId)
 
     try {
-        // Parse JSON string back to a map
         val gson = Gson()
         val mapType = object : TypeToken<Map<String, Any>>() {}.type
         val dataMap: Map<String, Any> = gson.fromJson(jsonString, mapType)
-
-        // Convert map entries to data classes
         val regularEvents = (dataMap["Events"] as Map<String, Any>)["Regular"] as Map<String, List<Map<String, Any>>>
         val nonregularEvents = (dataMap["Events"] as Map<String, Any>)["Nonregular"] as List<Map<String, Any>>
         val tasks = dataMap["Tasks"] as List<Map<String, Any>>
@@ -49,7 +47,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 )
             }
         }
-
         val nonregularEventObjects = nonregularEvents.map { event ->
             Event(
                 eventID = event["eventID"].toString(),
@@ -70,18 +67,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 priority = EventPriority.valueOf(event["priority"].toString())
             )
         }
-
-        val taskObjects = tasks.map { task ->
-            Task(
-                name = task["name"].toString(),
-                completed = task["completed"].toString() == "true",
-                doneCount = task["doneCount"].toString().toInt(),
-                addedDate = task["addedDate"].toString(),
-                maxStreak = task["maxStreak"].toString().toInt(),
-                lastCheck = task["lastCheck"].toString()
-            )
-        }
-
         val completedGoalObjects = completedGoals.map { goal ->
             Goal(
                 name = goal["name"].toString(),
@@ -89,7 +74,18 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 done = goal["done"].toString() == "true"
             )
         }
-
+        val taskObjects = tasks.map { task ->
+            val doneCount = floor(task["doneCount"].toString().toFloatOrNull() ?: 0.0f).toInt()
+            val max = floor(task["maxStreak"].toString().toFloatOrNull() ?: 0.0f).toInt()
+            Task(
+                name = task["name"].toString(),
+                completed = task["completed"].toString() == "true",
+                doneCount = doneCount,
+                addedDate = task["addedDate"].toString(),
+                maxStreak = max,
+                lastCheck = task["lastCheck"].toString()
+            )
+        }
         val unfinishedGoalObjects = unfinishedGoals.map { goal ->
             Goal(
                 name = goal["name"].toString(),
@@ -97,7 +93,6 @@ suspend fun importUserFile(userId: String, jsonString: String) {
                 done = goal["done"].toString() == "true"
             )
         }
-
         regularEventObjectsByDay.forEach { (day, events) ->
             userDocRef.update("regular.$day", events).await()
         }
