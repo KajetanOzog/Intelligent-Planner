@@ -1,5 +1,7 @@
 package com.example.io_project.ui.screens.dialogs
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -31,11 +34,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.dataclasses.WeatherForecast
 import com.example.io_project.datamanagement.getIcon
 import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.TimePickerCustom
+import com.example.io_project.ui.dialogs.AssistantViewModel
 import com.example.io_project.ui.theme.IO_ProjectTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -46,11 +52,15 @@ fun AssistantDialog(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit
 ) {
-    var state by remember { mutableIntStateOf(8) } // można zmieniać żeby zobaczyć podgląd danego stanu
+
+    val context: Context = LocalContext.current
+    val assistantViewModel: AssistantViewModel = hiltViewModel()
+
+    var state by remember { mutableIntStateOf(0) } // można zmieniać żeby zobaczyć podgląd danego stanu
     // 0 -> pytanie czy użytkownik ma pomysł na aktywność
     // 1 -> użytkownik nie ma pomysłu na aktywność
     // 2 -> użytkownik ma pomysł na aktywność (wybór kategorii)
-        // kiedy użytkownik wybierze kategorię to przechodzimy do wyboru jak w state == 1
+    // kiedy użytkownik wybierze kategorię to przechodzimy do wyboru jak w state == 1
     // 3 -> pytanie o preferencje co do terminu
     // 4 -> brak preferencji co do terminu
     // 5 -> użytkownik ma preferencje do terminu (date picker)
@@ -80,8 +90,7 @@ fun AssistantDialog(
             )
             Spacer(modifier = modifier.padding(8.dp))
 
-            when(state)
-            {
+            when (state) {
                 0 -> {
                     Text(
                         text = "Czy masz już pomysł na aktywność?",
@@ -104,7 +113,10 @@ fun AssistantDialog(
                             )
                         }
                         Button(
-                            onClick = { state = 1 },
+                            onClick = {
+                                state = 1
+                                assistantViewModel.getRandomSuggestions()
+                            },
                             shape = RoundedCornerShape(8.dp),
                         ) {
                             Text(
@@ -117,8 +129,7 @@ fun AssistantDialog(
 
                 1 -> {
                     Text(text = "Proponowane aktywności:", fontSize = 14.sp)
-                    for(i in 1..4)
-                    {
+                    for (i in 0..3) {
                         Row(
                             modifier = modifier
                                 .padding(top = 6.dp)
@@ -130,7 +141,9 @@ fun AssistantDialog(
                             Button(
                                 onClick = {
                                     state = 3
-                                    // ACTIVITY CHOSEN
+                                    assistantViewModel.chooseSuggestion(
+                                        assistantViewModel.suggestionDisplayList[i]
+                                    )
                                 },
                                 modifier = modifier
                                     .size(height = 40.dp, width = 200.dp),
@@ -138,7 +151,7 @@ fun AssistantDialog(
                             )
                             {
                                 Text(
-                                    text = "Aktywność #$i", // nazwa aktywności numer i
+                                    text = assistantViewModel.suggestionDisplayList[i].name, // nazwa aktywności numer i
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     style = MaterialTheme.typography.bodyMedium,
@@ -154,10 +167,10 @@ fun AssistantDialog(
                         verticalAlignment = Alignment.CenterVertically
                     )
                     {
-                        var refreshed by remember {mutableStateOf(false)}
+                        var refreshed by remember { mutableStateOf(false) }
                         Button(
                             onClick = {
-                                // REFRESH
+                                assistantViewModel.getRandomSuggestions()
                                 refreshed = true
                             },
                             enabled = !refreshed,
@@ -178,16 +191,22 @@ fun AssistantDialog(
 
                 2 -> {
                     Text(text = "Wybierz kategorię:", fontSize = 14.sp)
-                    val categories = listOf("Szkola", "Praca", "Aktywnosc fizyczna", "Znajomi", "Inne")
+                    var pickedCategory: String = "Inne"
+                    val categories =
+                        listOf("Szkola", "Praca", "Aktywnosc fizyczna", "Znajomi", "Inne")
                     var isEnabled by remember { mutableStateOf(false) }
                     DropDownPicker(
-                        onValueChange = { isEnabled = true },
+                        onValueChange = {
+                            pickedCategory = it
+                            isEnabled = true
+                        },
                         argList = categories,
                         label = "Kategoria"
                     )
                     Spacer(modifier = modifier.padding(10.dp))
                     Button(
                         onClick = {
+                            assistantViewModel.getSuggestionsByCategory(pickedCategory)
                             state = 1
                         },
                         enabled = isEnabled,
@@ -238,24 +257,26 @@ fun AssistantDialog(
 
                 4 -> {
                     val todayDate = LocalDate.now()
-                    val formatter = DateTimeFormatter.ofPattern("dd MMM")
+                    val formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN)
                     Text(
                         text = "Wybierz termin:",
                         fontSize = 14.sp
                     )
                     Spacer(modifier = modifier.padding(8.dp))
-                    for(i in 1..4)
-                    {
-                        Button(onClick = {
-                            // TODO: ustawienie daty i godziny
-                             state = 6
-                        },
+                    for (i in 0..3) {
+                        val nextDate = todayDate.plusDays(i.toLong()).format(formatter)
+                        val nextTime = assistantViewModel.getFreeTime(nextDate)
+                        Button(
+                            onClick = {
+                                assistantViewModel.changeDate(nextDate)
+                                assistantViewModel.changeTime(nextTime)
+                                state = 6
+                            },
                             modifier = modifier
                                 .size(height = 40.dp, width = 240.dp)
                         ) {
-                            val nextDate = todayDate.plusDays(i.toLong()).format(formatter)
                             Text(
-                                text = "$nextDate, 8:00", // TODO: ściąganie wolnej godziny z kalendarza
+                                text = "$nextTime $nextDate",
                                 fontSize = 16.sp
                             )
                             WeatherForecast.codes[i]?.let {
@@ -264,7 +285,9 @@ fun AssistantDialog(
                                         id = getIcon(it)
                                     ),
                                     contentDescription = "Ikona pogody",
-                                    modifier = modifier.size(48.dp).padding(start = 16.dp)
+                                    modifier = modifier
+                                        .size(48.dp)
+                                        .padding(start = 16.dp)
                                 )
                             }
                             WeatherForecast.temperatures[i]?.let {
@@ -281,13 +304,19 @@ fun AssistantDialog(
                     Text(text = "Wybierz datę i godzinę:", fontSize = 14.sp)
                     Row() {
                         DatePickerCustom(
-                            onValueChange = { datePicked = true }, //changeDate
+                            onValueChange = {
+                                assistantViewModel.changeDate(it)
+                                datePicked = true
+                            }, //changeDate
                             label = "Data",
                             modifier = Modifier.weight(2f)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         TimePickerCustom(
-                            onValueChange = { timePicked = true }, //changeTime
+                            onValueChange = {
+                                assistantViewModel.changeTime(it)
+                                timePicked = true
+                            }, //changeTime
                             label = "Godzina",
                             modifier = Modifier.weight(1f)
                         )
@@ -323,7 +352,10 @@ fun AssistantDialog(
                             .fillMaxWidth()
                     ) {
                         Button(
-                            onClick = { state = 7 },
+                            onClick = {
+                                assistantViewModel.changeVisible(true)
+                                state = 8
+                            },
                             shape = RoundedCornerShape(8.dp),
                         ) {
                             Text(
@@ -360,7 +392,11 @@ fun AssistantDialog(
                             .fillMaxWidth()
                     ) {
                         Button(
-                            onClick = { state = 9 },
+                            onClick = {
+                                assistantViewModel.submitSuggestedEvent()
+                                Toast.makeText(context, "Dodano wydarzenie", Toast.LENGTH_SHORT).show()
+                                navigateBack()
+                            },
                             shape = RoundedCornerShape(8.dp),
                         ) {
                             Text(

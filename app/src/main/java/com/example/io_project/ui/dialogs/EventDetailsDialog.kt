@@ -39,6 +39,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.Constants.FRIEND_COLOR_HEX
+import com.example.io_project.Constants.GROUP_COLOR_HEX
 import com.example.io_project.R
 import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.dataclasses.Event
@@ -189,47 +191,51 @@ fun EventDetailsDialog(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-                Row {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.error)
-                            .clickable {
-                                confirmDeleteVisible = !confirmDeleteVisible
-                            }
-                    ) {
-                        Text(
-                            text = "Usuń",
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
-                        )
-                    }
-                    if (confirmDeleteVisible) {
-                        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                if (eventDetailsViewModel.event.color != GROUP_COLOR_HEX &&
+                    eventDetailsViewModel.event.color != FRIEND_COLOR_HEX
+                ) {
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
+                    Row {
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(MaterialTheme.colorScheme.error)
                                 .clickable {
-                                    eventDetailsViewModel.deleteEvent()
-                                    Toast
-                                        .makeText(
-                                            context,
-                                            "Usunięto wydarzenie",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
-                                    navigateBack()
+                                    confirmDeleteVisible = !confirmDeleteVisible
                                 }
                         ) {
                             Text(
-                                text = "Na pewno?",
+                                text = "Usuń",
                                 color = Color.White,
                                 style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
                             )
+                        }
+                        if (confirmDeleteVisible) {
+                            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(MaterialTheme.colorScheme.error)
+                                    .clickable {
+                                        eventDetailsViewModel.deleteEvent()
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                "Usunięto wydarzenie",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+                                        navigateBack()
+                                    }
+                            ) {
+                                Text(
+                                    text = "Na pewno?",
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
+                                )
+                            }
                         }
                     }
                 }
