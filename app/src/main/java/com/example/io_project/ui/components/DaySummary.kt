@@ -1,7 +1,5 @@
 package com.example.io_project.ui.components
 
-import android.graphics.Color.toArgb
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,10 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,13 +45,6 @@ fun DaySummary(
                 if(GreetingData.events != null) break
                 delay(500)
             }
-//            GreetingData.events?.let {GreetingData.events = getFourMaxPrio(it)}
-//            events = GreetingData.events
-//            for (i in 1..10)
-//            {
-//                if(events != null && events!!.size <= 4) break
-//                delay(500)
-//            }
         }
     }
 
@@ -101,31 +88,4 @@ fun DaySummary(
             }
         }
     }
-}
-
-fun getFourMaxPrio(events: List<Event>): MutableList<Event>
-{
-    val timeComparator = Comparator<Event> { first, second ->
-        when{
-            first.time.length < second.time.length -> -1
-            first.time.length > second.time.length -> 1
-            first.time < second.time -> -1
-            first.time > second.time -> 1
-            else -> 0
-        }
-    }
-
-    val prioComparator = Comparator<Event> { first, second ->
-        when {
-            //first.priority < second.priority -> -1
-            //first.priority > second.priority -> 1
-            else -> -timeComparator.compare(first, second)
-        }
-    }
-    var sortedByPrio = events.sortedWith(prioComparator).toMutableList()
-    if(sortedByPrio.size > 4)
-    {
-        sortedByPrio = sortedByPrio.subList(sortedByPrio.size - 4, sortedByPrio.size)
-    }
-    return sortedByPrio.sortedWith(timeComparator).toMutableList()
 }

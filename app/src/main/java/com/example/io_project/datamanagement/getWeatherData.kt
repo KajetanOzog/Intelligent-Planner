@@ -97,7 +97,7 @@ private fun sendHttpRequest(url: String, onResponse: (String) -> Unit, onError: 
     })
 }
 
-private fun parseJson(json: String, onSuccess: (Double, Int, Array<Double>, Array<Int>) -> Unit, onError: () -> Unit){
+fun parseJson(json: String, onSuccess: (Double, Int, Array<Double>, Array<Int>) -> Unit, onError: () -> Unit){
     try
     {
         val gson = Gson()

@@ -154,6 +154,7 @@ fun StatsScreen(
                     }
                 }
             }
+
             Row(
                 modifier = modifier
                     .padding(),
@@ -302,7 +303,7 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     )
     {
         Text(
-            text = "Wykonane zadania:",
+            text = "Wykonane zadania dzisiaj:",
             modifier = modifier,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold
@@ -315,6 +316,14 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
                 fontSize = 28.sp
             )
         }
+            ?. run {
+                Text(
+                    text = "0",
+                    modifier = modifier
+                        .align(Alignment.CenterHorizontally),
+                    fontSize = 28.sp
+                )
+            }
     }
 }
 
@@ -403,8 +412,8 @@ fun filterEvents(events: List<Event>) {
             .toMutableList()
 
     val oneWeekAgo = now.minus(7, ChronoUnit.DAYS)
-    StatsData.dayEvents = events.filter {
-        Log.d("Stats screen", "${it.date}")
+    StatsData.weekEvents = events.filter {
+        // Log.d("Stats screen", it.date)
         val date = LocalDate.parse(it.date, formatter)
         date.isAfter(oneWeekAgo) || it.weekly
     }.toMutableList()
