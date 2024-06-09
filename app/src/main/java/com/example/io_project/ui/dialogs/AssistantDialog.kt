@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,8 +26,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -35,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.Constants.BUSY_INDICATOR
 import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.dataclasses.WeatherForecast
 import com.example.io_project.datamanagement.getIcon
@@ -43,6 +47,7 @@ import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.TimePickerCustom
 import com.example.io_project.ui.dialogs.AssistantViewModel
 import com.example.io_project.ui.theme.IO_ProjectTheme
+import com.example.io_project.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -266,32 +271,46 @@ fun AssistantDialog(
                     for (i in 0..3) {
                         val nextDate = todayDate.plusDays(i.toLong()).format(formatter)
                         val nextTime = assistantViewModel.getFreeTime(nextDate)
-                        Button(
-                            onClick = {
-                                assistantViewModel.changeDate(nextDate)
-                                assistantViewModel.changeTime(nextTime)
-                                state = 6
-                            },
-                            modifier = modifier
-                                .size(height = 40.dp, width = 240.dp)
+
+                        Column(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .shadow(elevation = 2.dp, shape = RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.inverseOnSurface)
+                                .clickable {
+                                    if (nextTime != BUSY_INDICATOR) {
+                                        assistantViewModel.changeDate(nextDate)
+                                        assistantViewModel.changeTime(nextTime)
+                                        state = 6
+                                    }
+                                }
+                                .fillMaxWidth()
+                                .padding(dimensionResource(id = R.dimen.padding_small))
                         ) {
                             Text(
                                 text = "$nextTime $nextDate",
-                                fontSize = 16.sp
+                                style = MaterialTheme.typography.titleSmall
                             )
-                            WeatherForecast.codes[i]?.let {
-                                Image(
-                                    painter = painterResource(
-                                        id = getIcon(it)
-                                    ),
-                                    contentDescription = "Ikona pogody",
-                                    modifier = modifier
-                                        .size(48.dp)
-                                        .padding(start = 16.dp)
-                                )
-                            }
-                            WeatherForecast.temperatures[i]?.let {
-                                Text(text = "$it°C", modifier.padding(start = 4.dp))
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                WeatherForecast.codes[i]?.let {
+                                    Image(
+                                        painter = painterResource(
+                                            id = getIcon(it)
+                                        ),
+                                        contentDescription = "Ikona pogody",
+                                        modifier = modifier
+                                            .size(48.dp)
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_small)))
+                                WeatherForecast.temperatures[i]?.let {
+                                    Text(
+                                        text = "$it°C",
+                                        style = MaterialTheme.typography.titleSmall
+                                    )
+                                }
                             }
                         }
                         Spacer(modifier = modifier.padding(4.dp))
@@ -394,7 +413,8 @@ fun AssistantDialog(
                         Button(
                             onClick = {
                                 assistantViewModel.submitSuggestedEvent()
-                                Toast.makeText(context, "Dodano wydarzenie", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Dodano wydarzenie", Toast.LENGTH_SHORT)
+                                    .show()
                                 navigateBack()
                             },
                             shape = RoundedCornerShape(8.dp),

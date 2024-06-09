@@ -51,6 +51,7 @@ object Constants {
     const val DEFAULT_COLOR_HEX: String = "#FF073B4C"
     const val GROUP_COLOR_HEX: String = "#FFFFD166"
     const val FRIEND_COLOR_HEX: String = "#FF454B56"
+    const val BUSY_INDICATOR: String = "Zajęty"
 
     //Messages
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."
