@@ -403,8 +403,8 @@ fun filterEvents(events: List<Event>) {
             .toMutableList()
 
     val oneWeekAgo = now.minus(7, ChronoUnit.DAYS)
-    StatsData.dayEvents = events.filter {
-        Log.d("Stats screen", "${it.date}")
+    StatsData.weekEvents = events.filter {
+        Log.d("Stats screen", it.date)
         val date = LocalDate.parse(it.date, formatter)
         date.isAfter(oneWeekAgo) || it.weekly
     }.toMutableList()
