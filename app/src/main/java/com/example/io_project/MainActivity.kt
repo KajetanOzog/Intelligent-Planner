@@ -1,12 +1,8 @@
 package com.example.io_project
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -14,18 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
-import androidx.core.content.getSystemService
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.compose.IO_ProjectTheme
-import com.example.io_project.dataclasses.Alarm
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.datamanagement.getCurrentLocation
-import com.example.io_project.notifications.AlarmScheduler
-import com.example.io_project.notifications.AlarmSchedulerImpl
 import com.example.io_project.ui.navigation.NavGraph
-import com.example.io_project.ui.screens.authscreen.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

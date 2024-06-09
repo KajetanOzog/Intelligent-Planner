@@ -3,4 +3,16 @@
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="habits">Habits</string>
     <string name="gcp_id">308962332064-1o6melaq90fk3oj1g82v5a0cd5ufvbon.apps.googleusercontent.com</string>
+    <string name="samouczek1">Klikając strzałkę na widżecie z pogodą możesz uzyskać dostęp do
+        podsumowania dnia - krótkiej listy z twoimi wydarzeniami na dany dzień. W ustawieniach
+        możesz włączyć opcję, aby takie podsumowanie było rozwinięte przy twojej pierwszej dziennej
+        wizycie w aplikacji.</string>
+    <string name="samouczek2">Z poziomu ekranu głównego możesz nawigować do najważniejszych miejsc
+        oraz utworzyć nową aktywność.</string>
+    <string name="samouczek3">Przy tworzeniu nowej aktywności możesz przełączać między jej rodzajami
+        - wydarzeniem, zadaniem albo celem długoterminowym.</string>
+    <string name="samouczek4">Na każdym ekranie z widokiem kalendarza możesz wybrać widoczność
+        wydarzeń z grup oraz tych udostępnionych przez twoich znajomych.</string>
+    <string name="samouczek5">Po zaznaczeniu wykonania oraz zatwierdzeniu, ukończone cele długoterminowe
+        zostaną przeniesione do ekranu archiwum, do którego możesz dostać się z ekranu profilu.</string>
 </resources>

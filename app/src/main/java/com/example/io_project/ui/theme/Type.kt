@@ -45,4 +45,9 @@ val AppTypography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
+    headlineLarge = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp
+    ),
 )

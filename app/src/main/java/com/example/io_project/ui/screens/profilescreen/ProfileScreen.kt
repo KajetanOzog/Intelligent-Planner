@@ -1,7 +1,5 @@
 package com.example.io_project.ui.screens.profilescreen
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -30,8 +28,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.io_project.R
@@ -40,17 +36,15 @@ import com.example.io_project.ui.components.TopBar
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.SignOut
 import com.example.io_project.ui.components.RevokeAccess
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.startActivityForResult
 import com.example.io_project.Constants.ARCHIVE_SCREEN
 import com.example.io_project.Constants.REVOKE_ACCESS_MESSAGE
 import com.example.io_project.Constants.SIGN_OUT
 import com.example.io_project.Constants.STATS_SCREEN
-import com.example.io_project.ui.components.CheckboxRow
 import com.example.io_project.ui.components.SettingsCheckboxRow
 import com.example.io_project.user.Settings
 import kotlinx.coroutines.launch

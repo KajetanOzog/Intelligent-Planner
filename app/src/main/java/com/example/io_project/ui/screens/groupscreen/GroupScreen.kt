@@ -1,6 +1,5 @@
 package com.example.io_project.ui.screens.groupscreen
 
-import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,21 +35,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.Constants.GROUP_SCREEN
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
-import com.example.io_project.dataclasses.Group
-import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.AddToGroupButton
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.CalendarTile
-import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
 import com.example.io_project.ui.components.UsersColumn
 import com.example.io_project.ui.components.formatDate
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)

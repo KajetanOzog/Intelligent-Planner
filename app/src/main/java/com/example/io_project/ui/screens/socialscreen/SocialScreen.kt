@@ -29,14 +29,12 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.Constants.ADD_FRIEND_DIALOG
 import com.example.io_project.Constants.ADD_GROUP_DIALOG
 import com.example.io_project.Constants.SOCIAL_SCREEN
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Group
-import com.example.io_project.datamanagement.addFriends
-import com.example.io_project.ui.components.AddToGroupButton
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.GroupDisplay
 import com.example.io_project.ui.components.TopBar

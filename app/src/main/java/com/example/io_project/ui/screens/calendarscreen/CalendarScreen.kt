@@ -1,6 +1,5 @@
 package com.example.io_project.ui.screens.calendarscreen
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,22 +21,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.Constants.CALENDAR_SCREEN
 import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.TASKS_SCREEN
@@ -49,10 +43,6 @@ import com.example.io_project.dataclasses.Event
 import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.formatDate
-import com.example.io_project.user.Settings
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 

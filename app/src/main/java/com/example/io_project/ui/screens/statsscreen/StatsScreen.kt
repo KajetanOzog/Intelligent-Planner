@@ -1,6 +1,5 @@
 package com.example.io_project.ui.screens.statsscreen
 
-import android.graphics.Paint
 import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -14,9 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,7 +32,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,14 +41,13 @@ import co.yml.charts.common.model.Point
 import co.yml.charts.ui.barchart.BarChart
 import co.yml.charts.ui.barchart.models.BarChartData
 import co.yml.charts.ui.barchart.models.BarData
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.StatsData
 import com.example.io_project.dataclasses.Task
 import com.example.io_project.datamanagement.fetchAllEvents
 import com.example.io_project.datamanagement.getTasks
-import com.example.io_project.datamanagement.updateTasks
 import com.example.io_project.ui.components.BottomBar
 import com.example.io_project.ui.components.PieChart
 import com.example.io_project.ui.components.TopBar

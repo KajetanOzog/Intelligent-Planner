@@ -13,14 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.ui.components.BottomBar
-import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.TopBar
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Goal
 import com.example.io_project.ui.components.GoalDisplay
-import com.example.io_project.ui.screens.goalsscreen.GoalsColumn
 import com.example.io_project.ui.screens.goalsscreen.NoGoalsText
 
 @Composable

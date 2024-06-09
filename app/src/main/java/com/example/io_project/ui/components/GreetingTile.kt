@@ -36,12 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose.IO_ProjectTheme
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.GreetingData
-import com.example.io_project.datamanagement.getNameFromUserName
-import com.example.io_project.datamanagement.getUserNameFromUID
 import com.example.io_project.datamanagement.isItDayTime
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -50,8 +48,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.example.io_project.googleauthmodule.repository.ProfileRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 
 @Composable
 fun GreetingTile(
