@@ -5,8 +5,8 @@ import com.example.io_project.ui.components.PieChartInput
 
 object StatsData
 {
-    var tasksCompleted: Int? = null
-    var maxStreak: Int? = null
+    var tasksCompleted: Int = 0
+    var maxStreak: Int = 0
     var tasks: MutableList<Task>? = null
     var allEvents: MutableList<Event>? = null
     var dayEvents: MutableList<Event>? = null
