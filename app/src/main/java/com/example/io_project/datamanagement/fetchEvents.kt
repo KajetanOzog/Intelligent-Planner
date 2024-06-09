@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.EventPriority
 import com.google.firebase.firestore.DocumentSnapshot
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // Function to fetch events for a user on a specific date
 suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
@@ -28,6 +30,10 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
                     returnList.add(mapToEvent(event))
                 }
             }
+
+            val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            returnList.sortWith(compareBy { event ->
+                    timeFormat.parse(event.time) })
 
             return returnList
         } else {
