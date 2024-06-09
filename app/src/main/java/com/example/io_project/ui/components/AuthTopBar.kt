@@ -16,7 +16,7 @@ fun AuthTopBar(modifier: Modifier = Modifier) {
     TopAppBar (
         title = {
             Text(
-                text = "Zaloguj się do aplikacji",
+                text = "",
                 style = MaterialTheme.typography.displayMedium,
                 modifier = modifier.fillMaxWidth()
             )

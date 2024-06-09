@@ -31,12 +31,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.example.compose.IO_ProjectTheme
 import com.example.io_project.dataclasses.WeatherForecast
 import com.example.io_project.datamanagement.getIcon
 import com.example.io_project.ui.components.DatePickerCustom
 import com.example.io_project.ui.components.DropDownPicker
 import com.example.io_project.ui.components.TimePickerCustom
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -46,7 +46,7 @@ fun AssistantDialog(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit
 ) {
-    var state by remember { mutableIntStateOf(4) } // można zmieniać żeby zobaczyć podgląd danego stanu
+    var state by remember { mutableIntStateOf(8) } // można zmieniać żeby zobaczyć podgląd danego stanu
     // 0 -> pytanie czy użytkownik ma pomysł na aktywność
     // 1 -> użytkownik nie ma pomysłu na aktywność
     // 2 -> użytkownik ma pomysł na aktywność (wybór kategorii)

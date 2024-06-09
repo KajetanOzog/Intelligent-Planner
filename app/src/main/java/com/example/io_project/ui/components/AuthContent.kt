@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -63,8 +65,10 @@ fun AuthContent(
         )
 
         TipComponent()
-
-
+//        Text(
+//            text = "Zaloguj się do aplikacji",
+//            style = MaterialTheme.typography.displayMedium
+//        )
         SignInButton(
             onClick = oneTapSignIn
         )
@@ -74,7 +78,7 @@ fun AuthContent(
 @Composable
 fun TipComponent() {
     var tipNumber: Int by remember {
-        mutableStateOf(1)
+        mutableStateOf(2)
     }
     val context: Context = LocalContext.current
     val drawableId = remember("samouczek${tipNumber}") {
@@ -125,10 +129,12 @@ fun TipComponent() {
                     Image(
                         painter = painterResource(id = drawableId),
                         contentDescription = "Tip screenshot",
+                        contentScale = ContentScale.FillWidth,
                         modifier = Modifier
                             .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp))
                             .clip(RoundedCornerShape(16.dp))
                             .background(MaterialTheme.colorScheme.background)
+                            .aspectRatio(0.9f)
                     )
                 }
 
@@ -151,8 +157,10 @@ fun TipComponent() {
             Text(
                 stringResource(id = stringId),
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Justify
+                textAlign = TextAlign.Justify,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
             )
+
         }
     }
 }
