@@ -26,7 +26,7 @@ class AssistantViewModel @Inject constructor(
 
     // Klasa przetestowana manualnie
 
-    
+
     var event: Event = Event(
         priority = EventPriority.MEDIUM,
         color = DEFAULT_COLOR_HEX
