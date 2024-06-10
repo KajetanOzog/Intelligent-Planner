@@ -18,7 +18,7 @@ import javax.inject.Inject
 class AddGoalViewModel @Inject constructor(
 ): ViewModel() {
     val goalState = MutableStateFlow(Goal())
-    val _goalState: StateFlow<Goal> = goalState.asStateFlow()
+
 
     fun getGoal(): Goal {
         return goalState.value

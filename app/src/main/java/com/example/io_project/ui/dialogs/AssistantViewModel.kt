@@ -116,17 +116,18 @@ class AssistantViewModel @Inject constructor(
             // oraz kolejną (np. 8:45 -> 8, 9 zajęta, 8:00 -> 8, 9 zajęta)
             // Eventy które rozprzestrzeniaja zaczynają się w poprzednich dniach i nachodzą na ten nie
             // są brane pod uwagę
-            if (event.endTime == ""){
-                val start = event.time.substringBefore(":").toInt() - 1
-                freeHoursBool[start] = false
-                if (start < 23)
-                    freeHoursBool[start + 1] = false
-            }
-            else {
-                val start = event.time.substringBefore(":").toInt() - 1
-                val end = event.endTime.substringBefore(":").toInt() - 1
-                for (i in start..end) {
-                    freeHoursBool[i] = false
+            if (event.time != ""){
+                if (event.endTime == "") {
+                    val start = event.time.substringBefore(":").toInt() - 1
+                    freeHoursBool[start] = false
+                    if (start < 23)
+                        freeHoursBool[start + 1] = false
+                } else {
+                    val start = event.time.substringBefore(":").toInt() - 1
+                    val end = event.endTime.substringBefore(":").toInt() - 1
+                    for (i in start..end) {
+                        freeHoursBool[i] = false
+                    }
                 }
             }
         }
