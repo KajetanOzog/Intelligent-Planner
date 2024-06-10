@@ -48,19 +48,19 @@ class AddEventToGroupViewModel @Inject constructor(
         }
     }
 
-    private fun necessaryArgumentsProvided(): Boolean {
+    fun necessaryArgumentsProvided(): Boolean {
         return (eventState.value.name != "") && (eventState.value.date != "")
                 && ((eventState.value.time < eventState.value.endTime) || (eventState.value.endTime == ""))
     }
 
 
     val _changeName: (String) -> Unit = { it -> changeName(it) }
-    private fun changeName(newName: String) {
+    fun changeName(newName: String) {
         eventState.update { currentState -> currentState.copy(name = newName) }
     }
 
     val _changeCategory: (String) -> Unit = { it -> changeCategory(it) }
-    private fun changeCategory(newCategory: String) {
+    fun changeCategory(newCategory: String) {
         eventState.update { currentState -> currentState.copy(category = newCategory) }
     }
 
@@ -75,12 +75,12 @@ class AddEventToGroupViewModel @Inject constructor(
     }
 
     val _changePlace: (String) -> Unit = { it -> changePlace(it) }
-    private fun changePlace(newPlace: String) {
+    fun changePlace(newPlace: String) {
         eventState.update { currentState -> currentState.copy(place = newPlace) }
     }
 
     val _changeTime: (String) -> Unit = { it -> changeTime(it) }
-    private fun changeTime(newTime: String) {
+    fun changeTime(newTime: String) {
         eventState.update { currentState -> currentState.copy(time = newTime) }
     }
 
@@ -90,17 +90,17 @@ class AddEventToGroupViewModel @Inject constructor(
     }
 
     val _changeDate: (String) -> Unit = { it -> changeDate(it) }
-    private fun changeDate(newDate: String) {
+    fun changeDate(newDate: String) {
         eventState.update { currentState -> currentState.copy(date = newDate) }
     }
 
     val _changeEndDate: (String) -> Unit = { it -> changeEndDate(it) }
-    private fun changeEndDate(newEndDate: String) {
+    fun changeEndDate(newEndDate: String) {
         eventState.update { currentState -> currentState.copy(endDate = newEndDate) }
     }
 
     val _changeDescription: (String) -> Unit = { it -> changeDescription(it) }
-    private fun changeDescription(newDescription: String) {
+    fun changeDescription(newDescription: String) {
         eventState.update { currentState -> currentState.copy(description = newDescription) }
     }
 

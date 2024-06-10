@@ -40,12 +40,12 @@ class GroupViewModel @AssistedInject constructor(
     var dateState = MutableStateFlow(LocalDate.now())
 
     init {
-        Log.d("GroupVM", "$dateState")
+        // Log.d("GroupVM", "$dateState")
         group = Gson().fromJson(groupJSON, Group::class.java)
-        refreshData()
+        // refreshData()
     }
 
-    private fun getDateString(): String =
+    fun getDateString(): String =
         dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
 
     fun changeDate(newDate: String) {
@@ -64,6 +64,7 @@ class GroupViewModel @AssistedInject constructor(
     }
 
     private fun updateEvents() {
+        /*
         runBlocking {
             Firebase.auth.currentUser?.let {
                 Log.d("GroupVM", "$dateState")
@@ -77,6 +78,8 @@ class GroupViewModel @AssistedInject constructor(
                 Log.d("GroupVM", "$eventsListState")
             }
         }
+
+         */
     }
 
     fun getPreviousDay() {

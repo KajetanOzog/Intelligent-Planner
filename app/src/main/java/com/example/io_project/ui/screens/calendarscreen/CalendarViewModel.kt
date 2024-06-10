@@ -43,7 +43,7 @@ class CalendarViewModel @Inject constructor(
         updateEvents()
     }
 
-    private fun getDateString(): String =
+    fun getDateString(): String =
         dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
 
     fun changeDate(newDate: String) {
@@ -58,6 +58,7 @@ class CalendarViewModel @Inject constructor(
 
 
     private fun updateEvents() {
+        /*
         runBlocking {
             Firebase.auth.currentUser?.let {
                 eventsListState =
@@ -70,22 +71,24 @@ class CalendarViewModel @Inject constructor(
                     }
             }
         }
+
+         */
     }
 
     fun getPreviousDay() {
         dateState.update { it.minusDays(1) }
-        Log.d("CVM", getDateString())
+        //Log.d("CVM", getDateString())
         updateEvents()
     }
 
     fun getNextDay() {
         dateState.update { it.plusDays(1) }
-        Log.d("CVM", getDateString())
+        //Log.d("CVM", getDateString())
         updateEvents()
     }
 
     fun refreshData() {
-        Log.d("CalendarVM", "$allEvents")
+        //Log.d("CalendarVM", "$allEvents")
         updateEvents()
     }
 }
