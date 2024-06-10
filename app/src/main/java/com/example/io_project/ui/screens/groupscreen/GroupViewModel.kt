@@ -42,7 +42,7 @@ class GroupViewModel @AssistedInject constructor(
     init {
         // Log.d("GroupVM", "$dateState")
         group = Gson().fromJson(groupJSON, Group::class.java)
-        // refreshData()
+        refreshData()
     }
 
     fun getDateString(): String =

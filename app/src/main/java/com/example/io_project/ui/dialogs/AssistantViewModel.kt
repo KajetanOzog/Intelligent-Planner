@@ -1,6 +1,7 @@
 package com.example.io_project.ui.dialogs
 
 import addEventToFirestore
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.io_project.Constants.BUSY_INDICATOR
@@ -66,6 +67,7 @@ class AssistantViewModel @Inject constructor(
 
     fun getSuggestionsByCategory(category: String) {
         val categorizedSuggestions = eventSuggestionsDB.filter { it.category == category }
+        Log.d("Assistant", "${categorizedSuggestions}, $eventSuggestionsDB")
         val indexes: List<Int> =
             generateSequence { Random.nextInt(categorizedSuggestions.indices) }
                 .distinct()

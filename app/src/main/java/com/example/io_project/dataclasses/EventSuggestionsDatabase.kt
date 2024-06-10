@@ -12,16 +12,16 @@ class EventSuggestionsDatabase {
         // Inne
         EventSuggestion(name = "Zakupy spożywcze", category = "Inne"),
         EventSuggestion(name = "Sprzątanie mieszkania", category = "Inne"),
-        EventSuggestion(name = "Wizyta u lekarza", category = "Inne"),
+        EventSuggestion(name = "Oglądanie filmu", category = "Inne"),
         EventSuggestion(name = "Kurs gotowania", category = "Inne"),
         EventSuggestion(name = "Czytanie książki", category = "Inne"),
 
         // Praca
-        EventSuggestion(name = "Spotkanie zespołu", category = "Praca"),
-        EventSuggestion(name = "Prezentacja projektu", category = "Praca"),
-        EventSuggestion(name = "Rozmowa kwalifikacyjna", category = "Praca"),
-        EventSuggestion(name = "Szkolenie z zarządzania czasem", category = "Praca"),
-        EventSuggestion(name = "Wyjazd służbowy", category = "Praca"),
+        EventSuggestion(name = "Poproś o urlop", category = "Praca"),
+        EventSuggestion(name = "Poproś o podwyżkę", category = "Praca"),
+        EventSuggestion(name = "Stalkuj szefa", category = "Praca"),
+        EventSuggestion(name = "Szukaj pracy", category = "Praca"),
+        EventSuggestion(name = "Spotkanie ze współpracownikami", category = "Praca"),
 
         // Aktywność fizyczna
         EventSuggestion(name = "Trening na siłowni", category = "Aktywność fizyczna"),

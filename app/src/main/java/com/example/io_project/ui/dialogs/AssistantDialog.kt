@@ -196,10 +196,12 @@ fun AssistantDialog(
 
                 2 -> {
                     Text(text = "Wybierz kategorię:", fontSize = 14.sp)
-                    var pickedCategory: String = "Inne"
+                    var pickedCategory by remember{
+                        mutableStateOf("Inne")
+                    }
                     val categories =
-                        listOf("Szkola", "Praca", "Aktywnosc fizyczna", "Znajomi", "Inne")
-                    var isEnabled by remember { mutableStateOf(false) }
+                        listOf("Szkola", "Inne", "Praca", "Aktywnosc fizyczna", "Znajomi")
+                    var isEnabled by remember { mutableStateOf(true) }
                     DropDownPicker(
                         onValueChange = {
                             pickedCategory = it

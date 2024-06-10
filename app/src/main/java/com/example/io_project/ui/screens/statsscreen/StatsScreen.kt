@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -282,10 +283,8 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit)
     {
         tasks?.let {
-            if (StatsData.tasksCompleted == null) {
-                StatsData.tasksCompleted = countCompleted(tasks)
-                completed = StatsData.tasksCompleted
-            }
+            StatsData.tasksCompleted = countCompleted(tasks)
+            completed = StatsData.tasksCompleted
         }
     }
 
@@ -304,18 +303,17 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     {
         Text(
             text = "Wykonane zadania dzisiaj:",
+            textAlign = TextAlign.Center,
             modifier = modifier,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold
         )
-        completed?.let {
-            Text(
-                text = "$it",
-                modifier = modifier
-                    .align(Alignment.CenterHorizontally),
-                fontSize = 28.sp
-            )
-        }
+        Text(
+            text = "$completed",
+            modifier = modifier
+                .align(Alignment.CenterHorizontally),
+            fontSize = 28.sp
+        )
 //            ?. run {
 //                Text(
 //                    text = "0",
@@ -334,10 +332,8 @@ fun Streak(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit)
     {
         tasks?.let {
-            if (StatsData.maxStreak == null) {
-                StatsData.maxStreak = getMaxStreak(it)
-                streak = StatsData.maxStreak
-            }
+            StatsData.maxStreak = getMaxStreak(it)
+            streak = StatsData.maxStreak
         }
     }
 
@@ -355,19 +351,18 @@ fun Streak(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     )
     {
         Text(
-            text = "Najdłuższa seria:",
+            text = "Najdłuższa bieżąca seria:",
+            textAlign = TextAlign.Center,
             modifier = modifier,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold
         )
-        streak?.let {
-            Text(
-                text = "$it",
-                modifier = modifier
-                    .align(Alignment.CenterHorizontally),
-                fontSize = 28.sp
-            )
-        }
+        Text(
+            text = "$streak",
+            modifier = modifier
+                .align(Alignment.CenterHorizontally),
+            fontSize = 28.sp
+        )
     }
 }
 
