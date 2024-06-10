@@ -15,10 +15,10 @@ import javax.inject.Inject
 class SocialViewModel @Inject constructor(
 
 ): ViewModel(){
-    var groups: List<Group> = emptyList()
+    var groups = mutableListOf<Group>()
     var groupCount: Int = 0
 
-    var friends: List<String> = emptyList()
+    var friends = mutableListOf<String>()
     var friendCount: Int = 0
     init {
         getGroupsList()
@@ -27,19 +27,19 @@ class SocialViewModel @Inject constructor(
         Log.d("SocialViewModel", "Fetched friends: $friends")
     }
 
-    fun getGroupsList() {
+    private fun getGroupsList() {
          runBlocking {
             Firebase.auth.currentUser?.let {
-                groups = fetchUserGroups(it.uid) ?: emptyList()
+                groups = fetchUserGroups(it.uid)?.toMutableList() ?: groups
                 groupCount = groups.size
             }
         }
     }
 
-    fun getFriendsList() {
+    private fun getFriendsList() {
         runBlocking {
             Firebase.auth.currentUser?.let {
-                friends = fetchFriends(it.uid) ?: emptyList()
+                friends = fetchFriends(it.uid)?.toMutableList() ?: friends
                 friendCount = friends.size
             }
         }

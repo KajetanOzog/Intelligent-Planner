@@ -51,13 +51,6 @@ fun DaySummary(
                 if(GreetingData.events != null) break
                 delay(500)
             }
-//            GreetingData.events?.let {GreetingData.events = getFourMaxPrio(it)}
-//            events = GreetingData.events
-//            for (i in 1..10)
-//            {
-//                if(events != null && events!!.size <= 4) break
-//                delay(500)
-//            }
         }
     }
 
@@ -101,31 +94,4 @@ fun DaySummary(
             }
         }
     }
-}
-
-fun getFourMaxPrio(events: List<Event>): MutableList<Event>
-{
-    val timeComparator = Comparator<Event> { first, second ->
-        when{
-            first.time.length < second.time.length -> -1
-            first.time.length > second.time.length -> 1
-            first.time < second.time -> -1
-            first.time > second.time -> 1
-            else -> 0
-        }
-    }
-
-    val prioComparator = Comparator<Event> { first, second ->
-        when {
-            //first.priority < second.priority -> -1
-            //first.priority > second.priority -> 1
-            else -> -timeComparator.compare(first, second)
-        }
-    }
-    var sortedByPrio = events.sortedWith(prioComparator).toMutableList()
-    if(sortedByPrio.size > 4)
-    {
-        sortedByPrio = sortedByPrio.subList(sortedByPrio.size - 4, sortedByPrio.size)
-    }
-    return sortedByPrio.sortedWith(timeComparator).toMutableList()
 }

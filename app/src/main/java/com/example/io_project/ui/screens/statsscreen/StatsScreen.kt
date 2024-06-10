@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -276,12 +277,12 @@ fun getBarChartData(): List<BarChartInput> {
 
 @Composable
 fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
-    var completed by remember { mutableStateOf(StatsData.tasksCompleted) }
+    var completed by remember { mutableIntStateOf(StatsData.tasksCompleted) }
 
     LaunchedEffect(Unit)
     {
         tasks?.let {
-            if (StatsData.tasksCompleted == null) {
+            if (StatsData.tasksCompleted == 0) {
                 StatsData.tasksCompleted = countCompleted(tasks)
                 completed = StatsData.tasksCompleted
             }
@@ -302,30 +303,30 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     )
     {
         Text(
-            text = "Wykonane zadania:",
+            text = "Wykonane dzisiaj zadania:",
             modifier = modifier,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
-        completed?.let {
-            Text(
-                text = "$it",
-                modifier = modifier
-                    .align(Alignment.CenterHorizontally),
-                fontSize = 28.sp
-            )
-        }
+        Text(
+            text = "$completed",
+            modifier = modifier
+                .align(Alignment.CenterHorizontally),
+            fontSize = 28.sp
+        )
     }
 }
 
 @Composable
 fun Streak(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
-    var streak by remember { mutableStateOf(StatsData.maxStreak) }
+    var streak by remember { mutableIntStateOf(StatsData.maxStreak) }
 
     LaunchedEffect(Unit)
     {
         tasks?.let {
-            if (StatsData.maxStreak == null) {
+            if(StatsData.maxStreak == 0)
+            {
                 StatsData.maxStreak = getMaxStreak(it)
                 streak = StatsData.maxStreak
             }
@@ -346,19 +347,18 @@ fun Streak(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
     )
     {
         Text(
-            text = "Najdłuższa seria:",
+            text = "Najdłuższa bieżąca seria:",
             modifier = modifier,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
-        streak?.let {
-            Text(
-                text = "$it",
-                modifier = modifier
-                    .align(Alignment.CenterHorizontally),
-                fontSize = 28.sp
-            )
-        }
+        Text(
+            text = "$streak",
+            modifier = modifier
+                .align(Alignment.CenterHorizontally),
+            fontSize = 28.sp
+        )
     }
 }
 
@@ -403,8 +403,8 @@ fun filterEvents(events: List<Event>) {
             .toMutableList()
 
     val oneWeekAgo = now.minus(7, ChronoUnit.DAYS)
-    StatsData.dayEvents = events.filter {
-        Log.d("Stats screen", "${it.date}")
+    StatsData.weekEvents = events.filter {
+        Log.d("Stats screen", it.date)
         val date = LocalDate.parse(it.date, formatter)
         date.isAfter(oneWeekAgo) || it.weekly
     }.toMutableList()

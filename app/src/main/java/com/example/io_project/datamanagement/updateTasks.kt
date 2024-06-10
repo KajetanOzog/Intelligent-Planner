@@ -16,13 +16,17 @@ suspend fun updateTasks(tasks: List<Task>, userID: String) {
 
     // Iterate through tasks
     for (task in tasks) {
-        Log.d("UpdateTask", "$task, $today")
         // Check if task was completed today
         if (task.lastCheck != today && task.completed) {
             // Increment doneCount and update lastCheck
-            task.doneCount++
-            task.lastCheck = today
+            task.doneCount += 1
+            task.maxStreak += 1
+            task.completed = false
         }
+        else if (task.lastCheck != today && !task.completed) {
+            task.maxStreak = 0
+        }
+        task.lastCheck = today
     }
 
     try {
