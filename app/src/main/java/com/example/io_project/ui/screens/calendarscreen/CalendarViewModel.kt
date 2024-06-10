@@ -58,7 +58,7 @@ class CalendarViewModel @Inject constructor(
 
 
     private fun updateEvents() {
-        /*
+
         runBlocking {
             Firebase.auth.currentUser?.let {
                 eventsListState =
@@ -72,7 +72,6 @@ class CalendarViewModel @Inject constructor(
             }
         }
 
-         */
     }
 
     fun getPreviousDay() {

@@ -64,11 +64,10 @@ class GroupViewModel @AssistedInject constructor(
     }
 
     private fun updateEvents() {
-        /*
+
         runBlocking {
             Firebase.auth.currentUser?.let {
                 Log.d("GroupVM", "$dateState")
-                //TODO(WYSWIETLANIE TYLKO Z DANEGO DNIA)
                 eventsListState = fetchGroup(group.groupID)?.events?.toMutableList()
                     ?: emptyList<Event>().toMutableList()
 
@@ -79,7 +78,7 @@ class GroupViewModel @AssistedInject constructor(
             }
         }
 
-         */
+
     }
 
     fun getPreviousDay() {

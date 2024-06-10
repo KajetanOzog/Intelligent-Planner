@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
         LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN))
 
     private fun getTodaysEvents() {
-        /*
+
         runBlocking {
             Firebase.auth.currentUser?.let {
                 todaysEvents =
@@ -42,7 +42,6 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-         */
     }
 
     fun refreshData() {

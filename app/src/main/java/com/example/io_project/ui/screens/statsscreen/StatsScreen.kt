@@ -316,14 +316,14 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
                 fontSize = 28.sp
             )
         }
-            ?. run {
-                Text(
-                    text = "0",
-                    modifier = modifier
-                        .align(Alignment.CenterHorizontally),
-                    fontSize = 28.sp
-                )
-            }
+//            ?. run {
+//                Text(
+//                    text = "0",
+//                    modifier = modifier
+//                        .align(Alignment.CenterHorizontally),
+//                    fontSize = 28.sp
+//                )
+//            }
     }
 }
 
