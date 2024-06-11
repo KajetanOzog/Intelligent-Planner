@@ -23,8 +23,8 @@ import com.example.io_project.ui.components.OutlinedTextFieldCustom
 import com.example.io_project.ui.components.TimePickerCustom
 
 @Composable
-fun AddEventComponent(
-    addEventViewModel: AddEventViewModel = hiltViewModel()
+fun AddEventPersonalComponent(
+    addEventPersonalViewModel: AddEventPersonalViewModel = hiltViewModel()
 ) {
     val categories = listOf("Szkoła", "Inne", "Praca", "Aktywność fizyczna", "Znajomi")
     val priorities = listOf("Niski", "Średni", "Wysoki")
@@ -42,60 +42,60 @@ fun AddEventComponent(
             .verticalScroll(ScrollState(0))
     ) {
         OutlinedTextFieldCustom(
-            onValueChange = addEventViewModel._changeName,
+            onValueChange = addEventPersonalViewModel._changeName,
             label = "Nazwa"
         )
 
         OutlinedTextFieldCustom(
-            onValueChange = addEventViewModel._changeDescription,
+            onValueChange = addEventPersonalViewModel._changeDescription,
             label = "Opis"
         )
 
         DropDownPicker(
-            onValueChange = addEventViewModel._changeCategory,
+            onValueChange = addEventPersonalViewModel._changeCategory,
             argList = categories,
             label = "Kategoria"
         )
 
         DropDownPicker(
-            onValueChange = addEventViewModel._changePriority,
+            onValueChange = addEventPersonalViewModel._changePriority,
             argList = priorities,
             label = "Priorytet"
         )
 
         ColorDropDownPicker(
-            onValueChange = addEventViewModel._changeColor,
+            onValueChange = addEventPersonalViewModel._changeColor,
             argList = colors,
             label = "Kolor"
         )
 
         OutlinedTextFieldCustom(
-            onValueChange = addEventViewModel._changePlace,
+            onValueChange = addEventPersonalViewModel._changePlace,
             label = "Lokalizacja"
         )
 
         Row() {
             DatePickerCustom(
-                onValueChange = addEventViewModel._changeDate,
+                onValueChange = addEventPersonalViewModel._changeDate,
                 label = "Data",
                 modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.width(8.dp))
             TimePickerCustom(
-                onValueChange = addEventViewModel._changeTime,
+                onValueChange = addEventPersonalViewModel._changeTime,
                 label = "Godzina r.",
                 modifier = Modifier.weight(1.3f)
             )
         }
         Row() {
             DatePickerCustom(
-                onValueChange = addEventViewModel._changeEndDate,
+                onValueChange = addEventPersonalViewModel._changeEndDate,
                 label = "Data zakończenia",
                 modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.width(8.dp))
             TimePickerCustom(
-                onValueChange = addEventViewModel._changeEndTime,
+                onValueChange = addEventPersonalViewModel._changeEndTime,
                 label = "Godzina z.",
                 modifier = Modifier.weight(1.3f)
             )
@@ -105,33 +105,33 @@ fun AddEventComponent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             CheckboxRow(
-                onValueChange = addEventViewModel._changeReminder,
+                onValueChange = addEventPersonalViewModel._changeReminder,
                 label = "Przypomnij",
                 modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.width(8.dp))
             TimePickerCustom(
-                onValueChange = addEventViewModel._changeReminderTime,
+                onValueChange = addEventPersonalViewModel._changeReminderTime,
                 label = "O której",
                 modifier = Modifier.weight(1.3f)
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         CheckboxRow(
-            onValueChange = addEventViewModel._changeAlarm,
+            onValueChange = addEventPersonalViewModel._changeAlarm,
             label = "Alarm"
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         CheckboxRow(
-            onValueChange = addEventViewModel._changeWeekly,
+            onValueChange = addEventPersonalViewModel._changeWeekly,
             label = "Tygodniowe"
         )
         
 
         Spacer(modifier = Modifier.height(16.dp))
         CheckboxRow(
-            onValueChange = addEventViewModel._changeVisible,
+            onValueChange = addEventPersonalViewModel._changeVisible,
             label = "Widoczne dla znajomych"
         )
     }

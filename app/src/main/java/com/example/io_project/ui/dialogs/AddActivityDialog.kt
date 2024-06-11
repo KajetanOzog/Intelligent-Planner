@@ -44,7 +44,7 @@ fun AddActivityDialog(
     navigateBack: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val addEventViewModel: AddEventViewModel = hiltViewModel()
+    val addEventPersonalViewModel: AddEventPersonalViewModel = hiltViewModel()
     val addTaskViewModel: AddTaskViewModel = hiltViewModel()
     val addGoalViewModel: AddGoalViewModel = hiltViewModel()
     val context: Context = LocalContext.current
@@ -103,7 +103,7 @@ fun AddActivityDialog(
             Spacer(modifier = modifier.padding(4.dp))
 
             when (currentDialog) {
-                "Event" -> AddEventComponent(addEventViewModel = addEventViewModel)
+                "Event" -> AddEventPersonalComponent(addEventPersonalViewModel = addEventPersonalViewModel)
                 "Task" -> AddTaskComponent(addTaskViewModel = addTaskViewModel)
                 "Goal" -> AddGoalComponent(addGoalViewModel = addGoalViewModel)
             }
@@ -121,7 +121,7 @@ fun AddActivityDialog(
                         coroutineScope.launch {
                             when (currentDialog) {
                                 "Event" -> {
-                                    if (addEventViewModel.eventAddedSuccessfully(alarmScheduler)) {
+                                    if (addEventPersonalViewModel.eventAddedSuccessfully(alarmScheduler)) {
                                         Toast.makeText(
                                             context,
                                             "Dodano wydarzenie",

@@ -172,13 +172,13 @@ fun AssistantDialog(
                         verticalAlignment = Alignment.CenterVertically
                     )
                     {
-                        var refreshed by remember { mutableStateOf(false) }
+                        var refreshedCount by remember { mutableStateOf(0) }
                         Button(
                             onClick = {
                                 assistantViewModel.getRandomSuggestions()
-                                refreshed = true
+                                refreshedCount += 1
                             },
-                            enabled = !refreshed,
+                            enabled = refreshedCount < 3,
                             modifier = modifier
                                 .size(height = 40.dp, width = 120.dp),
                             shape = RoundedCornerShape(8.dp)

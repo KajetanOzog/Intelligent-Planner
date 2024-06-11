@@ -2,18 +2,16 @@ package com.example.io_project
 
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.EventPriority
-import com.example.io_project.ui.dialogs.AddEventViewModel
+import com.example.io_project.ui.dialogs.AddEventPersonalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 
 @ExperimentalCoroutinesApi
-class AddEventViewModelTest {
+class AddEventPersonalViewModelTest {
 
 
-    private val viewModel = AddEventViewModel()
+    private val viewModel = AddEventPersonalViewModel()
 
     @Test
     fun testChangeName() = run {
