@@ -1,11 +1,8 @@
 package com.example.io_project.dataclasses
 
-import android.net.Uri
-import com.google.gson.Gson
-
 data class Event(
     var eventID: String = "",
-    val name: String = "",
+    override val name: String = "",
     val category: String = "",
     var color: String = "",
     val date: String = "",
@@ -20,8 +17,4 @@ data class Event(
     val visible: Boolean = false,
     val description: String = "",
     val priority: EventPriority
-) {
-    override fun toString(): String {
-        return Uri.encode(Gson().toJson(this))
-    }
-}
+) : Activity(name)
