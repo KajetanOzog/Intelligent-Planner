@@ -40,17 +40,15 @@ fun WeatherWidget(modifier: Modifier = Modifier)
     var wc by remember { mutableStateOf(WeatherCurrent.code) }
     val activity = LocalContext.current as Activity
 
-    if(!AskingForPermissions.started){
-        LaunchedEffect(Unit)
+    LaunchedEffect(Unit)
+    {
+        Permissions(activity)
+        while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
         {
-            Permissions(activity)
-            while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
-            {
-                delay(500)
-            }
-            temp = WeatherCurrent.temperature
-            wc = WeatherCurrent.code
+            delay(500)
         }
+        temp = WeatherCurrent.temperature
+        wc = WeatherCurrent.code
     }
 
     Row(

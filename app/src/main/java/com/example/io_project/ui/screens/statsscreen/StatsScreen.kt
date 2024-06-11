@@ -55,6 +55,7 @@ import com.example.io_project.ui.components.TopBar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -67,36 +68,7 @@ fun StatsScreen(
     modifier: Modifier = Modifier
 ) {
     var period by remember { mutableIntStateOf(1) }
-    var tasks by remember { mutableStateOf(StatsData.tasks) }
-    var events by remember { mutableStateOf(StatsData.allEvents) }
-    var dayCat by remember { mutableStateOf(StatsData.dayCat) }
-    var weekCat by remember { mutableStateOf(StatsData.weekCat) }
-    var monthCat by remember { mutableStateOf(StatsData.monthCat) }
-    var yearCat by remember { mutableStateOf(StatsData.yearCat) }
-
-    LaunchedEffect(Unit)
-    {
-        if (StatsData.tasks == null || StatsData.allEvents == null) {
-            val userID = Firebase.auth.currentUser?.uid.toString()
-            StatsData.tasks = getTasks(userID)?.toMutableList()
-            StatsData.allEvents = fetchAllEvents(userID)?.toMutableList()
-            for (i in 1..20) {
-                if (StatsData.tasks != null && StatsData.allEvents != null)
-                    break
-                delay(500)
-            }
-            tasks = StatsData.tasks
-            events = StatsData.allEvents
-            events?.let {
-                filterEvents(it)
-                countCategories()
-                dayCat = StatsData.dayCat
-                weekCat = StatsData.weekCat
-                monthCat = StatsData.monthCat
-                yearCat = StatsData.yearCat
-            }
-        }
-    }
+    updateData()
 
     Scaffold(
         topBar = {
@@ -162,10 +134,10 @@ fun StatsScreen(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Column(modifier = modifier.weight(1f)) {
-                    Completed(tasks = tasks)
+                    Completed(tasks = StatsData.tasks)
                 }
                 Column(modifier = modifier.weight(1f)) {
-                    Streak(tasks = tasks)
+                    Streak(tasks = StatsData.tasks)
                 }
             }
 
@@ -180,20 +152,45 @@ fun StatsScreen(
                     .background(MaterialTheme.colorScheme.inverseOnSurface)
                     .padding(dimensionResource(id = R.dimen.padding_small))
             ) {
-                PieChart(
-                    input = when (period) {
-                        1 -> dayCat
-                        2 -> weekCat
-                        3 -> monthCat
-                        else -> yearCat
-                    },
-                    radius = 500f,
-                    innerRadius = 300f,
-                    modifier = Modifier
-                        .padding(vertical = 12.dp)
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                )
+                when(period)
+                {
+                    1 -> PieChart(
+                        input = StatsData.dayCat,
+                        radius = 500f,
+                        innerRadius = 300f,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                    )
+                    2 -> PieChart(
+                        input = StatsData.weekCat,
+                        radius = 500f,
+                        innerRadius = 300f,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                    )
+                    3 -> PieChart(
+                        input = StatsData.monthCat,
+                        radius = 500f,
+                        innerRadius = 300f,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                    )
+                    else -> PieChart(
+                        input = StatsData.yearCat,
+                        radius = 500f,
+                        innerRadius = 300f,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                    )
+                }
             }
 
             BarChartInit()
@@ -201,10 +198,23 @@ fun StatsScreen(
     }
 }
 
+fun updateData()
+{
+    runBlocking {
+        val userID = Firebase.auth.currentUser?.uid.toString()
+        StatsData.allEvents = fetchAllEvents(userID)?.toMutableList()
+        StatsData.tasks = getTasks(userID)?.toMutableList()
+        StatsData.allEvents?.let {
+            filterEvents(it)
+            countCategories()
+        }
+    }
+}
+
 @Composable
 fun BarChartInit() {
-    val barData = getBarChartData()
 
+    val barData = getBarChartData()
     val chartData: MutableList<BarData> = mutableListOf()
     chartData.add(BarData(Point(0f, 0f)))
     var maxRange = 10
@@ -278,7 +288,7 @@ fun getBarChartData(): List<BarChartInput> {
 
 @Composable
 fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
-    var completed by remember { mutableStateOf(StatsData.tasksCompleted) }
+    var completed by remember { mutableIntStateOf(StatsData.tasksCompleted) }
 
     LaunchedEffect(Unit)
     {
@@ -314,25 +324,17 @@ fun Completed(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
                 .align(Alignment.CenterHorizontally),
             fontSize = 28.sp
         )
-//            ?. run {
-//                Text(
-//                    text = "0",
-//                    modifier = modifier
-//                        .align(Alignment.CenterHorizontally),
-//                    fontSize = 28.sp
-//                )
-//            }
     }
 }
 
 @Composable
 fun Streak(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
-    var streak by remember { mutableStateOf(StatsData.maxStreak) }
+    var streak by remember { mutableIntStateOf(StatsData.maxStreak) }
 
     LaunchedEffect(Unit)
     {
         tasks?.let {
-            StatsData.maxStreak = getMaxStreak(it)
+            StatsData.maxStreak = getMaxStreak(tasks)
             streak = StatsData.maxStreak
         }
     }
@@ -367,6 +369,8 @@ fun Streak(tasks: MutableList<Task>?, modifier: Modifier = Modifier) {
 }
 
 fun countCategories() {
+    categoriesToZero()
+
     StatsData.dayEvents?.let { events ->
         for (i in events.indices) {
             val item = StatsData.dayCat.find { it.description == events[i].category }
@@ -388,11 +392,28 @@ fun countCategories() {
         }
     }
 
+
     StatsData.yearEvents?.let { events ->
         for (i in events.indices) {
             val item = StatsData.yearCat.find { it.description == events[i].category }
             item?.let { it.value++ }
         }
+    }
+
+    for (i in StatsData.yearCat.indices)
+    {
+        Log.d(StatsData.yearCat[i].description, StatsData.yearCat[i].value.toString())
+    }
+}
+
+fun categoriesToZero()
+{
+    for(i in 0..4)
+    {
+        StatsData.dayCat[i].value = 0
+        StatsData.weekCat[i].value = 0
+        StatsData.monthCat[i].value = 0
+        StatsData.yearCat[i].value = 0
     }
 }
 
@@ -406,23 +427,23 @@ fun filterEvents(events: List<Event>) {
         dailyEvents.filter { it.date.substring(0, 3) == nowFormatted.substring(0, 3) }
             .toMutableList()
 
-    val oneWeekAgo = now.minus(7, ChronoUnit.DAYS)
+    val oneWeekAgo = now.minusWeeks(1)
     StatsData.weekEvents = events.filter {
         // Log.d("Stats screen", it.date)
         val date = LocalDate.parse(it.date, formatter)
-        date.isAfter(oneWeekAgo) || it.weekly
+        !date.isAfter(now) && date.isAfter(oneWeekAgo) || it.weekly
     }.toMutableList()
 
-    val oneMonthAgo = now.minus(30, ChronoUnit.DAYS)
+    val oneMonthAgo = now.minusMonths(1)
     StatsData.monthEvents = events.filter {
         val date = LocalDate.parse(it.date, formatter)
-        date.isAfter(oneMonthAgo) || it.weekly
+        !date.isAfter(now) && date.isAfter(oneMonthAgo) || it.weekly
     }.toMutableList()
 
-    val oneYearAgo = now.minus(365, ChronoUnit.DAYS)
+    val oneYearAgo = now.minusYears(1)
     StatsData.yearEvents = events.filter {
         val date = LocalDate.parse(it.date, formatter)
-        date.isAfter(oneYearAgo) || it.weekly
+        !date.isAfter(now) && date.isAfter(oneYearAgo) || it.weekly
     }.toMutableList()
 }
 
