@@ -15,6 +15,8 @@ object AskingForPermissions
     var finished: Boolean = false
 }
 
+// Checks permissions for location and asks for them if needed
+// Then, if permissions are given, updates weather data
 class Permissions(private val activity: Activity)
 {
     init {

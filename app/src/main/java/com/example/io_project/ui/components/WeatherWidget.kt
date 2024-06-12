@@ -30,6 +30,7 @@ import com.example.io_project.permissions.Permissions
 import com.example.io_project.permissions.checkLocationPermission
 import kotlinx.coroutines.delay
 
+// Displays temperature and weather icon on home screen
 @Composable
 fun WeatherWidget(modifier: Modifier = Modifier)
 {
@@ -39,6 +40,8 @@ fun WeatherWidget(modifier: Modifier = Modifier)
 
     LaunchedEffect(Unit)
     {
+        // Checks permissions for location and asks for them if needed
+        // Then, if permissions are given, updates location and weather data
         Permissions(activity)
         while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
         {
