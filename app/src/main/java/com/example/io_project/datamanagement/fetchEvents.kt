@@ -11,8 +11,8 @@ import java.util.Locale
 // Function to fetch events for a user on a specific date
 suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
     val documentSnapshot = getUserDocument(userID)
-    val returnList = ArrayList<Event>()
-    val eventsWithoutHour = ArrayList<Event>()
+    var returnList = mutableListOf<Event>()
+    var eventsWithoutHour = mutableListOf<Event>()
 
     try {
         if (documentSnapshot != null && documentSnapshot.exists()) {
@@ -47,17 +47,20 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
             val currentDate = Date()
             val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
 
-            // Filter the events in returnList based on endDate
-            returnList.removeAll { event ->
-                val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
-                endDate != null && endDate < currentDate
-            }
+            returnList = returnList.filter { event ->
+                val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
+                    dateFormat.parse(it)
+                }
+                endDate == null || !endDate.before(currentDate)
+            }.toMutableList()
 
-            // Filter the events in eventsWithoutHour based on endDate
-            eventsWithoutHour.removeAll { event ->
-                val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
-                endDate != null && endDate < currentDate
-            }
+            eventsWithoutHour = eventsWithoutHour.filter { event ->
+                val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
+                    dateFormat.parse(it)
+                }
+                endDate == null || !endDate.before(currentDate)
+            }.toMutableList()
+
 
             val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
             returnList.sortWith(compareBy { event ->

@@ -10,8 +10,8 @@ import java.util.Date
 import java.util.Locale
 suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
     val allEvents = ArrayList<Event>()
-    val eventsWithHour = ArrayList<Event>()
-    val eventsWithoutHour = ArrayList<Event>()
+    var eventsWithHour = mutableListOf<Event>()
+    var eventsWithoutHour = mutableListOf<Event>()
     val currentDate = Date()
     val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
     // Fetch events from friends
@@ -37,15 +37,29 @@ suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
         }
     }
 
-    eventsWithHour.removeAll { event ->
-        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
-        endDate != null && endDate < currentDate
-    }
+    eventsWithHour = eventsWithHour.filter { event ->
+        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
+            try {
+                dateFormat.parse(it)
+            } catch (e: ParseException) {
+                Log.d("FetchAllUserEvents", "Error parsing endDate for event: ${event.endDate}")
+                null
+            }
+        }
+        endDate == null || !endDate.before(currentDate)
+    }.toMutableList()
 
-    eventsWithoutHour.removeAll { event ->
-        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
-        endDate != null && endDate < currentDate
-    }
+    eventsWithoutHour = eventsWithoutHour.filter { event ->
+        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
+            try {
+                dateFormat.parse(it)
+            } catch (e: ParseException) {
+                Log.d("FetchAllUserEvents", "Error parsing endDate for event: ${event.endDate}")
+                null
+            }
+        }
+        endDate == null || !endDate.before(currentDate)
+    }.toMutableList()
 
     // Sort events with time by time
     val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
