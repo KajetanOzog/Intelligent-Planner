@@ -67,7 +67,7 @@ class AssistantViewModel @Inject constructor(
 
     fun getSuggestionsByCategory(category: String) {
         val categorizedSuggestions = eventSuggestionsDB.filter { it.category == category }
-        Log.d("Assistant", "${categorizedSuggestions}, $eventSuggestionsDB")
+
         val indexes: List<Int> =
             generateSequence { Random.nextInt(categorizedSuggestions.indices) }
                 .distinct()
