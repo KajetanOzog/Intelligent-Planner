@@ -23,7 +23,7 @@ class AddEventToGroupViewModel @Inject constructor(
 
     fun eventAddedSuccessfully(groupID: String): String {
         val errorMessage = necessaryArgumentsProvided()
-        if (errorMessage == MISSING_DATA) {
+        if (errorMessage == CORRECT_DATA) {
             addEvent(groupID)
         }
         return errorMessage
