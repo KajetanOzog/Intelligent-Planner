@@ -19,12 +19,6 @@ alt="Ekran grup" width="336" height="748"/>
 <img src="Screenshots/2b7118d5-5191-4088-9dec-e8cb57b4c183.jpg" 
 alt="Ekran statystyk" width="336" height="748"/>
 
-
-
-
-
-
-
 ## Plany na rozwój aplikacji
 - Migracja do Kotlin Multiplatform lub Flutter, w celu wprowadzenia dostępności dla urządzeń z systemem iOS
 - Synchronizacja ze SmartWatchami
@@ -35,8 +29,8 @@ alt="Ekran statystyk" width="336" height="748"/>
 - Telefon z systemem Android w wersji 8.0 (SDK 26) lub nowszej w języku polskim lub angielskim
 - Dostępu do Internetu dla synchronizacji danych, pobierania prognozy pogody i konta Google do logowania, a także usług lokalizacyjnych
 
-### Aby zainstalować naszą aplikację na telefonie wystarczy pobrać plik  
+### Aby zainstalować naszą aplikację na telefonie wystarczy pobrać plik [intelligent_planner_v1.0.apk ](https://github.com/michalgs/IO_Project/blob/master/intelligent_planner_v1.0.apk)
 
-### W razie jakichkolwiech błedów w czasie funkcjonowania aplikacji prosimy o kontatk mailowy pod adresem e-mail projektio2024@gmail.com
+### W razie jakichkolwiech błedów w czasie funkcjonowania aplikacji prosimy o kontatk mailowy pod adresem e-mail projektio2024@gmail.com 
 
 
