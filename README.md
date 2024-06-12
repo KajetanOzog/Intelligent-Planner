@@ -4,7 +4,7 @@
 ### Opis aplikacji:
 Aplikacja Inteligentny Planer to zaawansowane narzędzie do zarządzania czasem, które integruje funkcje planowania kalendarza, monitorowania pogody oraz możliwości współpracy społecznościowej. Użytkownicy będą mogli łatwo dodawać zadania, cele długoterminowe, tworzyć grupy z przyjaciółmi, przeglądać zaplanowane aktywności znajomych, a także organizować i zarządzać wspólnymi wydarzeniami. Dzięki funkcjom asystenta aplikacja będzie dostarczać spersonalizowane sugestie, pomagając użytkownikom w optymalnym planowaniu swojego dnia. Aplikacja stawia nacisk na dodawanie aktywności grupowych i dzielenie się tymi aktywnościami z innymi użytkownikami. 
 
-## Poniżej znajdują się zrzuty ekranu aplikacji
+## Poniżej znajdują się wybrane zrzuty ekranu aplikacji
 
 <img src="Screenshots/6e7fe64e-76ac-4228-aa49-a75ce937d392.jpg" 
 alt="Ekran główny" width="336" height="748"/>
