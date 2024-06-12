@@ -1,6 +1,5 @@
 package com.example.io_project.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,19 +42,17 @@ import com.example.io_project.dataclasses.GreetingData
 import com.example.io_project.datamanagement.isItDayTime
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import com.example.io_project.googleauthmodule.repository.ProfileRepository
 
+// Displays the tile at the top of home screen
 @Composable
 fun GreetingTile(
     modifier: Modifier = Modifier,
     defaultSummaryVisibility: Boolean,
     events: List<Event>
 ) {
-    val repo: ProfileRepository
     val defaultBool: Boolean = defaultSummaryVisibility
     val dayGradient = Brush.verticalGradient(
         colors = listOf(
@@ -124,6 +121,7 @@ fun GreetingTile(
     }
 }
 
+// Displays a time-dependent greeting and user name
 @Composable
 fun Greeting() {
     var time by remember { mutableStateOf<Int?>(null) }
@@ -165,6 +163,7 @@ fun Greeting() {
 
 }
 
+// Displays current date
 @Composable
 fun DateDisplay() {
     var date by remember { mutableStateOf(GreetingData.date) }
@@ -173,10 +172,6 @@ fun DateDisplay() {
         if (date == null) {
             val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
             GreetingData.date = LocalDate.now().format(formatter)
-            while (GreetingData.date == null) {
-                Log.d("date", "delaying")
-                delay(500)
-            }
             date = GreetingData.date
         }
     }

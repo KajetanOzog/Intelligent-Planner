@@ -16,6 +16,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 
+// Returns a path to weather icon depending on weather code
 fun getIcon(weatherCode: Int) : Int
 {
     return when(weatherCode)
@@ -32,6 +33,36 @@ fun getIcon(weatherCode: Int) : Int
         95 -> R.drawable.ic_thunder
         96,99 -> R.drawable.ic_rainythunder
         else -> R.drawable.ic_sunny
+    }
+}
+
+// Updates current location, on success loads weather information
+fun getCurrentLocation(activity: Activity)
+{
+    Log.d("Location", "update requested")
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+
+    if(checkLocationPermission(activity))
+    {
+        fusedLocationClient.requestLocationUpdates(
+            LocationRequest.create(),
+            object : LocationCallback()
+            {
+                override fun onLocationResult(locationResult: LocationResult)
+                {
+                    Log.d("Location", "update succeed")
+                    fusedLocationClient.removeLocationUpdates(this)
+                    AskingForPermissions.finished = true
+                    loadWeatherInfo(activity)
+                }
+            },
+            null
+        )
+    }
+    else
+    {
+        Log.d("Location", "update fail, no permission")
+        AskingForPermissions.finished = true
     }
 }
 
@@ -73,6 +104,7 @@ fun loadWeatherInfo(activity: Activity)
     )
 }
 
+// Sends http request to a given URL, returns a Json string on response
 private fun sendHttpRequest(url: String, onResponse: (String) -> Unit, onError: () -> Unit) {
     val client = OkHttpClient()
     val request = Request.Builder()
@@ -97,6 +129,7 @@ private fun sendHttpRequest(url: String, onResponse: (String) -> Unit, onError: 
     })
 }
 
+// Parses Json to data
 fun parseJson(json: String, onSuccess: (Double, Int, Array<Double>, Array<Int>) -> Unit, onError: () -> Unit){
     try
     {
@@ -120,35 +153,7 @@ fun parseJson(json: String, onSuccess: (Double, Int, Array<Double>, Array<Int>) 
     }
 }
 
-fun getCurrentLocation(activity: Activity)
-{
-    Log.d("Location", "update requested")
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
-
-    if(checkLocationPermission(activity))
-    {
-        fusedLocationClient.requestLocationUpdates(
-            LocationRequest.create(),
-            object : LocationCallback()
-            {
-                override fun onLocationResult(locationResult: LocationResult)
-                {
-                    Log.d("Location", "update succeed")
-                    fusedLocationClient.removeLocationUpdates(this)
-                    AskingForPermissions.finished = true
-                    loadWeatherInfo(activity)
-                }
-            },
-            null
-        )
-    }
-    else
-    {
-        Log.d("Location", "update fail, no permission")
-        AskingForPermissions.finished = true
-    }
-}
-
+// Gets last location (location has to be updated at least once before; use getCurrentLocation first)
 private fun getLastLocation(activity: Activity, onSuccess: (Double, Double) -> Unit)
 {
     Log.d("Location", "Getting last location")

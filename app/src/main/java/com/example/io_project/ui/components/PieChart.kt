@@ -26,18 +26,20 @@ import kotlin.math.atan2
 @Composable
 fun PieChart(
     modifier: Modifier = Modifier,
-    radius:Float = 500f,
-    innerRadius:Float = 250f,
+    radius:Float = 380f,
+    innerRadius:Float = 220f,
     transparentWidth:Float = 70f,
     input:List<PieChartInput>,
     centerText:String = "Aktywności"
 ) {
+    val filteredInput = input.filter { it.value > 0 }
+
     var circleCenter by remember {
         mutableStateOf(Offset.Zero)
     }
 
     var inputList by remember {
-        mutableStateOf(input)
+        mutableStateOf(filteredInput)
     }
     var isCenterTapped by remember {
         mutableStateOf(false)
@@ -73,8 +75,10 @@ fun PieChart(
                                 }
                                 isCenterTapped = !isCenterTapped
                             }else{
-                                val anglePerValue = 360f/input.sumOf {
-                                    it.value
+                                var anglePerValue = 360f
+
+                                if(filteredInput.isNotEmpty()) {
+                                    anglePerValue = 360f/filteredInput.sumOf { it.value }
                                 }
                                 var currAngle = 0f
                                 inputList.forEach { pieChartInput ->
@@ -101,60 +105,104 @@ fun PieChart(
             val height = size.height
             circleCenter = Offset(x= width/2f,y= height/2f)
 
-            val totalValue = input.sumOf {
-                it.value
+            var totalValue = 0
+            var anglePerValue = 360f
+
+            if(filteredInput.isNotEmpty())
+            {
+                totalValue = filteredInput.sumOf {
+                    it.value
+                }
+                anglePerValue = 360f/totalValue
             }
-            val anglePerValue = 360f/totalValue
+
             var currentStartAngle = 0f
 
-            inputList.forEach { pieChartInput ->
-                val scale = if(pieChartInput.isTapped) 1.1f else 1.0f
-                val angleToDraw = pieChartInput.value * anglePerValue
-                scale(scale){
-                    drawArc(
-                        color = pieChartInput.color,
-                        startAngle = currentStartAngle,
-                        sweepAngle = angleToDraw,
-                        useCenter = true,
-                        size = Size(
-                            width = radius*2f,
-                            height = radius*2f
-                        ),
-                        topLeft = Offset(
-                            (width-radius*2f)/2f,
-                            (height - radius*2f)/2f
-                        )
-                    )
-                    currentStartAngle += angleToDraw
-                }
-                var rotateAngle = currentStartAngle-angleToDraw/2f-90f
-                var factor = 1f
-                if(rotateAngle>90f){
-                    rotateAngle = (rotateAngle+180).mod(360f)
-                    factor = -0.92f
-                }
-
-                val percentage = (pieChartInput.value/totalValue.toFloat()*100).toInt()
-
-                drawContext.canvas.nativeCanvas.apply {
-                    if(percentage>3){
-                        rotate(rotateAngle){
-                            drawText(
-                                "$percentage %",
-                                circleCenter.x,
-                                circleCenter.y+(radius-(radius-innerRadius)/2f)*factor,
-                                Paint().apply {
-                                    textSize = 18.sp.toPx()
-                                    textAlign = Paint.Align.CENTER
-                                    color = Color.White.toArgb()
-                                }
+            if(inputList.isNotEmpty())
+            {
+                inputList.forEach { pieChartInput ->
+                    val scale = if (pieChartInput.isTapped) 1.1f else 1.0f
+                    val angleToDraw = pieChartInput.value * anglePerValue
+                    scale(scale) {
+                        drawArc(
+                            color = pieChartInput.color,
+                            startAngle = currentStartAngle,
+                            sweepAngle = angleToDraw,
+                            useCenter = true,
+                            size = Size(
+                                width = radius * 2f,
+                                height = radius * 2f
+                            ),
+                            topLeft = Offset(
+                                (width - radius * 2f) / 2f,
+                                (height - radius * 2f) / 2f
                             )
+                        )
+                        currentStartAngle += angleToDraw
+                    }
+                    var rotateAngle = currentStartAngle - angleToDraw / 2f - 90f
+                    var factor = 1f
+                    if (rotateAngle > 90f) {
+                        rotateAngle = (rotateAngle + 180).mod(360f)
+                        factor = -0.92f
+                    }
+
+                    val percentage = (pieChartInput.value / totalValue.toFloat() * 100).toInt()
+
+                    drawContext.canvas.nativeCanvas.apply {
+                        if (percentage > 3) {
+                            rotate(rotateAngle) {
+                                drawText(
+                                    "$percentage %",
+                                    circleCenter.x,
+                                    circleCenter.y + (radius - (radius - innerRadius) / 2f) * factor,
+                                    Paint().apply {
+                                        textSize = 18.sp.toPx()
+                                        textAlign = Paint.Align.CENTER
+                                        color = Color.White.toArgb()
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    if (pieChartInput.isTapped) {
+                        val tabRotation = currentStartAngle - angleToDraw - 90f
+                        rotate(tabRotation) {
+                            drawRoundRect(
+                                topLeft = circleCenter,
+                                size = Size(12f, radius * 1.2f),
+                                color = Color.White,
+                                cornerRadius = CornerRadius(15f, 15f)
+                            )
+                        }
+                        rotate(tabRotation + angleToDraw) {
+                            drawRoundRect(
+                                topLeft = circleCenter,
+                                size = Size(12f, radius * 1.2f),
+                                color = Color.White,
+                                cornerRadius = CornerRadius(15f, 15f)
+                            )
+                        }
+                        rotate(rotateAngle) {
+                            drawContext.canvas.nativeCanvas.apply {
+                                drawText(
+                                    "${pieChartInput.description}: ${pieChartInput.value}",
+                                    circleCenter.x,
+                                    circleCenter.y + radius * 1.25f * factor,
+                                    Paint().apply {
+                                        textSize = 18.sp.toPx()
+                                        textAlign = Paint.Align.CENTER
+                                        color = Color.Black.toArgb()
+                                        isFakeBoldText = true
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-                if(pieChartInput.isTapped){
-                    val tabRotation = currentStartAngle - angleToDraw - 90f
-                    rotate(tabRotation){
+
+                if(inputList.first().isTapped){
+                    rotate(-90f){
                         drawRoundRect(
                             topLeft = circleCenter,
                             size = Size(12f,radius*1.2f),
@@ -162,42 +210,9 @@ fun PieChart(
                             cornerRadius = CornerRadius(15f,15f)
                         )
                     }
-                    rotate(tabRotation+angleToDraw){
-                        drawRoundRect(
-                            topLeft = circleCenter,
-                            size = Size(12f,radius*1.2f),
-                            color = Color.Gray,
-                            cornerRadius = CornerRadius(15f,15f)
-                        )
-                    }
-                    rotate(rotateAngle){
-                        drawContext.canvas.nativeCanvas.apply {
-                            drawText(
-                                "${pieChartInput.description}: ${pieChartInput.value}",
-                                circleCenter.x,
-                                circleCenter.y + radius*1.3f*factor,
-                                Paint().apply {
-                                    textSize = 22.sp.toPx()
-                                    textAlign = Paint.Align.CENTER
-                                    color = Color.White.toArgb()
-                                    isFakeBoldText = true
-                                }
-                            )
-                        }
-                    }
                 }
             }
 
-            if(inputList.first().isTapped){
-                rotate(-90f){
-                    drawRoundRect(
-                        topLeft = circleCenter,
-                        size = Size(12f,radius*1.2f),
-                        color = Color.Gray,
-                        cornerRadius = CornerRadius(15f,15f)
-                    )
-                }
-            }
             drawContext.canvas.nativeCanvas.apply {
                 drawCircle(
                     circleCenter.x,
