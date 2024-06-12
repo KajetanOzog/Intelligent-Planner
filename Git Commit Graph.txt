@@ -1,0 +1,629 @@
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+:...skipping...
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+:...skipping...
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+| *   a881719 Merge branch 'master' of https://github.com/michalgs/IO_Project
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+| *   a881719 Merge branch 'master' of https://github.com/michalgs/IO_Project
+| |\
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+| *   a881719 Merge branch 'master' of https://github.com/michalgs/IO_Project
+| |\
+| * | d78be71 Sprawdzanie daty zakonczenia wydarzen
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+| *   a881719 Merge branch 'master' of https://github.com/michalgs/IO_Project
+| |\
+| * | d78be71 Sprawdzanie daty zakonczenia wydarzen
+* | | 8124b21 Poprawa dodawania do grup
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+| *   a881719 Merge branch 'master' of https://github.com/michalgs/IO_Project
+| |\
+| * | d78be71 Sprawdzanie daty zakonczenia wydarzen
+* | | 8124b21 Poprawa dodawania do grup
+* | | 707ba76 Poprawa dodawania do grup
+:...skipping...
+* ca617fd (HEAD -> master, origin/master) Zmiana pliku apk
+*   0715821 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * fe939d3 Update README.md
+| * 980ca49 Update README.md
+| * b2e704a Update README.md
+* | 9edfe74 Poprawa błędu z polskimi znakami w asystencie
+|/
+*   6eb510b Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * da172f4 Finalna wersja READNE
+* | 1adb2e4 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\|
+| * 7fae5b0 Dodane zrzuty ekranów do README
+* | 4f765eb Poprawa błędu z polskimi znakami w asystencie
+|/
+* 9340f2e Plik z licencją
+* 665e4c2 Add files via upload
+* 00502a2 Create README.md
+* 57e21a6 Strukturyzacja Gita
+* dc688cf Add files via upload
+* 8e93ba6 Intelligent Planner v1.0
+* b85e0dd Poprawka dodawania taskow z polskim kalendarzem
+* 24fc13a Poprawka asystenta z polskim kalendarzem
+* acaa23a Poprawka wyswietlania na homescreen dla polskiej daty
+*   84d3110 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| * ccbe44b Sprawdzanie daty zakonczenia wydarzen
+| *   a881719 Merge branch 'master' of https://github.com/michalgs/IO_Project
+| |\
+| * | d78be71 Sprawdzanie daty zakonczenia wydarzen
+* | | 8124b21 Poprawa dodawania do grup
+* | | 707ba76 Poprawa dodawania do grup
+| |/
+|/|
+* | cb42774 Poprawka kalendarza
+|/
+* 6b755b4 Poprawki interfejsu oraz importów
+*   64f5785 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\
+| *   713dfa5 Merge remote-tracking branch 'origin/master'
+| |\
+| * | 742f235 statystyki działają komentarze dodane
+* | | c9ac5c3 Zmiany przy dodawaniu eventów, poprawienie języka kalendarza
+* | |   21cd95a Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\ \ \
+| | |/
+| |/|
+| * | f444bdf Poprawione pobieranie
+| * | 0215d2d Merge branch 'master' of https://github.com/michalgs/IO_Project
+| |\|
+| * | 70428b0 naprawa dziedziczenia
+* | | 4550e60 Małe poprawki
+* | |   7ee9eb2 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\ \ \
+| | |/
+| |/|
+| * | 4937db0 statystyki działają (mam nadzieję) pogoda też poprawiona
+| * | 6adaf34 statystyki działają (mam nadzieję) pogoda też poprawiona
+| |/
+| * 69e72c2 Dodana klasa bazowa Activity
+* | 73044f4 Małe poprawki
+|/
+* 17438ba Merge do mastera
+* 9753dde Merge do mastera
+* 16ada38 (origin/notifications-calendar-tweaks-and-daily-data-updating, notifications-calendar-tweaks-and-daily-data-updating) Tweaks.
+*   1d92b09 Merge branch 'unit-tests' of https://github.com/michalgs/IO_Project into notifications-calendar-tweaks-and-daily-data-updating
+|\
+| * 6cbe4ad (origin/unit-tests, unit-tests) Tweaks.
+| * b05f212 Dodane kolejne testy oraz pliki z ich logami.
+| * 8394a03 BRANCH TYLKO DO TESTOWANIA dodane unit testy do niektórych funkcji, wykomentowane logi i funkcje związane z firebasem w viewModelach
+* | 4c792f2 Poprawki dla asystenta.
+* |   55a2f48 Merge branch 'notifications-calendar-tweaks-and-daily-data-updating' of https://github.com/michalgs/IO_Project into notifications-calendar-tweaks-and-daily-data-updating
+|\ \
+| * \   7047618 Merge remote-tracking branch 'origin/notifications-calendar-tweaks-and-daily-data-updating' into notifications-calendar-tweaks-and-daily-data-updating
+| |\ \
+| | * | 17c5e89 Poprawki w update'owaniu tasków i w wyświetlaniu propozycji dat w asystencie.
+| | |/
+| * | 0e29d3b poprawione wyświetlanie maxStreak i completed w statystykach
+| * | ec7bb5c wykres kołowy w statystykach poprawiony, wykasowana niepotrzebna funkcja w DaySummary
+| * | e967404 wykres kołowy w statystykach poprawiony, wykasowana niepotrzebna funkcja w DaySummary
+| |/
+* / d2211f6 Poprawa sortowania
+|/
+* 74f28d5 Sortowanie dodane
+*   f5c8b5e Merge branch 'notifications-calendar-tweaks-and-daily-data-updating' of https://github.com/michalgs/IO_Project into notifications-calendar-tweaks-and-daily-data-updating
+|\
+| * 3c9e6be RemoveEvent naprawione
+* | 5726bc3 Asystent.
+|/
+* 679d780 Usuwanie eventów, integracja z asystentem.
+*   e53d40c Merge remote-tracking branch 'origin/assistant' into notifications-calendar-tweaks-and-daily-data-updating
+|\
+| * e671dc0 (origin/assistant) wyświetlanie pogody na najbliższe 4 dni i wybór spośród nich
+| * 364ef45 większość frontu asystenta zrobiona
+* |   d0ff8ef Merge branch 'notifications-calendar-tweaks-and-daily-data-updating' of https://github.com/michalgs/IO_Project into notifications-calendar-tweaks-and-daily-data-updating
+|\ \
+| * | 87b7ccb usuniete niepotrzebne printy
+| * | e5fd27b naprawione sortowanie i import
+* | | c919cc3 Samouczek na ekranie logowania.
+* | | e1d9fe3 Wstępne testy jednostkowe.
+* | | aa8426c Przeniesienie ustawienia dla widoczności eventów znajomych na ekran główny i kalendarza, drobne poprawki, przeniesienie folderu docelowego eksportu z /Download na /Document.
+|/ /
+* | a38dad4 Poprawki dialogow, zmiana sciezki docelowej eksportu.
+* | 559d32e Poprawki.
+* | cabf4c4 Naprawa wersja 2
+* | 1c445e4 Poprawki
+* | d57d30b Naprawa importFile
+* | 16866fe Import/eksport, dodanie archiwum, poprawki
+* | 1996c9b Importowanie jsona
+* | b7e08e9 eksport danych
+* | 35d831e eksport danych
+* | 80e433d Pobieranie zrobionych celow
+* | 802061e Mala poprawka w fetchAllUserEvents
+* | e8770fd Dodana funkcja pobierajaca wszystkie eventy dla użytkownika
+* | 99a31b6 Update'owanie wykonania tasków, poprawki w dialogu dodawania eventów i ich wyświetlaniu.
+* | d1e2ea9 Integracja z nowymi polami w bazie danych. (Jeszcze do przetestowania).
+* | aa369c6 1. Dodanie do eventów: eventID, endTime, priority 2. Dodanie do tasków: doneCount (za DaysCounter), addedDate (za DaysCount), lastCheck (to moje do aktualizowania wiec raczej bez zmian) 3. Ustawienie kolorów eventów znajomych 4. Ustawienie kolorów dla grup 5. Pobieranie tasków zmienione lekko 6. Aktualizacja tasków 7. Aktualizajca celow 8. Usuwanie eventów
+* | 68ed8b4 Dodanie modułu statystyk Bartka, plus małe poprawki interfejsu.
+* |   81747a5 Merge branch 'StatsScreen' of https://github.com/michalgs/IO_Project into notifications-calendar-tweaks-and-daily-data-updating
+|\ \
+| * | 7a05209 (origin/StatsScreen) Ściąganie pogody na cały tydzień zamiast tylko aktualnej
+| * | 944dafb wyświetlanie imienia w greeting tile i poprawione null checki
+| * | c841032 Statystyki powinny działać. Do fetchEvents dodałem funkcję fetchującą wszystkie eventy danego użytkownika, trzeba ją chyba dokończyć/naprawić.
+| * | 7dfe8cd Statystyki powinny działać. Do fetchEvents dodałem funkcję fetchującą wszystkie eventy danego użytkownika, trzeba ją chyba dokończyć/naprawić.
+| |/
+* | bfe87be Overhaul graficzny, poprawki kalendarza, dodanie wyswietlania podsumowania dnia przy pierwszym wejsciu do aplikacji (przy odpowiednich ustawieniach).
+* | d55fe25 Interfejs do dodawania eventów do grup, dodanie sprawdzania, czy wprowadzane dane maja uzupełnione kluczowe pola, zamiana niektórych stringów na consty, małe poprawki interfejsu.
+* | da5ba8d Poprawione odświeżanie kalendarzy przy zmianie daty, dodanie listy kolorów do wyboru eventów.
+* | 2b7de28 Pobieranie jednej grupy
+* | 0f9e34d Dodawanie eventów do grup
+* | 28eb67b Poprawka w dodawaniu eventów, do tej pory wszystkie były regularne
+* | 60f1bdf Poprawki przy wyswietlaniu członków grupy, dużo poprawek UI, głównie w HomeScreen.kt.
+* | f890b6b Wyswietlanie ekranu grupy (jeszcze bez kalendarza), poprawienie nawigacji miedzy wszystkimi ekranami, dodanie funkcji getUserNameFromUID.kt (jeszcze nie przetestowana).
+* | 9b1380e Naprawione wyświetlanie znajomych.
+* | 65963ea .
+* | 40c9572 .
+* | e2d7b65 Dodawanie znajomych (backend jeszcze do małej poprawki)
+* | 4a7a39c Naprawa pobierania grup i dodanie pobierania znajomych
+* | 1ea48a5 runBlocking zamiast launch (dziala lepiej przy wyswietlaniu).
+* | 9d971a8 Małe poprawki w dodawaniu grup, teraz poprawnie dodaje groupID to documentu użytkownika.
+* | 62e06ed Powiadomienia z alarmem i bez, zmiany danych o północy, rozpoczęcie pracy nad SocialScreen.kt, małe zmiany i poprawy interfejsu.
+|/
+* 81ec3dd Dodane funckje do oblugi grup
+* 89341e6 Dodawanie grup i zmiana lekka w user_emial
+* 86ea6e2 Dodawanie grup i zmiana lekka w user_emial
+* 40c7a91 (origin/merge-test, merge-test) Naprawa fetchEvents.kt.
+*   8432f06 Merge remote-tracking branch 'origin/calendar' into merge-test
+|\
+| * cf3f9f1 (origin/calendar) Dodanie kalendarza
+* |   cd941dc Merge remote-tracking branch 'origin/greeting' into merge-test
+|\ \
+| * | 182b1ea (origin/greeting) greeting tile almost done
+| |/
+* | b0543a6 Merge remote-tracking branch 'origin/master'
+|\|
+| * 7bc33f9 .
+* | 9341e7b (origin/displaying-data, displaying-data) Naprawa merge'a.
+* |   b268654 Merge branch 'displaying-data' of https://github.com/michalgs/IO_Project into displaying-data
+|\ \
+| * | 7359734 .
+* | | 420e928 Naprawione fetchGoals.kt i fetchTasks.kt.
+* | | a7a2dcf Wyswietlanie, blad spowodowany dziwnym castowaniem elementow pobranej listy na hashmap
+|/ /
+* | 9d38306 Wyswietlanie zadan w TaskScreen
+* | f6289f8 Wyswietlanie celow w GoalScreen
+* | 2fc270b Merge branch 'master' of https://github.com/michalgs/IO_Project into displaying-data
+|\|
+| * 08fa5e7 pobieranie danych
+* | 4b55dc2 Dodanie części plików do wyświetlania danych z bazy.
+* |   f4cb14d Merge remote-tracking branch 'origin/weather'
+|\ \
+| * | e3a720d teraz już faktycznie powinno działać
+| * | a0449c6 teraz już faktycznie powinno działać
+| * |   58b5878 Merge branch 'weather' of https://github.com/michalgs/IO_Project into weather
+| |\ \
+| * | | 59fe108 Zdobywanie lokalizacji i wyświetlanie pogody chyba w końcu działa
+| * | | bd89f99 Zdobywanie lokalizacji i wyświetlanie pogody chyba w końcu działa
+| * | | 7279e89 Zdobywanie lokalizacji i wyświetlanie pogody chyba w końcu działa
+| * | | 6b0c236 Zdobywanie lokalizacji i wyświetlanie pogody chyba w końcu działa
+* | | |   d4bc414 Merge branch 'Naprawa-logowania'
+|\ \ \ \
+| |_|_|/
+|/| | |
+| * | | 30a2783 (Naprawa-logowania) Poprawki w dialogach i logowaniu.
+* | | | c9205f6 Dodawanie znajomych
+* | | | 0ca387b Naprawione AddGoal, AddTask oraz dodawanie pary id:email do pliku metadata
+|/ / /
+* | | 0bdcc26 Dokończone dialogi.
+* | |   7b1dad8 Merge branch 'master' of https://github.com/michalgs/IO_Project
+|\ \ \
+| * | | 12be64f naprawiona funkcja addEvent
+| * | | 3b6f1de naprawiona funkcja addEvent
+| * | | f0d1fc9 zmiana daty
+* | | | 8ef8c9a (dialogs) Dalsze zmiany w dialogach
+|/ / /
+* | | a050913 zmiana daty
+* | | 603659e zmiana daty
+* | | 9aab6aa Podlaczenie dialogu do funkcji addEventToFirestore (jeszcze wymaga naprawy).
+| |/  
+|/|   
+* | 3663168 Poprawiony dialog do dodawania, ale jeszcze bez podpietej funkcji ktora dodaje event do bazy.
+|/
+* 44c2438 (origin/json_etc, json_etc) Merge z JSONami, dodany dialog do dodawania eventow
+* 725456e Group data class added
+* 6f45bff some changes in add functions
+* 550bcb1 add functions
+* 26a37c6 Add empty data to user acount
+* c9b72a0 Dodane prawie wszystkie ekrany, nawigacja miedzy nimi, wszystko do oprogramowania.
+* bb5d3d1 LOGOWANIE DZIALA, GIGANTYCZNY SUKCES (jeszcze będzie modyfikowane, ale na ten moment można ruszać z pracą)
+* 6950126 Connected to Firebase, first login implementation (minor issues with authentification, to be fixed)
+* 3450bc1 Added firebase
+* c8c9ded Added bottom bar navigation, ProfileScreen and few minor tweaks
+* e329c64 Working navigation demo
+* da7ed22 Initial commit
