@@ -31,8 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.Constants
 import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.Constants.CALENDAR_SCREEN
+import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.Constants.GOALS_SCREEN
 import com.example.io_project.Constants.TASKS_SCREEN
 import com.example.io_project.ui.components.BottomBar
@@ -61,7 +63,7 @@ fun CalendarScreen(
     }
     val calendarViewModel: CalendarViewModel = hiltViewModel()
     val dateState = calendarViewModel.dateState.collectAsState()
-        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
+        .value.format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH))
     var eventsState: List<Event> by remember {
         mutableStateOf(calendarViewModel.eventsListState)
     }

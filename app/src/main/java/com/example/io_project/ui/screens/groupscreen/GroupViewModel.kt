@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.ui.graphics.vector.Group
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.io_project.Constants
+import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.Group
 import com.example.io_project.datamanagement.fetchEvents
@@ -46,13 +48,13 @@ class GroupViewModel @AssistedInject constructor(
     }
 
     fun getDateString(): String =
-        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
+        dateState.value.format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH))
 
     fun changeDate(newDate: String) {
         dateState.update {
             LocalDate.parse(
                 newDate,
-                DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH)
+                DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH)
             )
         }
         updateEvents()

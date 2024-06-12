@@ -47,13 +47,13 @@ class CalendarViewModel @Inject constructor(
     }
 
     fun getDateString(): String =
-        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
+        dateState.value.format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH))
 
     fun changeDate(newDate: String) {
         dateState.update {
             LocalDate.parse(
                 newDate,
-                DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH)
+                DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH)
             )
         }
         updateEvents()

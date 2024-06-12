@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +26,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getTodaysDateString() =
-        LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN))
+        LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH))
 
     private fun getTodaysEvents() {
 
