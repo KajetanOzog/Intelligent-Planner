@@ -1,11 +1,8 @@
 package com.example.io_project.dataclasses
-import android.net.Uri
-import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 
 open class Activity(
+    @SerializedName("activity_name") // Custom JSON field name for Activity
     open val name: String = ""
-) {
-    override fun toString(): String {
-        return Uri.encode(Gson().toJson(this))
-    }
-}
+)
+

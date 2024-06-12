@@ -3,6 +3,9 @@ package com.example.io_project.datamanagement
 import android.util.Log
 import com.example.io_project.Constants.FRIEND_COLOR_HEX
 import com.example.io_project.dataclasses.Event
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 suspend fun fetchFriendsEvents(userID: String, targetDate: String): List<Event>? {
     val documentSnapshot = getUserDocument(userID)
@@ -17,7 +20,15 @@ suspend fun fetchFriendsEvents(userID: String, targetDate: String): List<Event>?
                     // Filter visible events and assign friend's color
                     val visibleEvents = friendEvents.filter { it.visible }
                     visibleEvents.forEach { it.color = FRIEND_COLOR_HEX }
-                    returnList.addAll(visibleEvents)
+                    val currentDate = Date()
+                    val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
+
+                    // Filter the events based on endDate
+                    val filteredEvents = visibleEvents.filter { event ->
+                        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
+                        endDate == null || endDate >= currentDate
+                    }
+                    returnList.addAll(filteredEvents)
                 }
             }
             return returnList
