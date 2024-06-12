@@ -50,6 +50,7 @@ import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 @Composable
@@ -70,7 +71,6 @@ fun AssistantDialog(
     // 4 -> brak preferencji co do terminu
     // 5 -> użytkownik ma preferencje do terminu (date picker)
     // 6 -> pytanie o zaproszenie kogoś
-    // 7 -> wyświetla się lista wyboru znajomych
     // 8 -> pytanie o potwierdzenie dodania aktywności
     // 9 -> aktywność dodana
     Dialog(
@@ -264,7 +264,7 @@ fun AssistantDialog(
 
                 4 -> {
                     val todayDate = LocalDate.now()
-                    val formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN)
+                    val formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH)
                     Text(
                         text = "Wybierz termin:",
                         fontSize = 14.sp

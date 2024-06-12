@@ -21,6 +21,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 import kotlin.random.Random
 import kotlin.random.nextInt
@@ -104,7 +105,7 @@ class AssistantViewModel @Inject constructor(
             freeHoursBool.add(true)
         }
         val todaysDate: String =
-            LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN))
+            LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH))
         val currentHour: Int =
             LocalTime.now().format(DateTimeFormatter.ofPattern("HH")).toInt()
         // Jesli sprawdzamy zajęte godziny na dzisiaj, to wyłączamy te które już upłynęły
