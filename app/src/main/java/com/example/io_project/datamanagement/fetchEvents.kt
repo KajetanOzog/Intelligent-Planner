@@ -5,52 +5,10 @@ import com.example.io_project.dataclasses.EventPriority
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 // Function to fetch events for a user on a specific date
-/*suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
-    val documentSnapshot = getUserDocument(userID)
-    val returnList = ArrayList<Event>()
-    val eventsWithoutHour = ArrayList<Event>()
-    try {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            val dayOfWeek = getDayOfWeek(targetDate)
-            val regularDataForDayOfWeek = documentSnapshot.get("regular.$dayOfWeek") as List<Map<String, Event>>
-            Log.d("FetchEvents","Fetched events list: ${regularDataForDayOfWeek}")
-            if (regularDataForDayOfWeek is List<*>) {
-                @Suppress("UNCHECKED_CAST")
-                for (event in regularDataForDayOfWeek)
-                {
-                    returnList.add(mapToEvent(event))
-                }
-                Log.d("FetchEvents","ConvertedEvents: ${regularDataForDayOfWeek}")
-            }
-            val nonRegularDataForDate = getNonRegularDataForDate(documentSnapshot, targetDate)
-            if (nonRegularDataForDate != null) {
-                for (event in nonRegularDataForDate) {
-                    returnList.add(mapToEvent(event))
-                }
-            }
-
-            val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-            returnList.sortWith(compareBy { event ->
-                try {
-                    timeFormat.parse(event.time)
-                } catch (e: ParseException) {
-                    Log.d("FetchEvents", "Error parsing time for event: ${event.time}")
-                }
-            })
-            return returnList
-        } else {
-            Log.d("FetchEvents", "User document does not exist or was not fetched")
-        }
-    } catch (e: Exception) {
-        Log.d("FetchEvents", "Error fetching user events for the day: ${e.message}")
-    }
-    return null
-}*/
-
-
 suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
     val documentSnapshot = getUserDocument(userID)
     val returnList = ArrayList<Event>()
@@ -84,6 +42,21 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
                         returnList.add(eventObj)
                     }
                 }
+            }
+
+            val currentDate = Date()
+            val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
+
+            // Filter the events in returnList based on endDate
+            returnList.removeAll { event ->
+                val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
+                endDate != null && endDate < currentDate
+            }
+
+            // Filter the events in eventsWithoutHour based on endDate
+            eventsWithoutHour.removeAll { event ->
+                val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let { dateFormat.parse(it) }
+                endDate != null && endDate < currentDate
             }
 
             val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
