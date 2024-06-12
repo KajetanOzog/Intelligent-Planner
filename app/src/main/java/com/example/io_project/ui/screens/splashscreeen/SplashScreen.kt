@@ -39,8 +39,12 @@ fun SplashScreen(
     val lastVisitDate = dataStore.getLastVisitDate.collectAsState(initial = "")
 
     LaunchedEffect(true) {
+        // Przy każdym uruchomieniu aplikacji sprawdzamy czy jest to pierwsza wizyta danego dnia
+        // i jesli jest, to odwiezamy wykonane i niewykonane taski oraz wyswietlamy podsumowanie
+        // w przypadku takiego ustawienia w opcjach
         Firebase.auth.currentUser?.let {
             val tasksToUpdate = getTasks(it.uid)
+            // delay by dac szanse pobrac dane
             delay(SPLASH_DELAY)
             if (tasksToUpdate != null)
                 updateTasks(tasksToUpdate, it.uid)
@@ -54,6 +58,8 @@ fun SplashScreen(
                 LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN))
             )
         }
+        // Podobnie delay w celu odwiezenia ustawien (dataStore ma chwile zastanowienia
+        // potrafi zwrocic domyslna wartosc zamiast ustawionej)
         delay(SPLASH_DELAY)
         navigateTo(splashViewModel.chooseNavigationDestination(showSummary))
     }

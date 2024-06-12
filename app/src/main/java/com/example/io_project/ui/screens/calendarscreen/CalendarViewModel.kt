@@ -11,6 +11,8 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.io_project.Constants
+import com.example.io_project.Constants.DATE_FORMATTER_PATTERN
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.datamanagement.fetchAllUserEvents
 import com.example.io_project.datamanagement.fetchEvents
@@ -45,13 +47,13 @@ class CalendarViewModel @Inject constructor(
     }
 
     fun getDateString(): String =
-        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
 
     fun changeDate(newDate: String) {
         dateState.update {
             LocalDate.parse(
                 newDate,
-                DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
+                DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH)
             )
         }
         updateEvents()
@@ -77,18 +79,15 @@ class CalendarViewModel @Inject constructor(
 
     fun getPreviousDay() {
         dateState.update { it.minusDays(1) }
-        //Log.d("CVM", getDateString())
         updateEvents()
     }
 
     fun getNextDay() {
         dateState.update { it.plusDays(1) }
-        //Log.d("CVM", getDateString())
         updateEvents()
     }
 
     fun refreshData() {
-        //Log.d("CalendarVM", "$allEvents")
         updateEvents()
     }
 }

@@ -19,7 +19,6 @@ class AuthViewModel @Inject constructor(
     private val repo: AuthRepository,
     val oneTapClient: SignInClient
 ): ViewModel() {
-    val isUserAuthenticated get() = repo.isUserAuthenticatedInFirebase
 
     var oneTapSignInResponse by mutableStateOf<OneTapSignInResponse>(Success(null))
         private set
