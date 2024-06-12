@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -21,12 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.io_project.dataclasses.WeatherCurrent
-import com.example.io_project.R
 import com.example.io_project.datamanagement.getIcon
 import com.example.io_project.permissions.AskingForPermissions
 import com.example.io_project.permissions.Permissions
@@ -40,17 +37,15 @@ fun WeatherWidget(modifier: Modifier = Modifier)
     var wc by remember { mutableStateOf(WeatherCurrent.code) }
     val activity = LocalContext.current as Activity
 
-    if(!AskingForPermissions.started){
-        LaunchedEffect(Unit)
+    LaunchedEffect(Unit)
+    {
+        Permissions(activity)
+        while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
         {
-            Permissions(activity)
-            while(!AskingForPermissions.finished || !WeatherCurrent.acquired && checkLocationPermission(activity))
-            {
-                delay(500)
-            }
-            temp = WeatherCurrent.temperature
-            wc = WeatherCurrent.code
+            delay(500)
         }
+        temp = WeatherCurrent.temperature
+        wc = WeatherCurrent.code
     }
 
     Row(
