@@ -1,3 +1,5 @@
+<img src="app/src/main/res/mipmap-hdpi/ic_launcher_foreground.webp" 
+alt="Logo"/> 
 # Inteligentny Planer
 ## Autorzy: Michał Smorągiewicz, Kajetan Ożóg, Bartosz Siwakowski, Michał Kopyłowski, Bartosz Bugajski   
 
