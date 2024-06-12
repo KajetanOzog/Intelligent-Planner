@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +25,7 @@ class AddTaskViewModel @Inject constructor(
 ) : ViewModel() {
     val taskState = MutableStateFlow(
         Task(
-            addedDate = LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN))
+            addedDate = LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMATTER_PATTERN, Locale.ENGLISH))
         )
     )
     val _taskState: StateFlow<Task> = taskState.asStateFlow()
