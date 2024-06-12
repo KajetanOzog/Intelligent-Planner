@@ -19,12 +19,6 @@ alt="Ekran grup" width="336" height="748"/>
 <img src="Screenshots/2b7118d5-5191-4088-9dec-e8cb57b4c183.jpg" 
 alt="Ekran statystyk" width="336" height="748"/>
 
-## Plany na rozwój aplikacji
-- Migracja do Kotlin Multiplatform lub Flutter, w celu wprowadzenia dostępności dla urządzeń z systemem iOS
-- Synchronizacja ze SmartWatchami
-- Ciągłe rozbudowywanie aplikacji oraz dodawanie nowych funkcjonalności
-- Rozbudowa aplikacji o funkcje  Sztucznej Inteligencji 
-
 ## Wymagania 
 - Telefon z systemem Android w wersji 8.0 (SDK 26) lub nowszej w języku polskim lub angielskim
 - Dostępu do Internetu dla synchronizacji danych, pobierania prognozy pogody i konta Google do logowania, a także usług lokalizacyjnych
