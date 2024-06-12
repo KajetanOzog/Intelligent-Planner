@@ -1,17 +1,11 @@
 package com.example.io_project.ui.dialogs
 
 import addEventToGroup
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.io_project.Constants.CORRECT_DATA
-import com.example.io_project.Constants.GROUP_COLOR_HEX
 import com.example.io_project.Constants.INCORRECT_DATA
 import com.example.io_project.Constants.MISSING_DATA
-import com.example.io_project.dataclasses.Event
-import com.example.io_project.dataclasses.EventPriority
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
