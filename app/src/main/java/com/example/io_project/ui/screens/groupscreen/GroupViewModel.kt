@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel(assistedFactory = GroupViewModel.GroupViewModelFactory::class)
@@ -40,19 +41,18 @@ class GroupViewModel @AssistedInject constructor(
     var dateState = MutableStateFlow(LocalDate.now())
 
     init {
-        // Log.d("GroupVM", "$dateState")
         group = Gson().fromJson(groupJSON, Group::class.java)
         refreshData()
     }
 
     fun getDateString(): String =
-        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+        dateState.value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
 
     fun changeDate(newDate: String) {
         dateState.update {
             LocalDate.parse(
                 newDate,
-                DateTimeFormatter.ofPattern("EEE, MMM d yyyy")
+                DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH)
             )
         }
         updateEvents()
@@ -64,7 +64,6 @@ class GroupViewModel @AssistedInject constructor(
     }
 
     private fun updateEvents() {
-
         runBlocking {
             Firebase.auth.currentUser?.let {
                 Log.d("GroupVM", "$dateState")

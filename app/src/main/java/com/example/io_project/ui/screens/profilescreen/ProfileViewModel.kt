@@ -75,7 +75,6 @@ class ProfileViewModel @Inject constructor(
                 }
             }
             val database = stringBuilder.toString()
-            Log.d("FILE", database)
             viewModelScope.launch {
                 Firebase.auth.currentUser?.let {
                     importUserFile(it.uid, database)
