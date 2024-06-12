@@ -6,8 +6,22 @@ Aplikacja Inteligentny Planer to zaawansowane narzędzie do zarządzania czasem,
 
 ## Poniżej znajdują się zrzuty ekranu aplikacji
 
+<img src="Screenshots/6e7fe64e-76ac-4228-aa49-a75ce937d392.jpg" 
+alt="Ekran główny" width="336" height="748"/>
+<img src="Screenshots/bfb96290-9e19-47ec-b5d9-27346e96fd36.jpg" 
+alt="Ekran kalendarza" width="336" height="748"/>
+<img src="Screenshots/d19d0df8-5a8b-4daa-ad33-c9808c9e5976.jpg" 
+alt="Ekran nawyków" width="336" height="748"/>
+<img src="Screenshots/c096eeee-0b94-4450-9fe8-f7e07b072ae3.jpg" 
+alt="Ekran społeczności" width="336" height="748"/>
+<img src="Screenshots/427a289b-bd65-4f4b-864e-cccf79e689e0.jpg" 
+alt="Ekran grup" width="336" height="748"/>
+<img src="Screenshots/2b7118d5-5191-4088-9dec-e8cb57b4c183.jpg" 
+alt="Ekran statystyk" width="336" height="748"/>
 
-<img src=""/>
+
+
+
 
 
 
