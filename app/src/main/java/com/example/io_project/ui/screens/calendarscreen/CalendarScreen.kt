@@ -44,6 +44,7 @@ import com.example.io_project.ui.components.AddButton
 import com.example.io_project.ui.components.SmallTile
 import com.example.io_project.ui.components.formatDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +61,7 @@ fun CalendarScreen(
     }
     val calendarViewModel: CalendarViewModel = hiltViewModel()
     val dateState = calendarViewModel.dateState.collectAsState()
-        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
     var eventsState: List<Event> by remember {
         mutableStateOf(calendarViewModel.eventsListState)
     }

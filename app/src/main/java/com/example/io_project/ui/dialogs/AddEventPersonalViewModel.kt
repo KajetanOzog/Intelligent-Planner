@@ -3,6 +3,9 @@ package com.example.io_project.ui.dialogs
 import addEventToFirestore
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.io_project.Constants.CORRECT_DATA
+import com.example.io_project.Constants.INCORRECT_DATA
+import com.example.io_project.Constants.MISSING_DATA
 import com.example.io_project.dataclasses.Alarm
 import com.example.io_project.notifications.AlarmScheduler
 import com.google.firebase.Firebase
@@ -21,8 +24,9 @@ class AddEventPersonalViewModel @Inject constructor(
 ) : AddEventBaseViewModel() {
 
 
-    fun eventAddedSuccessfully(alarmScheduler: AlarmScheduler): Boolean {
-        return if (necessaryArgumentsProvided()) {
+    fun eventAddedSuccessfully(alarmScheduler: AlarmScheduler): String {
+        val errorMessage = necessaryArgumentsProvided()
+        if (errorMessage == CORRECT_DATA) {
             addEvent()
             if (eventState.value.reminder) {
                 val alarm = Alarm(
@@ -44,10 +48,8 @@ class AddEventPersonalViewModel @Inject constructor(
                     Log.d("AddActDia", "Scheduling single event")
                 }
             }
-            true
-        } else {
-            false
         }
+        return errorMessage
     }
 
 
@@ -64,11 +66,16 @@ class AddEventPersonalViewModel @Inject constructor(
         }
     }
 
-    fun necessaryArgumentsProvided(): Boolean {
-        return (eventState.value.name != "") && (eventState.value.date != "")
-                && !(eventState.value.reminder xor (eventState.value.reminderTime != ""))
-                && !(eventState.value.alarm xor eventState.value.reminder)
-                && ((eventState.value.time < eventState.value.endTime) || (eventState.value.endTime == ""))
+    fun necessaryArgumentsProvided(): String {
+        return if ((eventState.value.alarm xor eventState.value.reminder) ||
+            (eventState.value.reminder xor (eventState.value.reminderTime != "")) ||
+            (eventState.value.name == "") || (eventState.value.date == "")) {
+            MISSING_DATA
+        }
+        else if ((eventState.value.time >= eventState.value.endTime) && (eventState.value.endTime != "")) {
+            INCORRECT_DATA
+        }
+        else CORRECT_DATA
     }
 
 

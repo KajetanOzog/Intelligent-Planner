@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.Constants.CORRECT_DATA
+import com.example.io_project.Constants.MISSING_DATA
 import com.example.io_project.R
 import com.example.io_project.notifications.AlarmScheduler
 import com.example.io_project.notifications.AlarmSchedulerImpl
@@ -153,17 +155,24 @@ fun AddEventToGroupDialog(
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                            if (addEventToGroupViewModel.eventAddedSuccessfully(groupID)) {
+                            val errorMessage = addEventToGroupViewModel.eventAddedSuccessfully(groupID)
+                            if (errorMessage == CORRECT_DATA) {
                                 Toast.makeText(
                                     context,
                                     "Dodano wydarzenie",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 navigateBack()
-                            } else {
+                            } else if (errorMessage == MISSING_DATA) {
                                 Toast.makeText(
                                     context,
                                     "Uzupełnij wszysktie dane",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Sprawdź poprawność godzin",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

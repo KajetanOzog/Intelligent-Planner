@@ -46,6 +46,7 @@ import com.example.io_project.ui.components.TopBar
 import com.example.io_project.ui.components.UsersColumn
 import com.example.io_project.ui.components.formatDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +65,7 @@ fun GroupScreen(
             factory.create(groupJSON)
         }
     val dateState = groupViewModel.dateState.collectAsState()
-        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy"))
+        .value.format(DateTimeFormatter.ofPattern("EEE, MMM d yyyy", Locale.ENGLISH))
 
     var eventsState: List<Event> by remember {
         mutableStateOf(groupViewModel.eventsListState)

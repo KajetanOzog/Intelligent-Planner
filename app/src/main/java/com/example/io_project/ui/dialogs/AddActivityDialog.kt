@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.io_project.Constants.CORRECT_DATA
+import com.example.io_project.Constants.INCORRECT_DATA
+import com.example.io_project.Constants.MISSING_DATA
 import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.notifications.AlarmScheduler
@@ -121,17 +124,24 @@ fun AddActivityDialog(
                         coroutineScope.launch {
                             when (currentDialog) {
                                 "Event" -> {
-                                    if (addEventPersonalViewModel.eventAddedSuccessfully(alarmScheduler)) {
+                                    val errorMessage = addEventPersonalViewModel.eventAddedSuccessfully(alarmScheduler)
+                                    if (errorMessage == CORRECT_DATA) {
                                         Toast.makeText(
                                             context,
                                             "Dodano wydarzenie",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                         navigateBack()
-                                    } else {
+                                    } else if (errorMessage == MISSING_DATA) {
                                         Toast.makeText(
                                             context,
                                             "Uzupełnij wszysktie dane",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Sprawdź poprawność godzin",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
