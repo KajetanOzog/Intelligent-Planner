@@ -200,7 +200,7 @@ fun AssistantDialog(
                         mutableStateOf("Inne")
                     }
                     val categories =
-                        listOf("Szkola", "Inne", "Praca", "Aktywnosc fizyczna", "Znajomi")
+                        listOf("Szkoła", "Inne", "Praca", "Aktywność fizyczna", "Znajomi")
                     var isEnabled by remember { mutableStateOf(true) }
                     DropDownPicker(
                         onValueChange = {
