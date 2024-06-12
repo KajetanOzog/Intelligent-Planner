@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.io_project.Constants.AUTH_SCREEN
 
 
 @OptIn(ExperimentalMaterial3Api::class)

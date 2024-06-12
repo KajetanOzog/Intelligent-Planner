@@ -35,11 +35,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Event
 import com.example.io_project.dataclasses.GreetingData
 import com.example.io_project.datamanagement.isItDayTime
+import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import java.time.LocalDate

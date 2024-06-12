@@ -26,9 +26,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.io_project.ui.theme.IO_ProjectTheme
 import com.example.io_project.R
 import com.example.io_project.dataclasses.Goal
+import com.example.io_project.ui.theme.IO_ProjectTheme
 
 @Composable
 fun GoalDisplay() {

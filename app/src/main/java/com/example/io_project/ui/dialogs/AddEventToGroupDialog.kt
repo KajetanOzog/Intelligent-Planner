@@ -59,7 +59,6 @@ fun AddEventToGroupDialog(
     val addEventToGroupViewModel: AddEventToGroupViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     val context: Context = LocalContext.current
-    val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(context)
 
     Dialog(
         onDismissRequest = {

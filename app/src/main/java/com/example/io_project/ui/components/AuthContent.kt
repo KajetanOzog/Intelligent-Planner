@@ -3,24 +3,20 @@ package com.example.io_project.ui.components
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
-import com.example.io_project.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.material3.Icon
@@ -43,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.io_project.R
 import com.example.io_project.ui.navigation.changeTip
 import com.example.io_project.ui.theme.IO_ProjectTheme
 
@@ -65,10 +62,7 @@ fun AuthContent(
         )
 
         TipComponent()
-//        Text(
-//            text = "Zaloguj się do aplikacji",
-//            style = MaterialTheme.typography.displayMedium
-//        )
+
         SignInButton(
             onClick = oneTapSignIn
         )
@@ -170,8 +164,6 @@ fun TipComponent() {
 @Composable
 fun AuthPreview() {
     IO_ProjectTheme {
-        AuthContent(padding = PaddingValues()) {
-
-        }
+        AuthContent(padding = PaddingValues()){}
     }
 }

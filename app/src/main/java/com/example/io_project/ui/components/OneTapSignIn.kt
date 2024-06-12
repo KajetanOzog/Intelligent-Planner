@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.io_project.googleauthmodule.components.ProgressBar
-import com.example.io_project.googleauthmodule.model.Response.*
+import com.example.io_project.googleauthmodule.model.Response.Failure
+import com.example.io_project.googleauthmodule.model.Response.Loading
+import com.example.io_project.googleauthmodule.model.Response.Success
 import com.example.io_project.ui.screens.authscreen.AuthViewModel
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 

@@ -3,9 +3,7 @@ package com.example.io_project.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Create
 import androidx.compose.material.icons.rounded.DateRange
-import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -18,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.io_project.Constants
 import com.example.io_project.Constants.ADD_EVENT_TO_GROUP_DIALOG
 import com.example.io_project.Constants.ADD_USER_TO_GROUP_DIALOG
 
