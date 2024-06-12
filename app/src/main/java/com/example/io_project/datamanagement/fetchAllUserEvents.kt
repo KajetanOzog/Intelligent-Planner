@@ -6,14 +6,13 @@ import android.util.Log
 import com.example.io_project.dataclasses.Event
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+
 suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
     val allEvents = ArrayList<Event>()
-    var eventsWithHour = mutableListOf<Event>()
-    var eventsWithoutHour = mutableListOf<Event>()
-    val currentDate = Date()
-    val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
+    val eventsWithHour = ArrayList<Event>()
+    val eventsWithoutHour = ArrayList<Event>()
+    val endDateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
     // Fetch events from friends
     val friendsEvents: List<Event>? = fetchFriendsEvents(userID, date)
     friendsEvents?.let { allEvents.addAll(it) }
@@ -37,30 +36,6 @@ suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
         }
     }
 
-    eventsWithHour = eventsWithHour.filter { event ->
-        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
-            try {
-                dateFormat.parse(it)
-            } catch (e: ParseException) {
-                Log.d("FetchAllUserEvents", "Error parsing endDate for event: ${event.endDate}")
-                null
-            }
-        }
-        endDate == null || !endDate.before(currentDate)
-    }.toMutableList()
-
-    eventsWithoutHour = eventsWithoutHour.filter { event ->
-        val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
-            try {
-                dateFormat.parse(it)
-            } catch (e: ParseException) {
-                Log.d("FetchAllUserEvents", "Error parsing endDate for event: ${event.endDate}")
-                null
-            }
-        }
-        endDate == null || !endDate.before(currentDate)
-    }.toMutableList()
-
     // Sort events with time by time
     val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     eventsWithHour.sortWith(compareBy { event ->
@@ -78,6 +53,26 @@ suspend fun fetchAllUserEvents(userID: String, date: String): List<Event>? {
         addAll(eventsWithHour)
     }
 
-    return if (sortedEvents.isEmpty()) null else sortedEvents
+    // Filter events based on endDate
+    val filteredEvents = ArrayList<Event>()
+    for (event in sortedEvents) {
+        if (event.endDate == "") {
+            filteredEvents.add(event)
+        } else {
+            try {
+                val eventEndDate = endDateFormat.parse(event.endDate)
+                val calendarDate = endDateFormat.parse(date)
+                if (eventEndDate != null) {
+                    if (eventEndDate.after(calendarDate)) {
+                        filteredEvents.add(event)
+                    }
+                }
+            } catch (e: ParseException) {
+                Log.d("FetchAllUserEvents", "Error parsing endDate for event: ${event.endDate}")
+            }
+        }
+    }
+
+    return if (filteredEvents.isEmpty()) null else filteredEvents
 }
 

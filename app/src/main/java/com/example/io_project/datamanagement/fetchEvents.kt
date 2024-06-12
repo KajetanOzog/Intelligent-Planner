@@ -5,7 +5,6 @@ import com.example.io_project.dataclasses.EventPriority
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 // Function to fetch events for a user on a specific date
@@ -43,22 +42,20 @@ suspend fun fetchEvents(userID: String, targetDate: String): List<Event>? {
                     }
                 }
             }
-
-            val currentDate = Date()
             val dateFormat = SimpleDateFormat("EEE, MMM dd yyyy", Locale.ENGLISH)
 
             returnList = returnList.filter { event ->
                 val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
                     dateFormat.parse(it)
                 }
-                endDate == null || !endDate.before(currentDate)
+                endDate == null || !endDate.before(dateFormat.parse(targetDate))
             }.toMutableList()
 
             eventsWithoutHour = eventsWithoutHour.filter { event ->
                 val endDate = event.endDate.takeIf { it.isNotEmpty() }?.let {
                     dateFormat.parse(it)
                 }
-                endDate == null || !endDate.before(currentDate)
+                endDate == null || !endDate.before(dateFormat.parse(targetDate))
             }.toMutableList()
 
 
@@ -131,29 +128,6 @@ suspend fun fetchAllEvents(userID: String): List<Event>? {
     return null
 }
 
-
-// Function to map event data from Firestore document to Event object
-/*private fun mapToEvent(event: Map<String, Event>): Event {
-    return Event(
-
-        eventID = event["eventID"].toString(),
-        name = event["name"].toString(),
-        category = event["category"].toString(),
-        color = event["color"].toString(),
-        date = event["date"].toString(),
-        place = event["place"].toString(),
-        time = event["time"].toString(),
-        endDate = event["endDate"].toString(),
-        endTime = event["endTime"].toString(),
-        weekly = event["weekly"].toString() == "true",
-        reminder = event["reminder"].toString() == "true",
-        alarm = event["alarm"].toString() == "true",
-        reminderTime = event["reminderDate"].toString(),
-        visible = event["visible"].toString() == "true",
-        description = event["description"].toString(),
-        priority = EventPriority.valueOf(event["priority"].toString())
-    )
-}*/
 private fun mapToEvent(event: Map<String, Any>): Event {
     return Event(
         eventID = event["eventID"].toString(),
