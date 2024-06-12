@@ -67,7 +67,7 @@ class AddEventPersonalViewModel @Inject constructor(
     }
 
     fun necessaryArgumentsProvided(): String {
-        return if ((eventState.value.alarm xor eventState.value.reminder) ||
+        return if ((eventState.value.alarm && !eventState.value.reminder) ||
             (eventState.value.reminder xor (eventState.value.reminderTime != "")) ||
             (eventState.value.name == "") || (eventState.value.date == "")) {
             MISSING_DATA
